@@ -1,5 +1,5 @@
-# VC inpector
-Open sourced tool for inspecting verifyable credentials.
+# VC inspector
+Open-sourced tool for inspecting verifiable credentials.
 
 Will be aligned with eIDAS 2.0
 
