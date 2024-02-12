@@ -1,0 +1,56 @@
+name: Bug Report
+description: Describe unexpected behaviour.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report a bug to help us improve.
+  - type: textarea
+    id: what-not-working
+    attributes:
+      label: What is not working?
+      description: Describe what the bug is. What behaviour was expected to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Step-by-step
+      description: Give a step-by-step guide that preceded the bug.
+      value: 1. Step 1
+    validations:
+      required: true
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: Possible fix
+      description: Write a suggestion to fix this issue if you have one.
+  - type: dropdown
+    id: inspector-or-website
+    attributes:
+      label: Part
+      description: Is this a problem related to the inspector package or the website surrounding it. Feel free to add the corresponding label as well.
+      options:
+        - Inspector
+        - Website 
+        - Both
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers does the problem occurr on if only a subset?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Other
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output and screenshots
+      description: Insert any relevant log output or screenshots of the errors.
+      render: Markdown

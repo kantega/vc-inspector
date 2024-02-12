@@ -1,0 +1,29 @@
+name: Feature request
+description: Ask for a new feature or an enhancement to an existing feature.
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: Ask for a new feature or an enhancement to an existing feature.
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Is your feature request related to a problem?
+      description: A clear and concise description of what the problem is.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you would like
+      description: Describe the solution you'd like
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What are the criteria for this feature to be approved. Try to write requirements that can be easily validated against.
+      placeholder: |
+        All errors from requests are handled and shown to the user
+        
