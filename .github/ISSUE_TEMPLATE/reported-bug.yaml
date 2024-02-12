@@ -11,6 +11,7 @@ body:
     attributes:
       label: What is not working?
       description: Describe what the bug is. What behaviour was expected to happen?
+      placeholder: The website does not load....
     validations:
       required: true
   - type: textarea
@@ -26,6 +27,7 @@ body:
     attributes:
       label: Possible fix
       description: Write a suggestion to fix this issue if you have one.
+      placeholder: Try to update the file...
   - type: dropdown
     id: inspector-or-website
     attributes:
@@ -53,4 +55,3 @@ body:
     attributes:
       label: Relevant log output and screenshots
       description: Insert any relevant log output or screenshots of the errors.
-      render: Markdown
