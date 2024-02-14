@@ -1,4 +1,4 @@
-Please go the the `Preview` tab and select the appropriate sub-template:
+Select a pull request template by clicking the **Preview** tab.
 
-* [Website](?template=website.md)
-* [Inspector](?template=inspector.md)
+* [Website](?expand=1&template=website.md)
+* [Inspector package](?expand=1&template=inspector.md)
