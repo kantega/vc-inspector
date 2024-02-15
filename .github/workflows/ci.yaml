@@ -1,0 +1,42 @@
+name: Continous Integration
+
+on: push
+jobs:
+  install-check-test:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/actions-setup@v2
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check linting
+        run: pnpm lint
+
+      - name: Check prettier formatting
+        run: pnpm prettier:check
+
+      - name: Check typescript types
+        run: pnpm types
+
+      - name: Check production build
+        run: pnpm build
+
+      - name: Unit tests
+        run: pnpm test:unit
+
+      - name: Cypress component test
+        uses: cypress-io/github-action@v6
+        with:
+          component: true
+
+      - name: Cypress component integration
+        uses: cypress-io/github-action@v6
+        with:
+          build: pnpm build
+          start: npm start
+          
+
