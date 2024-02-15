@@ -1,6 +1,6 @@
 name: Bug Report
 description: Describe unexpected behaviour.
-labels: ["bug"]
+labels: ['bug']
 body:
   - type: markdown
     attributes:
@@ -35,7 +35,7 @@ body:
       description: Is this a problem related to the inspector package or the website surrounding it. Feel free to add the corresponding label as well.
       options:
         - Inspector
-        - Website 
+        - Website
         - Both
     validations:
       required: true

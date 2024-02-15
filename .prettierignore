@@ -1,0 +1,5 @@
+node_modules/
+dist/
+docs/
+prettier.config.js
+pnpm-lock.yaml

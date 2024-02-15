@@ -1,6 +1,6 @@
 name: Feature request
 description: Ask for a new feature or an enhancement to an existing feature.
-labels: ["feature"]
+labels: ['feature']
 body:
   - type: markdown
     attributes:
@@ -10,7 +10,7 @@ body:
     attributes:
       label: Is your feature request related to a problem?
       description: A clear and concise description of what the problem is or what is needed.
-      placeholder: I need support for this format because... 
+      placeholder: I need support for this format because...
     validations:
       required: true
   - type: textarea
@@ -28,4 +28,3 @@ body:
       description: What are the criteria for this feature to be approved. Try to write requirements that can be easily validated against.
       placeholder: |
         All errors from requests are handled and shown to the user
-        
