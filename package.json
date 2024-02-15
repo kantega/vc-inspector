@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
     "prettier": "prettier --write .",
     "prettier:check": "prettier ---check .",
+    "cypress:open": "cypress open",
+    "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
+    "test:component": "cypress run --component"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
@@ -17,6 +20,7 @@
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "start-server-and-test": "^2.0.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -25,6 +29,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "cypress": "^13.6.4",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
