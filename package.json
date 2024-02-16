@@ -12,7 +12,8 @@
     "types": "tsc --noEmit",
     "cypress:open": "cypress open",
     "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
-    "test:component": "cypress run --component"
+    "test:component": "cypress run --component",
+    "prepare": "husky"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
@@ -33,6 +34,7 @@
     "cypress": "^13.6.4",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "husky": "^9.0.11",
     "postcss": "^8",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
