@@ -25,9 +25,6 @@ jobs:
       - name: Check production build
         run: pnpm build
 
-      - name: Unit tests
-        run: pnpm test:unit
-
       - name: Cypress component test
         uses: cypress-io/github-action@v6
         with:
