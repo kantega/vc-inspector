@@ -1,6 +1,10 @@
-name: Continous Integration
+name: Continuous Integration
 
-on: push
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 jobs:
   install-check-test:
     name: Install, check format, and test
@@ -40,4 +44,3 @@ jobs:
         with:
           build: pnpm build
           start: npm start
-        continue-on-error: true

@@ -12,8 +12,7 @@
     "types": "tsc --noEmit",
     "cypress:open": "cypress open",
     "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
-    "test:component": "cypress run --component",
-    "prepare": "husky"
+    "test:component": "cypress run --component"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
