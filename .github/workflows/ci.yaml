@@ -3,11 +3,11 @@ name: Continous Integration
 on: push
 jobs:
   install-check-test:
-    name: Install
+    name: Install, check format, and test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/actions-setup@v2
+      - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Install dependencies
