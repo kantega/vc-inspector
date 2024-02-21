@@ -1,49 +1,18 @@
-/**
- * Module for inspector object types
- * @module inspectorObject
- *
- * Presentation might contain several VCs.
- *
- * @param
- * Options object
- *    include eIDAS 2.0
- * 
- * @returns
- * Errors, possible warnings
- * Validity of VC
- *   valid
- *   Valid from
- *   Valid to
- *   Proof
- * Supported standards
- *    eIDAS 2.0 
- *    - 
- * Format
- *   name
- *   converted to JSON if needed
- * Subject
- *   Claims
- * Context
- * Issuer
- * Credential status
- * Types; VerifiableCredential, Person, Degree
- *
- * Presentation
- */
-
-import { ListResult, Result } from "@/inspector/types/error";
+import { ListResult, ReasonedError, Result } from '@/inspector/types/error';
 
 export type URL = string;
 
-export type Issuer = {
-  kind: "WithName"
-  id: URL;
-  name: string;
-  description?: string;
-} | {
-  kind: "JustId"
-  id: URL;
-}
+export type Issuer =
+  | {
+      kind: 'WithName';
+      id: URL;
+      name: string;
+      description?: string;
+    }
+  | {
+      kind: 'JustId';
+      id: URL;
+    };
 
 /**
  * Another type would be a Record, but claims are records
@@ -62,20 +31,20 @@ export type Claim = {
 export type Subject = {
   id?: URL;
   claims: Claim[];
-}
+};
 
-export type SecuringMechanism = "Enveloping" | "Embedded"
+export type SecuringMechanism = 'Enveloping' | 'Embedded';
 
 export type Proof = {
-  type: SecuringMechanism
-}
+  type: SecuringMechanism;
+};
 
 export type Validity = {
   isValid: boolean;
   validFrom?: Date;
   validUntil?: Date;
   proof: ListResult<Proof>;
-}
+};
 
 export type Format = {
   name: string;
@@ -84,18 +53,21 @@ export type Format = {
    * this value is the JSON representation
    */
   convertedToJSON?: string;
-}
+};
 
 export type CredentialSchema = {
   type: string;
-  id: URL
-}
+  id: URL;
+};
 
 export type Context = {
   name?: string;
-  url: URL
-}
+  url: URL;
+};
 
+/**
+ * Verifiable Credential
+ */
 export type VC = {
   id?: URL;
   type: Result<string[]>;
@@ -111,7 +83,7 @@ export type VC = {
    * is here defined as a list
    */
   claimsSchema?: ListResult<CredentialSchema>;
-}
+};
 
 /**
  * Verifiable Presentation
@@ -121,13 +93,14 @@ export type VP = {
   context: Result<Context[]>;
   credentials: Result<VC>[];
   proofs: ListResult<Proof>;
-}
+};
 
-export type Inspector = {
-  kind: "VCredential";
-  value: VC;
-} | {
-  kind: "VPresentation";
-  value: VP;
-}
-
+export type Inspector =
+  | {
+      kind: 'VCredential';
+      value: VC;
+    }
+  | {
+      kind: 'VPresentation';
+      value: VP;
+    };
