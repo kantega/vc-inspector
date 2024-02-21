@@ -65,6 +65,10 @@ export type Context = {
   url: URL;
 };
 
+export type eIDAS2 = {
+  validToStandard: boolean;
+};
+
 /**
  * Verifiable Credential
  */
@@ -76,6 +80,7 @@ export type VC = {
   credentialSubject: ListResult<Subject>;
   validity: Result<Validity>;
   format: Result<Format>;
+  eIDAS2?: eIDAS2;
   /**
    * How the credential claims are structured
    * Has links which can be used to validate the credential
