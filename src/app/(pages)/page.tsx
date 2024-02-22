@@ -1,30 +1,22 @@
 'use client';
-import inspector from '@/inspector/inspector';
+import inspect, { InspectionResult } from '@/inspector/inspector';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
   // Proof of concept for the inspector
-  inspector();
 
   const [value, setValue] = useState('');
-  const [json, setJson] = useState({});
-  const [error, setError] = useState<Error | null>(null);
+  const [inspected, setInspected] = useState<InspectionResult | null>();
 
   useEffect(() => {
     if (!value) {
-      setJson({});
-      setError(null);
+      setInspected(null);
       return;
     }
 
-    try {
-      let val = JSON.parse(value);
-      setJson(val);
-      setError(null);
-    } catch (e) {
-      setError(e as Error);
-      setJson({});
-    }
+    const inspected = inspect(value);
+    setInspected(inspected);
+    console.log(inspected);
   }, [value]);
 
   return (
@@ -33,10 +25,27 @@ export default function Home() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Paste your verifiable credential here"
-        className={`w-1/2 rounded-md bg-gray-200 p-4 ${error === null ? 'bg-green-100' : 'bg-red-100'}`}
+        className={`w-1/2 rounded-md bg-gray-200 p-4 `}
       ></textarea>
-      {error && <p>{error?.message}</p>}
-      {Object.keys(json).length !== 0 && <p>{JSON.stringify(json)}</p>}
+
+      {inspected && (
+        <>
+          {inspected.type === 'InvalidCredential' && (
+            <>
+              {inspected.error.issues.map((issue, i) => {
+                return (
+                  <p key={i} className="text-red-800">
+                    {issue.fatal}
+                    {issue.path.join(' -> ')}: {issue.message}
+                  </p>
+                );
+              })}
+            </>
+          )}
+          {inspected.type === 'ParseError' && <p className="text-red-800">{inspected.error.message}</p>}
+          {inspected.type === 'ValidCredential' && <p className="text-green-800">Valid Credential</p>}
+        </>
+      )}
     </main>
   );
 }
