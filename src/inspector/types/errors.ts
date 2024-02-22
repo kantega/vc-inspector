@@ -11,7 +11,6 @@ export type ReasonedError = {
 };
 
 export type Result<T, E = ReasonedError> = { kind: 'ok'; value: T } | { kind: 'error'; error: E };
-// | { kind: "partial" ; value: Partial<T>; error: E };
 
 export type AllResult<T, E = ReasonedError> = {
   [P in keyof T]: Result<T[P], E>;

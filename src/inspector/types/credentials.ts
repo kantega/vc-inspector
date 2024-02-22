@@ -1,4 +1,4 @@
-import { ListResult, ReasonedError, Result } from '@/inspector/types/error';
+import { ListResult, Result } from '@/inspector/types/errors';
 
 export type URL = string;
 
