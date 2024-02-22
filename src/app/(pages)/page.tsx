@@ -1,5 +1,5 @@
-import inspector from "@/inspector/inspector";
-import Image from "next/image";
+import inspector from '@/inspector/inspector';
+import Image from 'next/image';
 
 export default function Home() {
   // Proof of concept for the inspector
