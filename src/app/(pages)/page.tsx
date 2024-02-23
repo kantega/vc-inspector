@@ -1,5 +1,5 @@
 'use client';
-import inspect, { InspectionResult } from '@/inspector/inspector';
+import inspect, { InspectionResult } from '@inspector/inspector';
 import { useEffect, useState } from 'react';
 
 export default function Home() {

@@ -2,6 +2,9 @@
   "name": "vc-inpector",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "src/inpector"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,7 +26,8 @@
     "react-dom": "^18",
     "start-server-and-test": "^2.0.3",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "@inspector": "file:src/inspector"
   },
   "devDependencies": {
     "@types/node": "^20",
