@@ -1,5 +1,4 @@
 import { ZodError } from 'zod';
-import { VC, VCSchema } from './types/zodtest';
 
 export default function inspect(credential: string): InspectionResult {
   try {
@@ -39,4 +38,14 @@ export type InspectionResult =
   | {
       type: 'ValidCredential';
       parsedJson: VC;
+    };
+
+export type Inspector =
+  | {
+      kind: 'VCredential';
+      value: VC;
+    }
+  | {
+      kind: 'VPresentation';
+      value: VP;
     };
