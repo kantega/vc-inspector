@@ -4,78 +4,89 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  class-variance-authority:
-    specifier: ^0.7.0
-    version: 0.7.0
-  clsx:
-    specifier: ^2.1.0
-    version: 2.1.0
-  lucide-react:
-    specifier: ^0.330.0
-    version: 0.330.0(react@18.2.0)
-  next:
-    specifier: 14.1.0
-    version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
-  react:
-    specifier: ^18
-    version: 18.2.0
-  react-dom:
-    specifier: ^18
-    version: 18.2.0(react@18.2.0)
-  start-server-and-test:
-    specifier: ^2.0.3
-    version: 2.0.3
-  tailwind-merge:
-    specifier: ^2.2.1
-    version: 2.2.1
-  tailwindcss-animate:
-    specifier: ^1.0.7
-    version: 1.0.7(tailwindcss@3.4.1)
+importers:
 
-devDependencies:
-  '@types/node':
-    specifier: ^20
-    version: 20.11.18
-  '@types/react':
-    specifier: ^18
-    version: 18.2.55
-  '@types/react-dom':
-    specifier: ^18
-    version: 18.2.19
-  autoprefixer:
-    specifier: ^10.0.1
-    version: 10.4.17(postcss@8.4.35)
-  cypress:
-    specifier: ^13.6.4
-    version: 13.6.4
-  eslint:
-    specifier: ^8
-    version: 8.56.0
-  eslint-config-next:
-    specifier: 14.1.0
-    version: 14.1.0(eslint@8.56.0)(typescript@5.3.3)
-  husky:
-    specifier: ^9.0.11
-    version: 9.0.11
-  postcss:
-    specifier: ^8
-    version: 8.4.35
-  prettier:
-    specifier: 3.2.5
-    version: 3.2.5
-  prettier-plugin-tailwindcss:
-    specifier: ^0.5.11
-    version: 0.5.11(prettier@3.2.5)
-  tailwindcss:
-    specifier: ^3.3.0
-    version: 3.4.1
-  typedoc:
-    specifier: ^0.25.8
-    version: 0.25.8(typescript@5.3.3)
-  typescript:
-    specifier: ^5
-    version: 5.3.3
+  .:
+    dependencies:
+      '@inspector':
+        specifier: file:src/inspector
+        version: file:src/inspector
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.0
+      lucide-react:
+        specifier: ^0.330.0
+        version: 0.330.0(react@18.2.0)
+      next:
+        specifier: 14.1.0
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
+      start-server-and-test:
+        specifier: ^2.0.3
+        version: 2.0.3
+      tailwind-merge:
+        specifier: ^2.2.1
+        version: 2.2.1
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.1)
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.11.18
+      '@types/react':
+        specifier: ^18
+        version: 18.2.55
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.2.19
+      autoprefixer:
+        specifier: ^10.0.1
+        version: 10.4.17(postcss@8.4.35)
+      cypress:
+        specifier: ^13.6.4
+        version: 13.6.4
+      eslint:
+        specifier: ^8
+        version: 8.56.0
+      eslint-config-next:
+        specifier: 14.1.0
+        version: 14.1.0(eslint@8.56.0)(typescript@5.3.3)
+      husky:
+        specifier: ^9.0.11
+        version: 9.0.11
+      postcss:
+        specifier: ^8
+        version: 8.4.35
+      prettier:
+        specifier: 3.2.5
+        version: 3.2.5
+      prettier-plugin-tailwindcss:
+        specifier: ^0.5.11
+        version: 0.5.11(prettier@3.2.5)
+      tailwindcss:
+        specifier: ^3.3.0
+        version: 3.4.1
+      typedoc:
+        specifier: ^0.25.8
+        version: 0.25.8(typescript@5.3.3)
+      typescript:
+        specifier: ^5
+        version: 5.3.3
+
+  src/inspector:
+    dependencies:
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
 
 packages:
 
@@ -3864,3 +3875,14 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: false
+
+  file:src/inspector:
+    resolution: {directory: src/inspector, type: directory}
+    name: inspector
+    dependencies:
+      zod: 3.22.4
+    dev: false
