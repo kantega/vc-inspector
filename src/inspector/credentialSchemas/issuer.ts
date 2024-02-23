@@ -5,7 +5,7 @@ export const IssuerSchema = z.union([
   z.object({
     id: z.string(),
     name: z.string(),
-    description: z.string(),
+    description: z.string().optional(),
   }),
 ]);
 

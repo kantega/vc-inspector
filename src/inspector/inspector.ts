@@ -1,4 +1,5 @@
 import { ZodError } from 'zod';
+import { VC, VCSchema } from './credentialSchemas/verifiableCredential';
 
 export default function inspect(credential: string): InspectionResult {
   try {
@@ -39,13 +40,13 @@ export type InspectionResult =
       type: 'ValidCredential';
       parsedJson: VC;
     };
-
-export type Inspector =
-  | {
-      kind: 'VCredential';
-      value: VC;
-    }
-  | {
-      kind: 'VPresentation';
-      value: VP;
-    };
+//
+// export type Inspector =
+//   | {
+//       kind: 'VCredential';
+//       value: VC;
+//     }
+//   | {
+//       kind: 'VPresentation';
+//       value: VP;
+//     };

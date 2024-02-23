@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { JSONType, JSONTypeSchema } from './jsonType';
 
 export const baseClaimSchema = z.object({
   key: z.string(),
