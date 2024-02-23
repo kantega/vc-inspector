@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "src/inpector"
+    "src/inspector"
   ],
   "scripts": {
     "dev": "next dev",
