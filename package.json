@@ -15,9 +15,12 @@
     "types": "tsc --noEmit",
     "cypress:open": "cypress open",
     "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
-    "test:component": "cypress run --component"
+    "test:component": "cypress run --component",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@inspector": "file:src/inspector",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.330.0",
@@ -26,10 +29,19 @@
     "react-dom": "^18",
     "start-server-and-test": "^2.0.3",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7",
-    "@inspector": "file:src/inspector"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.2.19",
+    "@storybook/addon-a11y": "^8.0.0",
+    "@storybook/addon-essentials": "^8.0.0",
+    "@storybook/addon-interactions": "^8.0.0",
+    "@storybook/addon-links": "^8.0.0",
+    "@storybook/addon-onboarding": "^8.0.0",
+    "@storybook/blocks": "^8.0.0",
+    "@storybook/nextjs": "^8.0.0",
+    "@storybook/react": "^8.0.0",
+    "@storybook/test": "^8.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -37,10 +49,12 @@
     "cypress": "^13.6.4",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "eslint-plugin-storybook": "^0.8.0",
     "husky": "^9.0.11",
     "postcss": "^8",
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "storybook": "^8.0.0",
     "tailwindcss": "^3.3.0",
     "typedoc": "^0.25.8",
     "typescript": "^5"
