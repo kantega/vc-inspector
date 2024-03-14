@@ -23,7 +23,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <>
           <Header />
+<<<<<<< HEAD
           <div className="container mx-auto">{children}</div>
+=======
+          {children}
+>>>>>>> 1ce96a7 (add logos and links on navigation bar)
         </>
       </body>
     </html>
