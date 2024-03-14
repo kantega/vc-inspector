@@ -27,12 +27,16 @@ export default function NavigationBar({ links, className, currentPath }: Navigat
         </Link>
         <NavigationMenuList>
           {links.map((l) => (
-            <Link href={l.to} key={l.to}>
-              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'block text-readable-gray')}>
+            <NavigationMenuLink
+              key={l.to}
+              className={cn(navigationMenuTriggerStyle(), 'block text-readable-gray')}
+              asChild
+            >
+              <Link href={l.to}>
                 <p>{l.label}</p>
                 {l.to === currentPath && <div className="-mx-2 my-1 rounded border-t-2 border-dark-purple"></div>}
-              </NavigationMenuLink>
-            </Link>
+              </Link>
+            </NavigationMenuLink>
           ))}
         </NavigationMenuList>
         <Link href="https://www.kantega.no/">
