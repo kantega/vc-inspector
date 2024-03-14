@@ -14,6 +14,11 @@ const config = {
       },
     },
     extend: {
+      colors: {
+        'dark-purple': '#2C0040',
+        'readable-gray': '#8E8C8C',
+        'subtle-gray': '#C6C6C6',
+      },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
