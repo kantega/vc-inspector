@@ -26,21 +26,16 @@ type NavigationBarProps = JSX.IntrinsicElements['div'] & {
 export default function NavigationBar({ links, className, currentPath, ...props }: NavigationBarProps) {
   return (
     <div className={cn(className)} {...props}>
-      <NavigationMenu className="max-w-full justify-between py-2 pl-10 pr-10">
-        <Link href="/" className="flex gap-2 align-middle text-xl font-bold text-dark-purple">
+      <NavigationMenu className="max-w-full justify-between px-10 py-2">
+        <Link href="/" className="flex gap-2 align-middle">
           <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} height={20} />
-          <h1 className="h-min self-center">VC Inspector</h1>
+          <h1 className="self-center text-xl font-bold text-dark-purple">VC Inspector</h1>
         </Link>
         <NavigationMenuList>
           {links.map((l) => (
-            <NavigationMenuLink
-              key={l.to}
-              className={cn(navigationMenuTriggerStyle(), 'block text-readable-gray')}
-              asChild
-            >
+            <NavigationMenuLink key={l.to} className={cn(navigationMenuTriggerStyle(), 'text-readable-gray')} asChild>
               <Link href={l.to}>
-                <p>{l.label}</p>
-                {l.to === currentPath && <div className="-mx-2 my-1 rounded border-t-2 border-dark-purple"></div>}
+                <p className={`border-dark-purple px-1 text-lg ${l.to === currentPath && 'border-b-2'}`}>{l.label}</p>
               </Link>
             </NavigationMenuLink>
           ))}
