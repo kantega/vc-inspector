@@ -1,6 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import NavigationBar from './NavBar';
+import NavigationDrawer from './NavDrawer';
 
 export type NavigationLinks = {
   to: string;
@@ -23,10 +24,11 @@ const links: NavigationLinks[] = [
 ];
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathName = usePathname();
   return (
     <header>
-      <NavigationBar currentPath={pathname} links={links} className="max-md:hidden" />
+      <NavigationBar currentPath={pathName} links={links} className="max-md:hidden" />
+      <NavigationDrawer currentPath={pathName} links={links} className="md:hidden" />
     </header>
   );
 }

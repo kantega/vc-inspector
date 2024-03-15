@@ -12,14 +12,20 @@ import Image from 'next/image';
 import kantegaLogo from '@/public/kantega-logo.png';
 import inspectorLogo from '@/public/inspector-logo.svg';
 
-type NavigationBarProps = JSX.IntrinsicElements['nav'] & {
+type NavigationBarProps = JSX.IntrinsicElements['div'] & {
   links: NavigationLinks[];
   currentPath: string;
 };
 
-export default function NavigationBar({ links, className, currentPath }: NavigationBarProps) {
+/**
+ * Navigation bar for larger screens
+ *
+ * @param links The name and path the link goes to.
+ * @param currentPath The current path for the client
+ */
+export default function NavigationBar({ links, className, currentPath, ...props }: NavigationBarProps) {
   return (
-    <div className={cn(className)}>
+    <div className={cn(className)} {...props}>
       <NavigationMenu className="max-w-full justify-between py-2 pl-10 pr-10">
         <Link href="/" className="flex gap-2 align-middle text-xl font-bold text-dark-purple">
           <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} height={20} />
