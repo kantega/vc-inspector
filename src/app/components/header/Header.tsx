@@ -23,6 +23,11 @@ const links: NavigationLinks[] = [
   },
 ];
 
+/**
+ * Component on top of page to select between mobile or desktop navigation
+ * Drawer up to tailwinds medium size. Bar above that.
+ * Needs to be a client component to be able to get path name
+ */
 export default function Header() {
   const pathName = usePathname();
   return (
