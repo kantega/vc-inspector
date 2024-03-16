@@ -8,10 +8,10 @@ import infoSuccessIcon from '@/public/infobox/success.svg';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 const messageType = {
-  neutral: 'bg-[#CCD5FF] text-[#00199A]',
-  warning: 'bg-[#FEFFCC] text-[#676700]',
-  error: 'bg-[#FFCDCD] text-[#990000]',
-  success: 'bg-[#CAFFCC] text-[#07470D]',
+  neutral: 'bg-light-blue text-dark-blue',
+  warning: 'bg-light-yellow text-dark-yellow',
+  error: 'bg-light-red text-dark-red',
+  success: 'bg-light-green text-dark-green',
 };
 
 export const infoBoxVariants = cva('rounded-2xl p-4 text-sm', {

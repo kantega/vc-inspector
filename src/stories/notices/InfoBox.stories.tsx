@@ -14,10 +14,11 @@ export const Default: Story = {
   args: {
     title: 'Information Title',
     children: 'Information box content',
+    messageType: 'neutral',
   },
 };
 
-export const Neutral: Story = {
+export const WithDefaultNeutral: Story = {
   args: {
     title: 'NoticeBox Title',
     children: 'NoticeBox content',
