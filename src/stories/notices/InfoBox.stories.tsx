@@ -29,7 +29,7 @@ export const Warning: Story = {
   args: {
     title: 'Warning about something',
     children: (
-      <ul className="list-disc">
+      <ul className="list-inside list-disc">
         <li>First item</li>
         <li>Second item</li>
       </ul>
