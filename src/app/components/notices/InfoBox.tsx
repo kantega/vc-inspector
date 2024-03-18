@@ -1,11 +1,6 @@
 import { cn } from '@/utils/styling';
 import { VariantProps, cva } from 'class-variance-authority';
-import Image from 'next/image';
-import infoNeutralIcon from '@/public/infobox/neutral.svg';
-import infoWarningIcon from '@/public/infobox/warning.svg';
-import infoErrorIcon from '@/public/infobox/error.svg';
-import infoSuccessIcon from '@/public/infobox/success.svg';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+import { Info, AlertCircle, XCircle, Check, LucideIcon } from 'lucide-react';
 
 const messageType = {
   neutral: 'bg-light-blue text-dark-blue',
@@ -28,11 +23,11 @@ type InfoBoxProps = JSX.IntrinsicElements['div'] &
     title: string;
   };
 
-const icons: Record<keyof typeof messageType, StaticImport> = {
-  neutral: infoNeutralIcon,
-  warning: infoWarningIcon,
-  error: infoErrorIcon,
-  success: infoSuccessIcon,
+const icons: Record<keyof typeof messageType, { icon: LucideIcon; color: string }> = {
+  neutral: { icon: Info, color: 'text-dark-blue' },
+  warning: { icon: AlertCircle, color: 'text-dark-yellow' },
+  error: { icon: XCircle, color: 'text-dark-red' },
+  success: { icon: Check, color: 'text-dark-green' },
 };
 
 /**
@@ -44,11 +39,11 @@ const icons: Record<keyof typeof messageType, StaticImport> = {
  * @param messageType Type of color and icon of the box.
  */
 export default function InformationBox({ className, title, messageType, children, ...props }: InfoBoxProps) {
-  const image = icons[messageType ?? 'neutral'];
+  const iconColor = icons[messageType ?? 'neutral'];
   return (
     <div className={cn(infoBoxVariants({ messageType }), className)} {...props}>
       <div className="flex gap-3">
-        <Image src={image} alt={`Info box icon`} width={20} height={20} />
+        <iconColor.icon width={20} height={20} className={iconColor.color} />
         <h4 className="text-md font-bold">{title}</h4>
       </div>
       <div className="py-2">{children}</div>
