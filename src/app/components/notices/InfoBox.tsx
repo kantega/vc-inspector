@@ -1,6 +1,6 @@
 import { cn } from '@/utils/styling';
 import { VariantProps, cva } from 'class-variance-authority';
-import { Info, AlertCircle, XCircle, LucideIcon, CheckCircle2 } from 'lucide-react';
+import { Info, CircleAlert, CircleX, CircleCheck, LucideIcon } from 'lucide-react';
 
 const messageType = {
   neutral: 'bg-light-blue text-dark-blue',
@@ -25,9 +25,9 @@ type InfoBoxProps = JSX.IntrinsicElements['div'] &
 
 const icons: Record<keyof typeof messageType, LucideIcon> = {
   neutral: Info,
-  warning: AlertCircle,
-  error: XCircle,
-  success: CheckCircle2,
+  warning: CircleAlert,
+  error: CircleX,
+  success: CircleCheck,
 };
 
 /**
