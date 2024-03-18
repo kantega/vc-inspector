@@ -23,11 +23,11 @@ type InfoBoxProps = JSX.IntrinsicElements['div'] &
     title: string;
   };
 
-const icons: Record<keyof typeof messageType, { icon: LucideIcon; color: string }> = {
-  neutral: { icon: Info, color: 'text-dark-blue' },
-  warning: { icon: AlertCircle, color: 'text-dark-yellow' },
-  error: { icon: XCircle, color: 'text-dark-red' },
-  success: { icon: Check, color: 'text-dark-green' },
+const icons: Record<keyof typeof messageType, LucideIcon> = {
+  neutral: Info,
+  warning: AlertCircle,
+  error: XCircle,
+  success: Check,
 };
 
 /**
@@ -39,11 +39,11 @@ const icons: Record<keyof typeof messageType, { icon: LucideIcon; color: string 
  * @param messageType Type of color and icon of the box.
  */
 export default function InformationBox({ className, title, messageType, children, ...props }: InfoBoxProps) {
-  const iconColor = icons[messageType ?? 'neutral'];
+  const Icon = icons[messageType ?? 'neutral'];
   return (
     <div className={cn(infoBoxVariants({ messageType }), className)} {...props}>
       <div className="flex gap-3">
-        <iconColor.icon width={20} height={20} className={iconColor.color} />
+        <Icon width={20} height={20} />
         <h4 className="text-md font-bold">{title}</h4>
       </div>
       <div className="py-2">{children}</div>
