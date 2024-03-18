@@ -4,8 +4,7 @@ import { NavigationLinks } from './Header';
 import inspectorLogo from '@/public/inspector-logo.svg';
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/shadcn/drawer';
 import { useState } from 'react';
-import menuIcon from '@/public/hamburger.svg';
-import crossIcon from '@/public/cross.svg';
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -33,7 +32,7 @@ export default function NavigationDrawer({ links, currentPath, className, ...pro
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger asChild>
           <button type="button">
-            <Image src={menuIcon} alt="Menu" width={40} height={40} />
+            <Menu width={40} height={40} />
           </button>
         </DrawerTrigger>
         <DrawerContent className="inset-x-auto bottom-0 right-0 h-full w-2/3 flex-row justify-between border-0 bg-dark-purple p-5">
@@ -50,7 +49,7 @@ export default function NavigationDrawer({ links, currentPath, className, ...pro
             ))}
           </nav>
           <DrawerClose className="h-min">
-            <Image className="text-white" src={crossIcon} alt="Close Menu Cross" width={40} height={40} />
+            <X width={40} height={40} color="white" />
           </DrawerClose>
         </DrawerContent>
       </Drawer>

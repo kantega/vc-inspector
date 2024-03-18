@@ -20,12 +20,12 @@ export default function Home() {
   }, [value]);
 
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center p-24">
+    <main className="flex min-h-screen w-full flex-col items-center p-24">
       <textarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Paste your verifiable credential here"
-        className={`w-1/2 rounded-md bg-gray-200 p-4 `}
+        className={`w-full rounded-md bg-gray-200 p-4 md:w-1/2 `}
       ></textarea>
 
       {inspected && (

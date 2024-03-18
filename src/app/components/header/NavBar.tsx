@@ -26,7 +26,7 @@ type NavigationBarProps = JSX.IntrinsicElements['div'] & {
 export default function NavigationBar({ links, className, currentPath, ...props }: NavigationBarProps) {
   return (
     <div className={cn(className)} {...props}>
-      <NavigationMenu className="max-w-full justify-between px-10 py-2">
+      <NavigationMenu className="container max-w-screen-xl justify-between px-10 py-2">
         <Link href="/" className="flex gap-2 align-middle">
           <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} height={20} />
           <h1 className="self-center text-xl font-bold text-dark-purple">VC Inspector</h1>
