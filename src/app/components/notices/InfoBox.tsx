@@ -1,6 +1,6 @@
 import { cn } from '@/utils/styling';
 import { VariantProps, cva } from 'class-variance-authority';
-import { Info, AlertCircle, XCircle, Check, LucideIcon } from 'lucide-react';
+import { Info, AlertCircle, XCircle, LucideIcon, CheckCircle } from 'lucide-react';
 
 const messageType = {
   neutral: 'bg-light-blue text-dark-blue',
@@ -27,7 +27,7 @@ const icons: Record<keyof typeof messageType, LucideIcon> = {
   neutral: Info,
   warning: AlertCircle,
   error: XCircle,
-  success: Check,
+  success: CheckCircle,
 };
 
 /**
