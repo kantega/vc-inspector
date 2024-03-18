@@ -2,7 +2,7 @@ import { StoryObj, Meta } from '@storybook/react';
 import InfoBox from '@/components/notices/InfoBox';
 
 const meta = {
-  title: 'Notices/NoticeBox',
+  title: 'Notices/InfoBox',
   component: InfoBox,
   tags: ['autodocs'],
 } satisfies Meta<typeof InfoBox>;
@@ -20,8 +20,8 @@ export const Default: Story = {
 
 export const WithDefaultNeutral: Story = {
   args: {
-    title: 'NoticeBox Title',
-    children: 'NoticeBox content',
+    title: 'InfoBox Title',
+    children: 'InfoBox content',
     messageType: 'neutral',
   },
 };
