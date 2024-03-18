@@ -42,9 +42,9 @@ export default function InformationBox({ className, title, messageType, children
   const Icon = icons[messageType ?? 'neutral'];
   return (
     <div className={cn(infoBoxVariants({ messageType }), className)} {...props}>
-      <div className="flex gap-3">
+      <div className="flex items-center gap-3">
         <Icon width={20} height={20} />
-        <h4 className="text-md font-bold">{title}</h4>
+        <h4 className="text-md font-semibold">{title}</h4>
       </div>
       <div className="py-2">{children}</div>
     </div>
