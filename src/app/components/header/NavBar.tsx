@@ -45,7 +45,7 @@ export default function NavigationBar({ links, className, currentPath, ...props 
           <Image src={kantegaLogo} alt="Kantega Logo" width={100} height={100} />
         </Link>
       </NavigationMenu>
-      <div className="mx-4 h-0 border-t-2 border-subtle-gray"></div>
+      <div className="mx-4 h-0 border-t-2 border-dark-gray"></div>
     </div>
   );
 }

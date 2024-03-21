@@ -28,7 +28,7 @@ export default function MinimizingTextArea({
   const ref = useRef<HTMLTextAreaElement | null>(null);
 
   const [minimized, setMinimized] = useState(false);
-  const [activeTransition, setActiveTransition] = useState(false);
+  const [activeTransition, setActiveTransition] = useState(true);
   const [lastHeight, setLastHeight] = useState(startHeight);
   const [heightNotMinimized, setHeightNotMinimized] = useState(startHeight);
 
@@ -77,9 +77,9 @@ export default function MinimizingTextArea({
       style={{ height: minimized ? MINIMIZED_HEIGHT + 'px' : heightNotMinimized + 'px' }}
       placeholder="Paste your verifiable credential here"
       className={cn(
-        'rounded-md bg-gray-200 p-4',
+        'rounded-md bg-light-gray p-4 placeholder-readable-gray',
         activeTransition && 'transition-all duration-200',
-        minimized && ' text-stone-600',
+        minimized && ' text-readable-gray',
         className,
       )}
     />
