@@ -1,10 +1,12 @@
 'use client';
 
 import { cn } from '@/utils/styling';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type TextAreaProps = JSX.IntrinsicElements['textarea'] & {
   startHeight?: number;
+  requestMinimizationTo?: boolean;
+  onMinimizationChange?: (a: boolean) => void;
 };
 
 const START_HEGHT = 300;
@@ -16,13 +18,26 @@ const MINIMIZED_HEIGHT = 100;
  * `MINIMIZED_HEIGHT`. When in focus again, it expands
  * to the previously defined height before minimization.
  */
-export default function MinimizingTextArea({ startHeight = START_HEGHT, className, ...props }: TextAreaProps) {
+export default function MinimizingTextArea({
+  onMinimizationChange,
+  requestMinimizationTo,
+  startHeight = START_HEGHT,
+  className,
+  ...props
+}: TextAreaProps) {
   const ref = useRef<HTMLTextAreaElement | null>(null);
 
   const [minimized, setMinimized] = useState(false);
   const [activeTransition, setActiveTransition] = useState(false);
   const [lastHeight, setLastHeight] = useState(startHeight);
   const [heightNotMinimized, setHeightNotMinimized] = useState(startHeight);
+
+  useEffect(() => {
+    if (requestMinimizationTo !== undefined) {
+      onMinimizationChange?.(requestMinimizationTo);
+      setMinimized(requestMinimizationTo);
+    }
+  }, [requestMinimizationTo, onMinimizationChange]);
 
   /**
    * Updates minimization state with transition state.
@@ -38,7 +53,10 @@ export default function MinimizingTextArea({ startHeight = START_HEGHT, classNam
     const expand = minimized && !minimize;
     setActiveTransition(transition);
     setTimeout(() => {
-      setMinimized(minimize);
+      if (minimize !== undefined) {
+        onMinimizationChange?.(minimize);
+        setMinimized(minimize);
+      }
     }, 1);
     if (minimize) {
       setLastHeight(ref.current?.clientHeight ?? startHeight);
