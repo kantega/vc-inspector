@@ -2,10 +2,12 @@
 import inspect, { InspectionResult } from '@inspector/inspector';
 import { useEffect, useState } from 'react';
 import MinimizingTextArea from '@/components/vc-inspection/MinimizingTextArea';
+import { Button } from '@/components/shadcn/button';
 
 export default function InspectionPage() {
   const [value, setValue] = useState('');
   const [inspected, setInspected] = useState<InspectionResult | null>();
+  const [textAreaStatus, setTextAreaStatus] = useState<'active-button' | 'min' | 'active'>('active');
 
   useEffect(() => {
     if (!value) {
@@ -19,8 +21,19 @@ export default function InspectionPage() {
   }, [value]);
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center p-24">
-      <MinimizingTextArea className="w-full md:w-1/2" value={value} onChange={(e) => setValue(e.target.value)} />
+    <main className="flex min-h-screen w-full flex-col items-center gap-5 p-24">
+      <MinimizingTextArea
+        className="w-full md:w-1/2"
+        value={value}
+        onChange={(e) => {
+          setTextAreaStatus('active-button');
+          setValue(e.target.value);
+        }}
+        onMinimizationChange={(m) =>
+          setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button')
+        }
+        requestMinimizationTo={textAreaStatus === 'min'}
+      />
 
       {inspected && (
         <>
@@ -40,6 +53,10 @@ export default function InspectionPage() {
           {inspected.type === 'ValidCredential' && <p className="text-green-800">Valid Credential</p>}
         </>
       )}
+
+      <Button className={` ${textAreaStatus != 'active-button' && 'hidden'}`} onClick={() => setTextAreaStatus('min')}>
+        Inspect
+      </Button>
     </main>
   );
 }
