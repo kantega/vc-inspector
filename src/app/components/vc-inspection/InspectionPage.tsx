@@ -54,7 +54,10 @@ export default function InspectionPage() {
         </>
       )}
 
-      <Button className={` ${textAreaStatus != 'active-button' && 'hidden'}`} onClick={() => setTextAreaStatus('min')}>
+      <Button
+        className={`bg-dark-purple px-6 ${textAreaStatus != 'active-button' && 'hidden'}`}
+        onClick={() => setTextAreaStatus('min')}
+      >
         Inspect
       </Button>
     </main>
