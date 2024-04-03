@@ -10,15 +10,14 @@ export default function InspectionPage() {
   const [textAreaStatus, setTextAreaStatus] = useState<'active-button' | 'min' | 'active'>('active');
 
   useEffect(() => {
-    if (!value) {
+    if (!value || (!inspected && textAreaStatus !== 'min')) {
       setInspected(null);
       return;
     }
 
-    const inspected = inspect(value);
-    setInspected(inspected);
-    console.log(inspected);
-  }, [value]);
+    const inspectedResult = inspect(value);
+    setInspected(inspectedResult);
+  }, [textAreaStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center gap-5 p-24">
