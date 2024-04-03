@@ -1,5 +1,6 @@
 import { ZodError } from 'zod';
 import { VC, VCSchema } from './credentialSchemas/verifiableCredential';
+import { parseValidity } from './calculatedAttributes/validity';
 
 export default function inspect(credential: string): InspectionResult {
   try {
@@ -14,6 +15,7 @@ export default function inspect(credential: string): InspectionResult {
       };
     }
 
+    console.log('halla', parseValidity(parsedJson));
     return {
       type: 'ValidCredential',
       parsedJson: parsedJson as VC,
