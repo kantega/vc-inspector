@@ -15,7 +15,6 @@ export default function inspect(credential: string): InspectionResult {
       };
     }
 
-    console.log('halla', parseValidity(parsedJson));
     return {
       type: 'ValidCredential',
       parsedJson: parsedJson as VC,
