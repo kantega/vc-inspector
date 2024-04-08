@@ -30,19 +30,19 @@ export default function inspect(credential: string): InspectionResult {
 
 export type InspectionResult =
   | {
-    type: 'ParseError';
-    error: Error;
-  }
+      type: 'ParseError';
+      error: Error;
+    }
   | {
-    type: 'InvalidCredential';
-    parsedJson: object;
-    error: ZodError;
-  }
+      type: 'InvalidCredential';
+      parsedJson: object;
+      error: ZodError;
+    }
   | {
-    type: 'ValidCredential';
-    parsedJson: VC;
-    calculatedAttributes: CalculatedAttributes;
-  };
+      type: 'ValidCredential';
+      parsedJson: VC;
+      calculatedAttributes: CalculatedAttributes;
+    };
 //
 // export type Inspector =
 //   | {
