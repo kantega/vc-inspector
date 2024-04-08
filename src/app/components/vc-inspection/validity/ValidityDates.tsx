@@ -9,7 +9,7 @@ import { Loader2 } from 'lucide-react';
 type ValidityDatesProps = Omit<AccordionSingleProps, 'type'> & {
   validFrom?: Date;
   validUntil?: Date;
-  withinDates?: boolean;
+  withinDates: boolean;
 };
 
 /**
@@ -43,7 +43,7 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
   }, []);
 
   return (
-    <Accordion defaultValue="validity-dates" className={cn('', className)} type="single" collapsible {...props}>
+    <Accordion defaultValue="validity-dates" className={className} type="single" collapsible {...props}>
       <AccordionItem
         value="validity-dates"
         className={cn(
@@ -66,11 +66,15 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
             <>
               <div>
                 <p className="text-sm">Valid from</p>
-                <p className="text-xl">{fromDate ?? 'No start of validity'}</p>
+                <p data-testid="valid-from-date" className="text-xl">
+                  {fromDate ?? 'No start of validity'}
+                </p>
               </div>
               <div>
                 <p className="text-sm">Expires</p>
-                <p className="text-xl">{toDate ?? 'No expiration'}</p>
+                <p data-testid="valid-until-date" className="text-xl">
+                  {toDate ?? 'No expiration'}
+                </p>
               </div>
             </>
           )}
