@@ -1,8 +1,7 @@
+import { ValiditySchemaType } from '../credentialSchemas/validity';
 import { ErrorReason, Result } from './errors';
 import { Standards } from './standards';
-
-export type ParserResult<T> = Partial<Record<Standards, Result<T>>>;
-export type ReasonedOptional<T> = { kind: 'some'; value: T } | { kind: 'none'; reason: string };
+import { ParserResult, ReasonedOptional, StandardParsers } from './types';
 
 export type Validity = {
   isValid: boolean;
@@ -14,19 +13,21 @@ export type ValidityDates = {
   validUntil: ReasonedOptional<Date>;
 };
 
-export type InputType = Record<string, string>;
-
-const ValidityParsers = [
+const ValidityParsers: StandardParsers<ValiditySchemaType, ValidityDates> = [
   { standard: Standards.W3C_V2, parser: W3CV2ValidityDatesParser },
   { standard: Standards.W3C_V1, parser: W3CV1ValidityDatesParser },
   { standard: Standards.EIDAS2_0, parser: W3CV1ValidityDatesParser },
 ];
 
-export function parseValidity(parsedJson: InputType): ParserResult<Validity> {
+/**
+ * Parses the validity dates of an VC.
+ *
+ * Returns a list of all standards and if they are compliant
+ */
+export function parseValidityDates(parsedJson: ValiditySchemaType): ParserResult<Validity> {
   const results: ParserResult<Validity> = {};
 
   for (const parser of ValidityParsers) {
-    results[parser.standard];
     const validityDates = parser.parser(parsedJson);
 
     if (validityDates.kind === 'error') {
@@ -45,7 +46,7 @@ export function parseValidity(parsedJson: InputType): ParserResult<Validity> {
   return results;
 }
 
-function W3CV2ValidityDatesParser(obj: InputType): Result<ValidityDates> {
+function W3CV2ValidityDatesParser(obj: ValiditySchemaType): Result<ValidityDates> {
   let result: ValidityDates = {
     validFrom: {
       kind: 'none',
@@ -57,19 +58,19 @@ function W3CV2ValidityDatesParser(obj: InputType): Result<ValidityDates> {
     },
   };
 
-  if ('validFrom' in obj) {
+  if (obj.validFrom) {
     result.validFrom = { kind: 'some', value: new Date(obj.validFrom) };
   }
 
-  if ('validUntil' in obj) {
+  if (obj.validUntil) {
     result.validUntil = { kind: 'some', value: new Date(obj.validUntil) };
   }
 
   return { kind: 'ok', value: result };
 }
 
-function W3CV1ValidityDatesParser(obj: InputType): Result<ValidityDates> {
-  if (!('issuanceDate' in obj)) {
+function W3CV1ValidityDatesParser(obj: ValiditySchemaType): Result<ValidityDates> {
+  if (!obj.issuanceDate) {
     return {
       kind: 'error',
       error: { name: 'Missing', message: 'issuanceDate is required', reason: ErrorReason.Missing },
@@ -87,7 +88,7 @@ function W3CV1ValidityDatesParser(obj: InputType): Result<ValidityDates> {
     },
   };
 
-  if ('expirationDate' in obj) {
+  if (obj.expirationDate) {
     result.validUntil = { kind: 'some', value: new Date(obj.expirationDate) };
   }
 
