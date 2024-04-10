@@ -1,4 +1,4 @@
-import LabeledValueCard, { nested, node } from '@/components/data-lists/LabeledValueCard';
+import LabeledValueCard, { fromJSON, nested, node } from '@/components/data-lists/LabeledValueCard';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CircleUser, FilePenLine } from 'lucide-react';
 
@@ -81,5 +81,26 @@ export const TwiceNested: Story = {
         ]),
       },
     ],
+  },
+};
+
+export const FromJSON: Story = {
+  args: {
+    titleIcon: CircleUser,
+    title: 'Subject',
+    values: fromJSON({
+      Name: 'Bob',
+      Degree: {
+        Type: 'Bachelor of Science',
+        Study: 'Computer Science',
+      },
+      'Driving licence': {
+        Class: 'B',
+        Information: {
+          Issued: '2015-01-01',
+          Expires: '2025-01-01',
+        },
+      },
+    }),
   },
 };
