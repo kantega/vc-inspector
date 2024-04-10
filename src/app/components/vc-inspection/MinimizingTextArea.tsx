@@ -79,7 +79,7 @@ export default function MinimizingTextArea({
       className={cn(
         'rounded-md bg-light-gray p-4 placeholder-readable-gray',
         activeTransition && 'transition-all duration-200',
-        minimized && ' text-readable-gray',
+        minimized && 'overflow-hidden text-readable-gray',
         className,
       )}
     />
