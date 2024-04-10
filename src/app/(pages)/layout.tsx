@@ -4,6 +4,7 @@ import '@/globals.css';
 import Header from '@/components/header/Header';
 
 const inter = Inter({
+  weight: '600',
   subsets: ['latin'],
   variable: '--font-sans',
 });

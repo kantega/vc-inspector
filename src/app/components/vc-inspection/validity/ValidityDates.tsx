@@ -47,32 +47,32 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
       <AccordionItem
         value="validity-dates"
         className={cn(
-          'rounded-lg p-2 px-4',
+          'rounded-lg p-3 px-4',
           withinDates ? 'bg-light-green text-dark-green' : 'bg-light-red text-dark-red',
         )}
       >
-        <AccordionTrigger className="gap-8">
-          <div className="flex items-center gap-8">
-            <Icon width={25} height={25} />
-            <h3 className="text-xl font-bold">
+        <AccordionTrigger>
+          <div className="flex items-center gap-2">
+            <Icon width={30} height={30} />
+            <h3 className="text-2xl font-bold">
               {withinDates ? 'Within validity date range' : 'Outside validity date range'}
             </h3>
           </div>
         </AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-5 p-2">
+        <AccordionContent className="flex flex-col gap-3 p-1">
           {loading ? (
             <Loader2 className="animate-spin" />
           ) : (
             <>
               <div>
-                <p className="text-sm">Valid from</p>
-                <p data-testid="valid-from-date" className="text-xl">
+                <p className="text-xl">Valid from</p>
+                <p data-testid="valid-from-date" className="text-2xl font-semibold">
                   {fromDate ?? 'No start of validity'}
                 </p>
               </div>
               <div>
-                <p className="text-sm">Expires</p>
-                <p data-testid="valid-until-date" className="text-xl">
+                <p className="text-xl">Expires</p>
+                <p data-testid="valid-until-date" className="text-2xl font-semibold">
                   {toDate ?? 'No expiration'}
                 </p>
               </div>
