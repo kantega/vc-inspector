@@ -1,4 +1,4 @@
-import ValidityDates from './ValidityDates';
+import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 
 function dateFrom() {
   return cy.get('[data-testid="valid-from-date"]');
