@@ -7,7 +7,7 @@ function dateUntil() {
   return cy.get('[data-testid="valid-until-date"]');
 }
 
-const CONTAINS_NO_DIGIT = '^((?!d).)*$';
+const CONTAINS_NO_DIGIT = /^((?!\d).)*$/;
 
 describe('<ValidityDates />', () => {
   it('starts as open', () => {
@@ -25,12 +25,12 @@ describe('<ValidityDates />', () => {
   });
   it('has no numbers for date when not passed in', () => {
     cy.mount(<ValidityDates withinDates />).should('exist');
-    dateFrom().should('be.visible').contains('/^((?!d).)*$/');
+    dateFrom().should('be.visible').contains(CONTAINS_NO_DIGIT);
     dateUntil().should('be.visible').contains(CONTAINS_NO_DIGIT);
   });
   it('from has numbers when passed a date to from', () => {
     cy.mount(<ValidityDates withinDates validFrom={new Date()} />).should('exist');
-    dateFrom().should('be.visible').contains('/d/');
+    dateFrom().should('be.visible').contains(/\d/);
     dateUntil().should('be.visible').contains(CONTAINS_NO_DIGIT);
   });
 });

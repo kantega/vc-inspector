@@ -40,7 +40,7 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
     setFromDate(formatDate(validFrom));
     setToDate(formatDate(validUntil));
     setLoading(false);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Accordion defaultValue="validity-dates" className={className} type="single" collapsible {...props}>
