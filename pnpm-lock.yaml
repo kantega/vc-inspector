@@ -132,6 +132,9 @@ importers:
 
   src/inspector:
     dependencies:
+      jose:
+        specifier: ^5.2.4
+        version: 5.2.4
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -7659,6 +7662,10 @@ packages:
       '@sideway/pinpoint': 2.0.0
     dev: false
 
+  /jose@5.2.4:
+    resolution: {integrity: sha512-6ScbIk2WWCeXkmzF6bRPmEuaqy1m8SbsRFMa/FLrSCkGIhj8OLVG/IH+XHVmNMx/KUo8cVWEE6oKR4dJ+S0Rkg==}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -11311,5 +11318,6 @@ packages:
     resolution: {directory: src/inspector, type: directory}
     name: inspector
     dependencies:
+      jose: 5.2.4
       zod: 3.22.4
     dev: false

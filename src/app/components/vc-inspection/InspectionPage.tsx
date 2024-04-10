@@ -16,6 +16,7 @@ export default function InspectionPage() {
     }
 
     const inspectedResult = inspect(value);
+    console.log(inspectedResult);
     setInspected(inspectedResult);
   }, [textAreaStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
