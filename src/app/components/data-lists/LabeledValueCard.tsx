@@ -39,15 +39,11 @@ function NestedValues({ values }: { values: LabeledValues[] }) {
   return (
     <>
       {values.map(({ label: l, value: v }) => (
-        <CardContent key={l}>
+        <CardContent className="py-1" key={l}>
           <p className="text-2xl text-readable-gray">{l}</p>
-          {v.kind === 'leaf' && (
-            <p className="relative text-2xl font-semibold after:absolute after:-left-6 after:top-0 after:h-1/6 after:w-4 after:border-b-2 after:bg-transparent after:content-['']">
-              {v.node}
-            </p>
-          )}
+          {v.kind === 'leaf' && <p className="relative text-2xl font-semibold">{v.node}</p>}
           {v.kind === 'nested' && (
-            <div className="ml-2 border-l-2 border-light-gray">
+            <div className="border-l-2 border-light-gray">
               <NestedValues values={v.values} />
             </div>
           )}
