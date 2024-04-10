@@ -3,9 +3,19 @@ import { cn } from '@/utils/styling';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
 
+type LeafNode = {
+  kind: 'leaf';
+  node: ReactNode;
+};
+
+type NestedNodes = {
+  kind: 'nested';
+  values: LabeledValues[];
+};
+
 type LabeledValues = {
   label: string;
-  value: ReactNode;
+  value: LeafNode | NestedNodes;
 };
 
 type LabeledValueCardProps = Omit<JSX.IntrinsicElements['div'], 'ref'> & {
@@ -13,6 +23,39 @@ type LabeledValueCardProps = Omit<JSX.IntrinsicElements['div'], 'ref'> & {
   title: string;
   values: LabeledValues[];
 };
+
+export function node(value: ReactNode): LeafNode {
+  return { kind: 'leaf', node: value };
+}
+
+export function nested(values: LabeledValues[]): NestedNodes {
+  return { kind: 'nested', values: values };
+}
+
+/**
+ * Recursive labels and values that indents new labeled values
+ */
+function NestedValues({ values }: { values: LabeledValues[] }) {
+  return (
+    <>
+      {values.map(({ label: l, value: v }) => (
+        <CardContent key={l}>
+          <p className="text-2xl text-readable-gray">{l}</p>
+          {v.kind === 'leaf' && (
+            <p className="relative text-2xl font-semibold after:absolute after:-left-6 after:top-0 after:h-1/6 after:w-4 after:border-b-2 after:bg-transparent after:content-['']">
+              {v.node}
+            </p>
+          )}
+          {v.kind === 'nested' && (
+            <div className="ml-2 border-l-2 border-light-gray">
+              <NestedValues values={v.values} />
+            </div>
+          )}
+        </CardContent>
+      ))}
+    </>
+  );
+}
 
 export default function LabeledValueCard({
   titleIcon: TitleIcon,
@@ -29,12 +72,7 @@ export default function LabeledValueCard({
           <span>{title}</span>
         </CardTitle>
       </CardHeader>
-      {values.map(({ label: l, value: v }) => (
-        <CardContent key={l}>
-          <p className="text-2xl text-readable-gray">{l}</p>
-          <p className="text-2xl font-semibold">{v}</p>
-        </CardContent>
-      ))}
+      <NestedValues values={values} />
     </Card>
   );
 }

@@ -1,6 +1,6 @@
-import LabeledValueCard from '@/components/data-lists/LabeledValueCard';
+import LabeledValueCard, { nested, node } from '@/components/data-lists/LabeledValueCard';
 import type { Meta, StoryObj } from '@storybook/react';
-import { CircleUser } from 'lucide-react';
+import { CircleUser, FilePenLine } from 'lucide-react';
 
 const meta = {
   title: 'DataLists/LabeledValueCard',
@@ -18,11 +18,11 @@ export const Default: Story = {
     values: [
       {
         label: 'Name',
-        value: 'Person A',
+        value: node('Identifier A'),
       },
       {
         label: 'ID',
-        value: 'Identifier A',
+        value: node('123456'),
       },
     ],
   },
@@ -30,7 +30,56 @@ export const Default: Story = {
 
 export const NoValues: Story = {
   args: {
+    titleIcon: FilePenLine,
     title: 'Issuer',
     values: [],
+  },
+};
+
+export const TwiceNested: Story = {
+  args: {
+    titleIcon: CircleUser,
+    title: 'Subject',
+    values: [
+      {
+        label: 'Name',
+        value: node('Bob'),
+      },
+      {
+        label: 'Degree',
+        value: nested([
+          {
+            label: 'Type',
+            value: node('Bachelor of Science'),
+          },
+          {
+            label: 'Study',
+            value: node('Computer Science'),
+          },
+        ]),
+      },
+      {
+        label: 'Driving licence',
+        value: nested([
+          {
+            label: 'Class',
+            value: node('B'),
+          },
+          {
+            label: 'Information',
+            value: nested([
+              {
+                label: 'Issued',
+                value: node('2015-01-01'),
+              },
+              {
+                label: 'Expires',
+                value: node('2025-01-01'),
+              },
+            ]),
+          },
+        ]),
+      },
+    ],
   },
 };
