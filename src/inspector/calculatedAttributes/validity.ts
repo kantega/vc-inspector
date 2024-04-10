@@ -13,7 +13,7 @@ export type ValidityDates = {
   validUntil: ReasonedOptional<Date>;
 };
 
-const ValidityParsers: StandardParsers<ValiditySchemaType, ValidityDates> = [
+const validityParsers: StandardParsers<ValiditySchemaType, ValidityDates> = [
   { standard: Standards.W3C_V2, parser: W3CV2ValidityDatesParser },
   { standard: Standards.W3C_V1, parser: W3CV1ValidityDatesParser },
   { standard: Standards.EIDAS2_0, parser: W3CV1ValidityDatesParser },
@@ -25,9 +25,9 @@ const ValidityParsers: StandardParsers<ValiditySchemaType, ValidityDates> = [
  * Returns a list of all standards and if they are compliant
  */
 export function parseValidityDates(parsedJson: ValiditySchemaType): ParserResult<Validity> {
-  const results: ParserResult<Validity> = {};
+  const results: Partial<ParserResult<Validity>> = {};
 
-  for (const parser of ValidityParsers) {
+  for (const parser of validityParsers) {
     const validityDates = parser.parser(parsedJson);
 
     if (validityDates.kind === 'error') {
@@ -43,7 +43,7 @@ export function parseValidityDates(parsedJson: ValiditySchemaType): ParserResult
     results[parser.standard] = { kind: 'ok', value: { isValid, validityDates: validityDates.value } };
   }
 
-  return results;
+  return results as ParserResult<Validity>;
 }
 
 function W3CV2ValidityDatesParser(obj: ValiditySchemaType): Result<ValidityDates> {
