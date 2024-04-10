@@ -88,6 +88,12 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
   );
 }
 
+/**
+ * Component to display a json/Record like structure.
+ * Nested values will also be displayed with an indent.
+ * Helper functions have been defined to facilitate
+ * adding labeled values.
+ */
 export default function LabeledValueCard({
   titleIcon: TitleIcon,
   title,
@@ -98,7 +104,7 @@ export default function LabeledValueCard({
   return (
     <Card className={className} {...props}>
       <CardHeader>
-        <CardTitle className="flex items-center gap-3">
+        <CardTitle className={cn('flex items-center', TitleIcon && 'gap-3')}>
           <span>{TitleIcon && <TitleIcon width={30} height={30} />}</span>
           <span>{title}</span>
         </CardTitle>
