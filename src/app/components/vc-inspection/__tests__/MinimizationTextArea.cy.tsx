@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import MinimizingTextArea from './MinimizingTextArea';
+import MinimizingTextArea from '@/components/vc-inspection/MinimizingTextArea';
 
 function WithExternalMinButton() {
   const [state, setState] = useState<'active-button' | 'min' | 'active'>('active');
