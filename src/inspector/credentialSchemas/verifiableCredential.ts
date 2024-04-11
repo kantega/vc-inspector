@@ -32,7 +32,7 @@ export const VCSchema = z
     '@context': ContextSchema,
     issuer: IssuerSchema,
     credentialSubject: CredentialSubjectSchema,
-    proof: ProofSchema,
+    proof: ProofSchema.optional(),
   })
   .merge(ValiditySchema);
 
