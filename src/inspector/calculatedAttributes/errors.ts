@@ -7,7 +7,7 @@ export enum ErrorReason {
 export type ReasonedError = {
   name: string;
   message: string;
-  reason?: ErrorReason;
+  reason: ErrorReason;
 };
 
 export type Result<T, E = ReasonedError> = { kind: 'ok'; value: T } | { kind: 'error'; error: E };
