@@ -51,8 +51,12 @@ export default function InspectionPage() {
           )}
           {inspected.type === 'ParseError' && (
             <>
-              {inspected.errors.map((error) => {
-                return <p className="text-red-800">{error.message}</p>;
+              {inspected.errors.map((error, i) => {
+                return (
+                  <p key={i} className="text-red-800">
+                    {error.message}
+                  </p>
+                );
               })}
             </>
           )}
