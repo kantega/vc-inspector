@@ -1,7 +1,7 @@
 import { ZodError } from 'zod';
 import { VC, VCSchema } from './credentialSchemas/verifiableCredential';
 import { CalculatedAttributes, calculateAttributes } from './calculatedAttributes/calculateAttributes';
-import { Result } from './calculatedAttributes/errors';
+import { ErrorReason, ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
 
@@ -64,7 +64,7 @@ function safeJsonParse(credential: string): Result<ParsedJson> {
   try {
     return { kind: 'ok', value: { type: 'JSON', payload: JSON.parse(credential) } };
   } catch (e) {
-    return { kind: 'error', error: e as Error };
+    return { kind: 'error', error: e as ReasonedError };
   }
 }
 
@@ -80,7 +80,7 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
       },
     };
   } catch (e) {
-    return { kind: 'error', error: e as Error };
+    return { kind: 'error', error: e as ReasonedError };
   }
 }
 
