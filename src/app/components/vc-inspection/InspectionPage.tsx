@@ -49,7 +49,13 @@ export default function InspectionPage() {
               })}
             </>
           )}
-          {inspected.type === 'ParseError' && <p className="text-red-800">{inspected.error.message}</p>}
+          {inspected.type === 'ParseError' && (
+            <>
+              {inspected.errors.map((error) => {
+                return <p className="text-red-800">{error.message}</p>;
+              })}
+            </>
+          )}
           {inspected.type === 'ValidCredential' && <p className="text-green-800">Valid Credential</p>}
         </>
       )}

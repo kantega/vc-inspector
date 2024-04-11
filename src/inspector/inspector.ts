@@ -1,7 +1,7 @@
 import { ZodError } from 'zod';
 import { VC, VCSchema } from './credentialSchemas/verifiableCredential';
 import { CalculatedAttributes, calculateAttributes } from './calculatedAttributes/calculateAttributes';
-import { ReasonedError, Result } from './calculatedAttributes/errors';
+import { Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
 
@@ -10,7 +10,7 @@ export default function inspect(credential: string): InspectionResult {
   if (parsedJson.kind == 'error') {
     return {
       type: 'ParseError',
-      error: parsedJson.error,
+      errors: parsedJson.error,
     };
   }
 
@@ -44,24 +44,27 @@ type ParsedJson = {
 
 type ParsedCredential = ParsedJson | ParsedJWT;
 
-function credentialToJSON(credential: string): Result<ParsedCredential> {
+function credentialToJSON(credential: string): Result<ParsedCredential, Error[]> {
   const parsers = [safeJsonParse, safeJWTParse];
+  let errors = [];
 
   for (const parser of parsers) {
     const result = parser(credential);
     if (result.kind == 'ok') {
       return result;
+    } else {
+      errors.push(result.error);
     }
   }
 
-  return { kind: 'error', error: { name: 'JSON Parse Error', message: "Couldn't decode JWT" } };
+  return { kind: 'error', error: errors };
 }
 
 function safeJsonParse(credential: string): Result<ParsedJson> {
   try {
     return { kind: 'ok', value: { type: 'JSON', payload: JSON.parse(credential) } };
   } catch (e) {
-    return { kind: 'error', error: { name: 'JSON Parse Error', message: "Couldn't decode JWT" } };
+    return { kind: 'error', error: e as Error };
   }
 }
 
@@ -77,22 +80,22 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
       },
     };
   } catch (e) {
-    return { kind: 'error', error: { name: 'JWT Parse Error', message: "Couldn't decode JWT" } };
+    return { kind: 'error', error: e as Error };
   }
 }
 
 export type InspectionResult =
   | {
-    type: 'ParseError';
-    error: Error;
-  }
+      type: 'ParseError';
+      errors: Error[];
+    }
   | {
-    type: 'InvalidCredential';
-    parsedJson: ParsedCredential;
-    error: ZodError;
-  }
+      type: 'InvalidCredential';
+      parsedJson: ParsedCredential;
+      error: ZodError;
+    }
   | {
-    type: 'ValidCredential';
-    parsedJson: VC;
-    calculatedAttributes: CalculatedAttributes;
-  };
+      type: 'ValidCredential';
+      parsedJson: VC;
+      calculatedAttributes: CalculatedAttributes;
+    };
