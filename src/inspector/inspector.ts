@@ -4,6 +4,7 @@ import { CalculatedAttributes, calculateAttributes } from './calculatedAttribute
 import { ErrorReason, ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
+import { ReasonedOptional } from './calculatedAttributes/types';
 
 export default function inspect(credential: string): InspectionResult {
   const parsedJson = credentialToJSON(credential);
@@ -84,18 +85,20 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
   }
 }
 
-export type InspectionResult =
-  | {
-      type: 'ParseError';
-      errors: Error[];
-    }
-  | {
-      type: 'InvalidCredential';
-      parsedJson: ParsedCredential;
-      error: ZodError;
-    }
-  | {
-      type: 'ValidCredential';
-      parsedJson: VC;
-      calculatedAttributes: CalculatedAttributes;
-    };
+export type ParseErrorResult = {
+  type: 'ParseError';
+  errors: Error[];
+};
+
+export type InvalidCredentialResult = {
+  type: 'InvalidCredential';
+  parsedJson: ParsedCredential;
+  error: ZodError;
+};
+export type ValidCredentialResult = {
+  type: 'ValidCredential';
+  parsedJson: VC;
+  calculatedAttributes: CalculatedAttributes;
+};
+
+export type InspectionResult = ParseErrorResult | InvalidCredentialResult | ValidCredentialResult;
