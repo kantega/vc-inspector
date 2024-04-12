@@ -39,7 +39,7 @@ export default function MinimizingTextArea({
       onMinimizationChange?.(requestMinimizationTo);
       setMinimized(requestMinimizationTo);
     }
-  }, [requestMinimizationTo, onMinimizationChange]);
+  }, [requestMinimizationTo, onMinimizationChange, handleMinimizationChange]);
 
   /**
    * Updates minimization state with transition state.

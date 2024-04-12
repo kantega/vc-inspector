@@ -38,7 +38,6 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
       issuerValues = fromJSON(issuer);
     }
   }
-  console.log(!validSchema && inspectedResult.error);
 
   return (
     <div className={className} {...props}>
