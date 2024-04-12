@@ -56,18 +56,6 @@ export default function InspectionPage() {
           {inspected.type != 'ParseError' && afterFirstInspection && (
             <ParsedCredentialInfo inspectedResult={inspected} />
           )}
-          {inspected.type === 'InvalidCredential' && (
-            <>
-              {inspected.error.issues.map((issue, i) => {
-                return (
-                  <p key={i} className="text-red-800">
-                    {issue.fatal}
-                    {issue.path.join(' -> ')}: {issue.message}
-                  </p>
-                );
-              })}
-            </>
-          )}
           {inspected.type === 'ParseError' && (
             <>
               {inspected.errors.map((error, i) => {
@@ -79,7 +67,6 @@ export default function InspectionPage() {
               })}
             </>
           )}
-          {inspected.type === 'ValidCredential' && <p className="text-green-800">Valid Credential</p>}
         </>
       )}
     </div>

@@ -21,7 +21,7 @@ export default function AccordionSection({
 }: AccordionSectionProps) {
   return (
     <AccordionItem className={cn('rounded-lg p-3 px-4', className)} {...props}>
-      <AccordionTrigger>
+      <AccordionTrigger className="gap-4">
         <div className={cn('flex items-center', TitleIcon && 'gap-2')}>
           {TitleIcon && <TitleIcon width={30} height={30} />}
           <h3 className="text-2xl font-bold">{title}</h3>
