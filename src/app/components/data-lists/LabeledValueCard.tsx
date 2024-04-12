@@ -69,7 +69,7 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
           {v.kind === 'leaf' && (
             <p
               className={cn(
-                'relative text-2xl font-semibold',
+                'relative break-words text-2xl font-semibold',
                 !root &&
                   "after:absolute after:-left-6 after:top-0 after:h-1/6 after:w-4 after:border-b-2 after:bg-transparent after:content-['']",
               )}

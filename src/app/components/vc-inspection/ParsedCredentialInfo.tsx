@@ -66,6 +66,9 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             ))}
         </Accordion>
       </div>
+      <Accordion type="single" collapsible className="">
+        <AccordionSection value="decoded-to-json" title="Decoded JSON"></AccordionSection>
+      </Accordion>
     </div>
   );
 }
