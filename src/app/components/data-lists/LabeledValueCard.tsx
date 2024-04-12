@@ -47,7 +47,7 @@ export function fromJSON(json: Record<string, unknown>): LabeledValues[] {
   for (let i = 0; i < entries.length; i++) {
     const [key, value] = entries[i];
     if (Array.isArray(value)) {
-      values.push({ label: key, value: node(value.join(", ")) });
+      values.push({ label: key, value: node(value.join(', ')) });
     } else if (isRecord(value)) {
       values.push({ label: key, value: nested(fromJSON(value)) });
     } else if (typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number') {
