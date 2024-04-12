@@ -39,9 +39,9 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
 
   return (
     <div className={className} {...props}>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 gap-8">
         <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues ?? []} />
-        <LabeledValueCard title="Subject" titleIcon={CircleUser} values={subjectValues ?? []} />
+        <LabeledValueCard title="Subject" titleIcon={CircleUser} values={subjectValues ?? []} className='row-span-2' />
         {standardDates && (
           <ValidityDates
             withinDates={standardDates.isValid}
