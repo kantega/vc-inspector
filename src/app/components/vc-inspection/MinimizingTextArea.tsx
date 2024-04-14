@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils/styling';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type TextAreaProps = JSX.IntrinsicElements['textarea'] & {
   startHeight?: number;
@@ -32,14 +32,23 @@ export default function MinimizingTextArea({
   const [lastHeight, setLastHeight] = useState(startHeight);
   const [heightNotMinimized, setHeightNotMinimized] = useState(startHeight);
 
+  const handleMinimizationChanges = useCallback((expand: boolean, requestedMinimize: boolean) => {
+    if (requestedMinimize) {
+      setLastHeight(ref.current?.clientHeight ?? startHeight);
+      setTimeout(() => ref.current?.blur(), 1);
+    } else if (expand) {
+      setHeightNotMinimized(lastHeight);
+    }
+  }, [lastHeight, startHeight]);
+
   useEffect(() => {
     if (requestMinimizationTo !== undefined) {
       const expand = minimized && !requestMinimizationTo;
-      handleMinimizationChange(expand, requestMinimizationTo);
+      handleMinimizationChanges(expand, requestMinimizationTo);
       onMinimizationChange?.(requestMinimizationTo);
       setMinimized(requestMinimizationTo);
     }
-  }, [requestMinimizationTo, onMinimizationChange, handleMinimizationChange]);
+  }, [requestMinimizationTo, onMinimizationChange, handleMinimizationChanges, minimized]);
 
   /**
    * Updates minimization state with transition state.
@@ -60,16 +69,7 @@ export default function MinimizingTextArea({
         setMinimized(minimize);
       }
     }, 1);
-    handleMinimizationChange(expand, minimize);
-  }
-
-  function handleMinimizationChange(expand: boolean, requestedMinimize: boolean) {
-    if (requestedMinimize) {
-      setLastHeight(ref.current?.clientHeight ?? startHeight);
-      setTimeout(() => ref.current?.blur(), 1);
-    } else if (expand) {
-      setHeightNotMinimized(lastHeight);
-    }
+    handleMinimizationChanges(expand, minimize);
   }
 
   return (

@@ -16,6 +16,7 @@ const config = {
     extend: {
       colors: {
         'dark-purple': '#2C0040',
+        'light-purple': '#F6F4F7',
         'readable-gray': '#8E8C8C',
         'light-gray': '#EBEBEB',
         'dark-gray': '#C6C6C6',

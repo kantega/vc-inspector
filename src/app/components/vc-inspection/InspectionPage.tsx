@@ -43,6 +43,7 @@ export default function InspectionPage() {
         }}
         requestMinimizationTo={textAreaStatus === 'min'}
       />
+      <div className="h-0 w-5/6 border-t-2 border-dark-gray"></div>
 
       <Button
         className={`bg-dark-purple px-6 ${textAreaStatus != 'active-button' && 'hidden'}`}
