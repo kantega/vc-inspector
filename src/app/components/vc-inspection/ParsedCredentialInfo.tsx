@@ -83,9 +83,9 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             inspectedResult.error.issues.map((issue, i) => (
               <AccordionSection
                 key={i}
-                value={issue.path.join('-')}
+                value={issue.path.join('-') + i}
                 className="bg-light-red text-dark-red"
-                title={`${issue.path.join(' -> ')}: ${issue.message}`}
+                title={`${issue.path.join(' -> ')}`}
                 titleIcon={CircleX}
               >
                 {issue.message}

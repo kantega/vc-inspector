@@ -1,9 +1,12 @@
-import { ZodError } from 'zod';
+import z, { ZodError } from 'zod';
 import { VC, VCSchema } from './credentialSchemas/verifiableCredential';
 import { CalculatedAttributes, calculateAttributes } from './calculatedAttributes/calculateAttributes';
 import { ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
+import { requiredErrorMap } from './errorHandling';
+
+z.setErrorMap(requiredErrorMap);
 
 export default function inspect(credential: string): InspectionResult {
   const parsedJson = credentialToJSON(credential);

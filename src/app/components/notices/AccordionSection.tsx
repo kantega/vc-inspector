@@ -27,7 +27,7 @@ export default function AccordionSection({
           <h3 className="text-2xl font-bold">{title}</h3>
         </div>
       </AccordionTrigger>
-      <AccordionContent>{children}</AccordionContent>
+      <AccordionContent className="text-xl">{children}</AccordionContent>
     </AccordionItem>
   );
 }

@@ -26,6 +26,7 @@ export default function MinimizingTextArea({
   ...props
 }: TextAreaProps) {
   const ref = useRef<HTMLTextAreaElement | null>(null);
+  useEffect(() => ref.current?.focus(), []);
 
   const [minimized, setMinimized] = useState(false);
   const [activeTransition, setActiveTransition] = useState(true);
