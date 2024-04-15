@@ -27,6 +27,7 @@ export default function InspectionPage() {
       <div className="w-full">
         <MinimizingTextArea
           className="w-full"
+          data-testid="inspector-textarea"
           value={value}
           onChange={(e) => {
             setTextAreaStatus('active-button');
@@ -43,6 +44,7 @@ export default function InspectionPage() {
       <Button
         className={`bg-dark-purple px-6 ${textAreaStatus != 'active-button' && 'hidden'}`}
         onClick={() => setTextAreaStatus('min')}
+        data-testid="inspect-button"
       >
         Inspect
       </Button>

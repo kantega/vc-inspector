@@ -71,8 +71,19 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
   return (
     <div className={className} {...props}>
       <div className="grid grid-cols-2 gap-8">
-        <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues ?? []} />
-        <LabeledValueCard title="Subject" titleIcon={CircleUser} values={subjectValues ?? []} className="row-span-2" />
+        <LabeledValueCard
+          title="Issuer"
+          titleIcon={FilePenLine}
+          values={issuerValues ?? []}
+          data-testid="issuer-card"
+        />
+        <LabeledValueCard
+          title="Subject"
+          titleIcon={CircleUser}
+          values={subjectValues ?? []}
+          className="row-span-2"
+          data-testid="subject-card"
+        />
         {standardDates && (
           <ValidityDates
             withinDates={standardDates.isValid}
@@ -80,7 +91,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             validUntil={getSomeValue(standardDates.validityDates.validUntil)}
           />
         )}
-        <Accordion type="multiple" className="flex flex-col gap-4">
+        <Accordion type="multiple" className="flex flex-col gap-4" data-testid="inspection-issues">
           {!validSchema &&
             inspectedResult.error.issues.map((issue, i) => (
               <AccordionSection
