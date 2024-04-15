@@ -1,7 +1,7 @@
-import { ValiditySchemaType } from '../credentialSchemas/validity';
-import { ErrorReason, Result } from './errors';
+import { z } from 'zod';
+import { Result } from './errors';
 import { Standards } from './standards';
-import { ParserResult, ReasonedOptional, StandardParsers } from './types';
+import { ParserResult, ReasonedOptional, StandardParsers, addReasonIfUndefined, toSome } from './types';
 
 export type Validity = {
   isValid: boolean;
@@ -47,50 +47,75 @@ export function parseValidityDates(parsedJson: unknown): ParserResult<Validity> 
 }
 
 function W3CV2ValidityDatesParser(obj: unknown): Result<ValidityDates> {
-  let result: ValidityDates = {
-    validFrom: {
-      kind: 'none',
-      reason: 'validFrom is missing',
-    },
-    validUntil: {
-      kind: 'none',
-      reason: 'validUntil is missing',
+  const schema = z.object({
+    validFrom: z.date().optional(),
+    validUntil: z.date().optional(),
+  });
+
+  const parsed = schema.safeParse(obj);
+
+  if (!parsed.success) {
+    return { kind: 'error', error: parsed.error };
+  }
+
+  return {
+    kind: 'ok',
+    value: {
+      validFrom: addReasonIfUndefined(parsed.data.validFrom, 'Missing validFrom'),
+      validUntil: addReasonIfUndefined(parsed.data.validUntil, 'Missing validUntil'),
     },
   };
-
-  if (obj.validFrom) {
-    result.validFrom = { kind: 'some', value: new Date(obj.validFrom) };
-  }
-
-  if (obj.validUntil) {
-    result.validUntil = { kind: 'some', value: new Date(obj.validUntil) };
-  }
-
-  return { kind: 'ok', value: result };
 }
 
-function W3CV1ValidityDatesParser(obj: ValiditySchemaType): Result<ValidityDates> {
-  if (!obj.issuanceDate) {
-    return {
-      kind: 'error',
-      error: { name: 'Missing', message: 'issuanceDate is required', reason: ErrorReason.Missing },
-    };
+function W3CV1ValidityDatesParser(obj: unknown): Result<ValidityDates> {
+  const schema = z.object({
+    issuanceDate: z.date(),
+    expirationDate: z.date().optional(),
+  });
+
+  const parsed = schema.safeParse(obj);
+
+  if (!parsed.success) {
+    return { kind: 'error', error: parsed.error };
   }
 
-  let result: ValidityDates = {
-    validFrom: {
-      kind: 'some',
-      value: new Date(obj.issuanceDate),
-    },
-    validUntil: {
-      kind: 'none',
-      reason: 'expirationDate is missing',
+  return {
+    kind: 'ok',
+    value: {
+      validFrom: toSome(parsed.data.issuanceDate),
+      validUntil: addReasonIfUndefined(parsed.data.expirationDate, 'expirationDate is missing'),
     },
   };
+}
 
-  if (obj.expirationDate) {
-    result.validUntil = { kind: 'some', value: new Date(obj.expirationDate) };
+function MDOCValidityDatesParse(obj: unknown): Result<ValidityDates> {
+  const schema = z.object({
+    issuerSigned: z.object({
+      issuerAuth: z.tuple([
+        z.any(),
+        z.any(),
+        z.object({
+          validityInfo: z.object({
+            validFrom: z.date(), // TODO: Check if actually is required
+            validUntil: z.date(), // TODO: Check if actually is required
+          }),
+        }),
+      ]),
+    }),
+  });
+
+  const parsed = schema.safeParse(obj);
+
+  if (!parsed.success) {
+    return { kind: 'error', error: parsed.error };
   }
 
-  return { kind: 'ok', value: result };
+  const validityInfo = parsed.data.issuerSigned.issuerAuth[2].validityInfo;
+  return {
+    kind: 'ok',
+    value: {
+      validFrom: toSome(validityInfo.validFrom),
+      validUntil: toSome(validityInfo.validUntil),
+    },
+  };
 }

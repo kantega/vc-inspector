@@ -6,7 +6,7 @@ import { CBOR, cborSchema } from './cborSchema';
 export type ParsedCBOR = {
   type: 'CBOR';
   byteType: 'hex' | 'base64' | 'base64url';
-  cbor: CBOR;
+  payload: CBOR;
 };
 
 export function safeCBORParse(credential: string): Result<ParsedCBOR> {
@@ -41,7 +41,7 @@ export function safeCBORParse(credential: string): Result<ParsedCBOR> {
     value: {
       type: 'CBOR',
       byteType: decoded.value.byteType,
-      cbor: cborDecoded,
+      payload: cborDecoded,
     },
   };
 }
