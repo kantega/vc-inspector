@@ -26,4 +26,11 @@ export class StandardRetriever {
     let res = standardResults[this.standard];
     if (res.kind === 'ok') return res.value;
   }
+
+  /**
+   * Get the result type from the standard
+   */
+  public getResult<T>(standardResults: ParserResult<T>): Result<T> {
+    return standardResults[this.standard];
+  }
 }

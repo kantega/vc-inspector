@@ -32,14 +32,17 @@ export default function MinimizingTextArea({
   const [lastHeight, setLastHeight] = useState(startHeight);
   const [heightNotMinimized, setHeightNotMinimized] = useState(startHeight);
 
-  const handleMinimizationChanges = useCallback((expand: boolean, requestedMinimize: boolean) => {
-    if (requestedMinimize) {
-      setLastHeight(ref.current?.clientHeight ?? startHeight);
-      setTimeout(() => ref.current?.blur(), 1);
-    } else if (expand) {
-      setHeightNotMinimized(lastHeight);
-    }
-  }, [lastHeight, startHeight]);
+  const handleMinimizationChanges = useCallback(
+    (expand: boolean, requestedMinimize: boolean) => {
+      if (requestedMinimize) {
+        setLastHeight(ref.current?.clientHeight ?? startHeight);
+        setTimeout(() => ref.current?.blur(), 1);
+      } else if (expand) {
+        setHeightNotMinimized(lastHeight);
+      }
+    },
+    [lastHeight, startHeight],
+  );
 
   useEffect(() => {
     if (requestMinimizationTo !== undefined) {
