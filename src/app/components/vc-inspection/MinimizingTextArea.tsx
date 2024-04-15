@@ -10,7 +10,7 @@ type TextAreaProps = JSX.IntrinsicElements['textarea'] & {
 };
 
 const START_HEGHT = 300;
-const MINIMIZED_HEIGHT = 100;
+const MINIMIZED_HEIGHT = 50;
 
 /**
  * A text area that minimizes after text is pasted.

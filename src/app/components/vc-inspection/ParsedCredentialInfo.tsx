@@ -44,14 +44,16 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
     }
   } else {
     const json = inspectedResult.parsedJson.payload;
-    if ('credentialSubject' in json && isStrRecord(json.credentialSubject)) {
-      subjectValues = fromJSON(json.credentialSubject);
-    }
-    if ('issuer' in json) {
-      if (isStrRecord(json.issuer)) {
-        issuerValues = fromJSON(json.issuer);
-      } else if (typeof json.issuer === 'string') {
-        issuerValues = [labeledValue('id', node(json.issuer))];
+    if (isStrRecord(json)) {
+      if ('credentialSubject' in json && isStrRecord(json.credentialSubject)) {
+        subjectValues = fromJSON(json.credentialSubject);
+      }
+      if ('issuer' in json) {
+        if (isStrRecord(json.issuer)) {
+          issuerValues = fromJSON(json.issuer);
+        } else if (typeof json.issuer === 'string') {
+          issuerValues = [labeledValue('id', node(json.issuer))];
+        }
       }
     }
   }
@@ -61,7 +63,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
     context = inspectedResult.parsedJson['@context'];
   } else {
     const payload = inspectedResult.parsedJson.payload;
-    if ('@context' in payload && Array.isArray(payload['@context'])) {
+    if (isStrRecord(payload) && '@context' in payload && Array.isArray(payload['@context'])) {
       context = payload['@context'];
     }
   }
@@ -85,7 +87,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
                 key={i}
                 value={issue.path.join('-') + i}
                 className="bg-light-red text-dark-red"
-                title={`${issue.path.join(' -> ')}`}
+                title={<h3 className="font-bold">{issue.path.join(' -> ')}</h3>}
                 titleIcon={CircleX}
               >
                 {issue.message}

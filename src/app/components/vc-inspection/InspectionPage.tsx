@@ -24,27 +24,22 @@ export default function InspectionPage() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center gap-5">
-      <MinimizingTextArea
-        className="w-full"
-        onKeyDown={(e) => {
-          if (e.code == 'Tab') {
-            setValue(value + '  ');
-            e.preventDefault();
-          }
-        }}
-        value={value}
-        onChange={(e) => {
-          setTextAreaStatus('active-button');
-          setValue(e.target.value);
-        }}
-        onMinimizationChange={(m) => {
-          setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button');
-          setAfterFirstInspection(true);
-        }}
-        requestMinimizationTo={textAreaStatus === 'min'}
-      />
-      <div className="h-0 w-5/6 border-t-2 border-dark-gray"></div>
-
+      <div className="w-full">
+        <MinimizingTextArea
+          className="w-full"
+          value={value}
+          onChange={(e) => {
+            setTextAreaStatus('active-button');
+            setValue(e.target.value);
+          }}
+          onMinimizationChange={(m) => {
+            setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button');
+            setAfterFirstInspection(true);
+          }}
+          requestMinimizationTo={textAreaStatus === 'min'}
+        />
+        <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
+      </div>
       <Button
         className={`bg-dark-purple px-6 ${textAreaStatus != 'active-button' && 'hidden'}`}
         onClick={() => setTextAreaStatus('min')}

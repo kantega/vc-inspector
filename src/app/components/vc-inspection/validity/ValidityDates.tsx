@@ -47,7 +47,9 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
     <Accordion defaultValue="validity-dates" className={className} type="single" collapsible {...props}>
       <AccordionSection
         value="validity-dates"
-        title={withinDates ? 'Within validity date range' : 'Outside valdity date range'}
+        title={
+          <h3 className="font-bold">{withinDates ? 'Within validity date range' : 'Outside valdity date range'}</h3>
+        }
         titleIcon={Icon}
         className={withinDates ? 'bg-light-green text-dark-green' : 'bg-light-red text-dark-red'}
       >
