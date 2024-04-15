@@ -20,11 +20,11 @@ const validityParsers: StandardParsers<ValiditySchemaType, ValidityDates> = [
 ];
 
 /**
- * Parses the validity dates of an VC.
+ * Parses the validity dates of an VC of different standards.
  *
  * Returns a list of all standards and if they are compliant
  */
-export function parseValidityDates(parsedJson: ValiditySchemaType): ParserResult<Validity> {
+export function parseValidityDates(parsedJson: unknown): ParserResult<Validity> {
   const results: Partial<ParserResult<Validity>> = {};
 
   for (const parser of validityParsers) {
@@ -46,7 +46,7 @@ export function parseValidityDates(parsedJson: ValiditySchemaType): ParserResult
   return results as ParserResult<Validity>;
 }
 
-function W3CV2ValidityDatesParser(obj: ValiditySchemaType): Result<ValidityDates> {
+function W3CV2ValidityDatesParser(obj: unknown): Result<ValidityDates> {
   let result: ValidityDates = {
     validFrom: {
       kind: 'none',

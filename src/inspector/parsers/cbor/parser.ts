@@ -3,7 +3,7 @@ import cbor from 'cbor';
 import { anyToByteArray } from './toByteArray';
 import { CBOR, cborSchema } from './cborSchema';
 
-type ParsedCBOR = {
+export type ParsedCBOR = {
   type: 'CBOR';
   byteType: 'hex' | 'base64' | 'base64url';
   cbor: CBOR;
@@ -33,6 +33,8 @@ export function safeCBORParse(credential: string): Result<ParsedCBOR> {
       tags: { 24: (x: Uint8Array) => cbor.decodeFirstSync(x) },
     });
   }
+
+  console.log(cborSchema.strict().safeParse(cborDecoded));
 
   return {
     kind: 'ok',

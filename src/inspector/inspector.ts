@@ -5,6 +5,7 @@ import { ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
 import { requiredErrorMap } from './errorHandling';
+import { ParsedCBOR, safeCBORParse } from './parsers/cbor/parser';
 
 z.setErrorMap(requiredErrorMap);
 
@@ -45,7 +46,7 @@ type ParsedJson = {
   payload: JSON;
 };
 
-type ParsedCredential = ParsedJson | ParsedJWT;
+type ParsedCredential = ParsedJson | ParsedJWT | ParsedCBOR;
 
 function credentialToJSON(credential: string): Result<ParsedCredential, Error[]> {
   const parsers = [safeJsonParse, safeJWTParse];
