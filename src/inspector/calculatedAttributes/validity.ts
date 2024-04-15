@@ -13,10 +13,10 @@ export type ValidityDates = {
   validUntil: ReasonedOptional<Date>;
 };
 
-const validityParsers: StandardParsers<ValiditySchemaType, ValidityDates> = [
+const validityParsers: StandardParsers<ValidityDates> = [
   { standard: Standards.W3C_V2, parser: W3CV2ValidityDatesParser },
   { standard: Standards.W3C_V1, parser: W3CV1ValidityDatesParser },
-  { standard: Standards.EIDAS2_0, parser: W3CV1ValidityDatesParser },
+  { standard: Standards.MDOC, parser: MDOCValidityDatesParse },
 ];
 
 /**
@@ -94,3 +94,5 @@ function W3CV1ValidityDatesParser(obj: ValiditySchemaType): Result<ValidityDates
 
   return { kind: 'ok', value: result };
 }
+
+function MDOCValidityDatesParse(obj: Vali);
