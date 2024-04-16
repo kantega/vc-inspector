@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/shadcn/card';
+import { isStrRecord } from '@/utils/assertTypes';
 import { cn } from '@/utils/styling';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
@@ -24,6 +25,10 @@ type LabeledValueCardProps = Omit<JSX.IntrinsicElements['div'], 'ref'> & {
   values: LabeledValues[];
 };
 
+export function labeledValue(label: string, value: LeafNode | NestedNodes): LabeledValues {
+  return { label, value };
+}
+
 export function node(value: ReactNode): LeafNode {
   return { kind: 'leaf', node: value };
 }
@@ -32,23 +37,14 @@ export function nested(values: LabeledValues[]): NestedNodes {
   return { kind: 'nested', values: values };
 }
 
-function isRecord(obj: unknown): obj is Record<string, unknown> {
-  return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    !Array.isArray(obj) &&
-    Object.keys(obj).every((k) => typeof k === 'string')
-  );
-}
-
 export function fromJSON(json: Record<string, unknown>): LabeledValues[] {
   const entries = Object.entries(json);
   let values: LabeledValues[] = [];
   for (let i = 0; i < entries.length; i++) {
     const [key, value] = entries[i];
     if (Array.isArray(value)) {
-      values.push({ label: key, value: node(value) });
-    } else if (isRecord(value)) {
+      values.push({ label: key, value: node(value.join(', ')) });
+    } else if (isStrRecord(value)) {
       values.push({ label: key, value: nested(fromJSON(value)) });
     } else if (typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number') {
       values.push({ label: key, value: node(value) });
@@ -65,11 +61,11 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
     <>
       {values.map(({ label: l, value: v }) => (
         <CardContent className="py-1" key={l}>
-          <p className="text-2xl text-readable-gray">{l}</p>
+          <p className="text-lg text-readable-gray">{l}</p>
           {v.kind === 'leaf' && (
             <p
               className={cn(
-                'relative text-2xl font-semibold',
+                'relative break-words text-lg font-semibold',
                 !root &&
                   "after:absolute after:-left-6 after:top-0 after:h-1/6 after:w-4 after:border-b-2 after:bg-transparent after:content-['']",
               )}

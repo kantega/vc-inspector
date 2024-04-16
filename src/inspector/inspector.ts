@@ -1,9 +1,12 @@
-import { ZodError } from 'zod';
+import z, { ZodError } from 'zod';
 import { VC, VCSchema } from './credentialSchemas/verifiableCredential';
 import { CalculatedAttributes, calculateAttributes } from './calculatedAttributes/calculateAttributes';
-import { ErrorReason, ReasonedError, Result } from './calculatedAttributes/errors';
+import { ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
+import { requiredErrorMap } from './errorHandling';
+
+z.setErrorMap(requiredErrorMap);
 
 export default function inspect(credential: string): InspectionResult {
   const parsedJson = credentialToJSON(credential);
@@ -84,18 +87,20 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
   }
 }
 
-export type InspectionResult =
-  | {
-      type: 'ParseError';
-      errors: Error[];
-    }
-  | {
-      type: 'InvalidCredential';
-      parsedJson: ParsedCredential;
-      error: ZodError;
-    }
-  | {
-      type: 'ValidCredential';
-      parsedJson: VC;
-      calculatedAttributes: CalculatedAttributes;
-    };
+export type ParseErrorResult = {
+  type: 'ParseError';
+  errors: Error[];
+};
+
+export type InvalidCredentialResult = {
+  type: 'InvalidCredential';
+  parsedJson: ParsedCredential;
+  error: ZodError;
+};
+export type ValidCredentialResult = {
+  type: 'ValidCredential';
+  parsedJson: VC;
+  calculatedAttributes: CalculatedAttributes;
+};
+
+export type InspectionResult = ParseErrorResult | InvalidCredentialResult | ValidCredentialResult;

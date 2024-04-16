@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { AccordionSingleProps } from '@radix-ui/react-accordion';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import AccordionSection from '@/components/notices/AccordionSection';
 
 type ValidityDatesProps = Omit<AccordionSingleProps, 'type'> & {
   validFrom?: Date;
@@ -44,42 +45,35 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
 
   return (
     <Accordion defaultValue="validity-dates" className={className} type="single" collapsible {...props}>
-      <AccordionItem
+      <AccordionSection
         value="validity-dates"
-        className={cn(
-          'rounded-lg p-3 px-4',
-          withinDates ? 'bg-light-green text-dark-green' : 'bg-light-red text-dark-red',
-        )}
+        title={
+          <h3 className="font-bold">{withinDates ? 'Within validity date range' : 'Outside valdity date range'}</h3>
+        }
+        titleIcon={Icon}
+        className={withinDates ? 'bg-light-green text-dark-green' : 'bg-light-red text-dark-red'}
       >
-        <AccordionTrigger>
-          <div className="flex items-center gap-2">
-            <Icon width={30} height={30} />
-            <h3 className="text-2xl font-bold">
-              {withinDates ? 'Within validity date range' : 'Outside validity date range'}
-            </h3>
-          </div>
-        </AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-3 p-1">
+        <div className="flex flex-col gap-3 p-1">
           {loading ? (
             <Loader2 className="animate-spin" />
           ) : (
             <>
               <div>
-                <p className="text-xl">Valid from</p>
-                <p data-testid="valid-from-date" className="text-2xl font-semibold">
+                <p className="text-lg">Valid from</p>
+                <p data-testid="valid-from-date" className="text-xl font-semibold">
                   {fromDate ?? 'No start of validity'}
                 </p>
               </div>
               <div>
-                <p className="text-xl">Expires</p>
-                <p data-testid="valid-until-date" className="text-2xl font-semibold">
+                <p className="text-lg">Expires</p>
+                <p data-testid="valid-until-date" className="text-xl font-semibold">
                   {toDate ?? 'No expiration'}
                 </p>
               </div>
             </>
           )}
-        </AccordionContent>
-      </AccordionItem>
+        </div>
+      </AccordionSection>
     </Accordion>
   );
 }
