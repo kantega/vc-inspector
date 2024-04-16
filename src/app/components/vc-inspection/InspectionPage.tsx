@@ -3,8 +3,11 @@ import inspect, { InspectionResult } from '@inspector/inspector';
 import { useEffect, useState } from 'react';
 import MinimizingTextArea from '@/components/vc-inspection/MinimizingTextArea';
 import { Button } from '@/components/shadcn/button';
+import { cn } from '@/utils/styling';
 
-export default function InspectionPage() {
+type InspectionPageProps = JSX.IntrinsicElements['div'] & {};
+
+export default function InspectionPage({ className, ...props }: InspectionPageProps) {
   const [value, setValue] = useState('');
   const [inspected, setInspected] = useState<InspectionResult | null>();
   const [textAreaStatus, setTextAreaStatus] = useState<'active-button' | 'min' | 'active'>('active');
@@ -21,7 +24,7 @@ export default function InspectionPage() {
   }, [textAreaStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center gap-5 p-24">
+    <main className={cn('flex w-full flex-col items-center gap-5 p-24', className)} {...props}>
       <MinimizingTextArea
         className="w-full md:w-1/2"
         value={value}
