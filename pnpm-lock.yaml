@@ -135,18 +135,6 @@ importers:
 
   src/inspector:
     dependencies:
-      base64url:
-        specifier: ^3.0.1
-        version: 3.0.1
-      cbor:
-        specifier: ^9.0.2
-        version: 9.0.2
-      cbor-x:
-        specifier: ^1.5.9
-        version: 1.5.9
-      cborg:
-        specifier: ^4.2.0
-        version: 4.2.0
       jose:
         specifier: ^5.2.4
         version: 5.2.4
@@ -8502,7 +8490,6 @@ packages:
   /node-gyp-build-optional-packages@5.1.1:
     resolution: {integrity: sha512-+P72GAjVAbTxjjwUmwjVrqrdZROD4nf8KgpBoDxqXXTiYZZt/ud60dE5yvCSr9lRO8e8yv6kgJIC0K0PfZFVQw==}
     hasBin: true
-    requiresBuild: true
     dependencies:
       detect-libc: 2.0.2
     dev: false
