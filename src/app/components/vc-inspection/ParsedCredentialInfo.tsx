@@ -63,7 +63,13 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
     context = inspectedResult.parsedJson['@context'];
   } else {
     const payload = inspectedResult.parsedJson.payload;
-    if (isStrRecord(payload) && '@context' in payload && Array.isArray(payload['@context'])) {
+    if (
+      isStrRecord(payload) &&
+      '@context' in payload &&
+      Array.isArray(payload['@context']) &&
+      payload['@context'].length > 0 &&
+      typeof payload['@context'][0] == 'string'
+    ) {
       context = payload['@context'];
     }
   }
@@ -98,7 +104,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
                 key={i}
                 value={issue.path.join('-') + i}
                 className="bg-light-red text-dark-red"
-                title={<h3 className="font-bold">{issue.path.join(' -> ')}</h3>}
+                title={issue.path.join(' -> ')}
                 titleIcon={CircleX}
               >
                 {issue.message}
