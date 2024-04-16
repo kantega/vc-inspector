@@ -1,12 +1,11 @@
 import Image from 'next/image';
 import { Button } from '../shadcn/button';
-import GitHubCat from '@/public/github-mark.svg';
+import GitHubCat from '@/public/github-mark-white.svg';
 import Link from 'next/link';
 import { cn } from '@/utils/styling';
+import { GITHUB_LINK } from '@/utils/links';
 
 type FeedbackBoxProps = JSX.IntrinsicElements['div'] & {};
-
-const GITHUB_LINK = 'https://github.com/thomsen85/vc-inspector';
 
 /**
  * A box to remind visitors that they can visit they github
@@ -14,18 +13,15 @@ const GITHUB_LINK = 'https://github.com/thomsen85/vc-inspector';
  */
 export default function FeedbackBox({ className, ...props }: FeedbackBoxProps) {
   return (
-    <div
-      className={cn('flex flex-col items-center justify-center gap-8 rounded-xl bg-dark-purple p-20', className)}
-      {...props}
-    >
-      <h2 className="text-4xl text-white">
+    <div className={cn('flex flex-col items-center justify-center gap-8 rounded-xl  p-10', className)} {...props}>
+      <h2 className="text-2xl ">
         Want to provide <span className="font-semibold">feedback</span> or{' '}
         <span className="font-semibold">contribute</span>?
       </h2>
-      <Button variant="secondary" asChild>
+      <Button variant="default" asChild>
         <Link href={GITHUB_LINK} className="items-center gap-3">
           <Image src={GitHubCat} alt="GitHub invertocat" className="h-full w-full" width={40} height={40} />
-          <p className="text-xl">See repository</p>
+          <p className="text-lg">See repository</p>
         </Link>
       </Button>
     </div>
