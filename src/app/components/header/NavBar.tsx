@@ -33,7 +33,11 @@ export default function NavigationBar({ links, className, currentPath, ...props 
         </Link>
         <NavigationMenuList>
           {links.map((l) => (
-            <NavigationMenuLink key={l.to} className={cn(navigationMenuTriggerStyle(), 'text-readable-gray')} asChild>
+            <NavigationMenuLink
+              key={l.to}
+              className={cn(navigationMenuTriggerStyle(), 'bg-light-purple text-readable-gray')}
+              asChild
+            >
               <Link href={l.to}>
                 <p className={`border-dark-purple px-1 text-lg ${l.to === currentPath && 'border-b-2'}`}>{l.label}</p>
               </Link>

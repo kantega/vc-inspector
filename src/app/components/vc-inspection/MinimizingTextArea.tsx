@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils/styling';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type TextAreaProps = JSX.IntrinsicElements['textarea'] & {
   startHeight?: number;
@@ -10,7 +10,7 @@ type TextAreaProps = JSX.IntrinsicElements['textarea'] & {
 };
 
 const START_HEGHT = 300;
-const MINIMIZED_HEIGHT = 100;
+const MINIMIZED_HEIGHT = 50;
 
 /**
  * A text area that minimizes after text is pasted.
@@ -26,18 +26,33 @@ export default function MinimizingTextArea({
   ...props
 }: TextAreaProps) {
   const ref = useRef<HTMLTextAreaElement | null>(null);
+  useEffect(() => ref.current?.focus(), []);
 
   const [minimized, setMinimized] = useState(false);
   const [activeTransition, setActiveTransition] = useState(true);
   const [lastHeight, setLastHeight] = useState(startHeight);
   const [heightNotMinimized, setHeightNotMinimized] = useState(startHeight);
 
+  const handleMinimizationChanges = useCallback(
+    (expand: boolean, requestedMinimize: boolean) => {
+      if (requestedMinimize) {
+        setLastHeight(ref.current?.clientHeight ?? startHeight);
+        setTimeout(() => ref.current?.blur(), 1);
+      } else if (expand) {
+        setHeightNotMinimized(lastHeight);
+      }
+    },
+    [lastHeight, startHeight],
+  );
+
   useEffect(() => {
     if (requestMinimizationTo !== undefined) {
+      const expand = minimized && !requestMinimizationTo;
+      handleMinimizationChanges(expand, requestMinimizationTo);
       onMinimizationChange?.(requestMinimizationTo);
       setMinimized(requestMinimizationTo);
     }
-  }, [requestMinimizationTo, onMinimizationChange]);
+  }, [requestMinimizationTo, onMinimizationChange, handleMinimizationChanges, minimized]);
 
   /**
    * Updates minimization state with transition state.
@@ -45,7 +60,7 @@ export default function MinimizingTextArea({
    * when resizing the text area. Additionally, we want
    * the text area to go back to its original height when
    * it is activated. Also after a resize and minimization.
-   * The minimal timouts are used to force the minimization and blurring
+   * The minimal timout are used to force the minimization and blurring
    * happen after the transition state update and paste have
    * been finished respectively.
    */
@@ -58,12 +73,7 @@ export default function MinimizingTextArea({
         setMinimized(minimize);
       }
     }, 1);
-    if (minimize) {
-      setLastHeight(ref.current?.clientHeight ?? startHeight);
-      setTimeout(() => ref.current?.blur(), 1);
-    } else if (expand) {
-      setHeightNotMinimized(lastHeight);
-    }
+    handleMinimizationChanges(expand, minimize);
   }
 
   return (
