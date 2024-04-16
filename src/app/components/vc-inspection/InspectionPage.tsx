@@ -6,6 +6,7 @@ import { Button } from '@/components/shadcn/button';
 import ParsedCredentialInfo from './ParsedCredentialInfo';
 import { cn } from '@/utils/styling';
 import { FileType } from 'lucide-react';
+import InformationBox from '../notices/InfoBox';
 
 export default function InspectionPage() {
   const [value, setValue] = useState('');
@@ -32,7 +33,7 @@ export default function InspectionPage() {
   return (
     <div
       className={cn(
-        'flex min-h-screen w-5/6 flex-col items-center gap-5 transition-all duration-200',
+        'flex min-h-screen w-full flex-col items-center gap-5 transition-all duration-200 sm:w-5/6',
         onceSuccessfullyParsed && '-mt-20',
       )}
     >
@@ -46,7 +47,13 @@ export default function InspectionPage() {
             </span>
           </div>
         ) : (
-          <h1 className="m-4 text-3xl font-semibold">Inspect your verifiable credential</h1>
+          <div className="m-6 flex flex-col gap-6">
+            <h1 className="text-3xl font-semibold">Inspect your verifiable credential</h1>
+            <InformationBox messageType="neutral" title="Info" className="text-left">
+              We do not record tokens, all validation and debugging is done on the client side. Be careful where you
+              paste them!
+            </InformationBox>
+          </div>
         )}
         <div className="w-full">
           <MinimizingTextArea
