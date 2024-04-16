@@ -34,13 +34,13 @@ export default function InspectionPage() {
     <div
       className={cn(
         'flex min-h-screen w-full flex-col items-center gap-5 transition-all duration-200 sm:w-5/6',
-        onceSuccessfullyParsed && '-mt-20',
+        onceSuccessfullyParsed && '-mt-12',
       )}
     >
       <div className="w-full items-center text-center">
         {onceSuccessfullyParsed ? (
           <div className="flex w-full justify-between gap-2 p-3">
-            <p>Verifiable Credential</p>
+            <p className="text-xl">Verifiable Credential</p>
             <span className="flex">
               <FileType />
               <p>JWT-VC</p>
