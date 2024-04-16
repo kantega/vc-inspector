@@ -15,5 +15,8 @@
     "cose-js": "^0.9.0",
     "jose": "^5.2.4",
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/cose-js": "^0.8.3"
   }
 }

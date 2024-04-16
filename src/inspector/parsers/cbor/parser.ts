@@ -1,7 +1,7 @@
 import { Result, firstOk } from '../../calculatedAttributes/errors';
 import cbor from 'cbor';
 import { anyToByteArray } from './toByteArray';
-import { CBOR, cborSchema } from './cborSchema';
+import { CBOR } from './cborSchema';
 
 export type ParsedCBOR = {
   type: 'CBOR';
@@ -33,8 +33,6 @@ export function safeCBORParse(credential: string): Result<ParsedCBOR> {
       tags: { 24: (x: Uint8Array) => cbor.decodeFirstSync(x) },
     });
   }
-
-  console.log(cborSchema.strict().safeParse(cborDecoded));
 
   return {
     kind: 'ok',

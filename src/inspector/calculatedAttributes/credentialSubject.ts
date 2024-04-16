@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { Result, toError, toOk } from './errors';
 import { Standards } from './standards';
-import { ParserResult, StandardParsers } from './types';
+import { ParserResult, StandardParsers, standardParsersToParserResult } from './types';
 
 export type CredentialSubject = {
   id?: string;
@@ -22,16 +22,15 @@ export type Claim =
       digestID?: number;
     };
 
-const credentialSubjectParses: StandardParsers<CredentialSubject> = [
+const credentialSubjectParsers: StandardParsers<CredentialSubject> = [
   { standard: Standards.W3C_V1, parser: W3CCredentialSubjectParser },
   { standard: Standards.W3C_V2, parser: W3CCredentialSubjectParser },
   { standard: Standards.MDOC, parser: MDOCCredentialSubjectParser },
 ];
 
 export function parseCredentialSubject(obj: unknown): ParserResult<CredentialSubject> {
-  return Object.fromEntries(
-    credentialSubjectParses.map(({ standard, parser }) => [standard, parser(obj)]),
-  ) as ParserResult<CredentialSubject>;
+  // TODO: Credential Subject can be a list
+  return standardParsersToParserResult(credentialSubjectParsers, obj);
 }
 
 function MDOCCredentialSubjectParser(obj: unknown): Result<CredentialSubject> {
@@ -96,5 +95,5 @@ function W3CCredentialSubjectParser(obj: unknown): Result<CredentialSubject> {
     };
   });
 
-  return toOk({ id: parsed.data.credentialSubject.id, claims });
+  return toOk({ id: parsed.data.id, claims });
 }

@@ -1,4 +1,4 @@
-import { Result } from './errors';
+import { ReasonedError, Result } from './errors';
 import { Standards } from './standards';
 
 export type ParserResult<T> = Record<Standards, Result<T>>;
@@ -36,6 +36,18 @@ export class StandardRetriever {
 
 export type StandardParsers<T> = { standard: Standards; parser: (obj: unknown) => Result<T> }[];
 
+/*
+ * Helper method for converting standardParsers to Parser Result.
+ *
+ * Note that this does not take into consideration if the standardParsers does not contain all th e ParserResult */
+export function standardParsersToParserResult<T>(standardParsers: StandardParsers<T>, obj: unknown): ParserResult<T> {
+  return Object.fromEntries(standardParsers.map(({ standard, parser }) => [standard, parser(obj)])) as ParserResult<T>;
+}
+
+export function unimplementedParser(_: unknown): { kind: 'error'; error: ReasonedError } {
+  return { kind: 'error', error: { name: 'Unimplemented', message: 'Parser is not implemented' } };
+}
+
 export function addReasonIfUndefined<T>(obj: T | undefined, reason: string): ReasonedOptional<T> {
   if (obj) {
     return { kind: 'some', value: obj };
@@ -43,6 +55,6 @@ export function addReasonIfUndefined<T>(obj: T | undefined, reason: string): Rea
   return { kind: 'none', reason };
 }
 
-export function isSome<T>(obj: T): { kind: 'some'; value: T } {
+export function toSome<T>(obj: T): { kind: 'some'; value: T } {
   return { kind: 'some', value: obj };
 }
