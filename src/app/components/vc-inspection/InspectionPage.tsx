@@ -15,7 +15,7 @@ export default function InspectionPage() {
   const [afterFirstInspection, setAfterFirstInspection] = useState(false);
 
   const onceSuccessfullyParsed = useMemo(
-    () => afterFirstInspection && inspected?.type !== 'ParseError',
+    () => afterFirstInspection && inspected?.success,
     [afterFirstInspection, inspected],
   );
 
@@ -83,10 +83,8 @@ export default function InspectionPage() {
 
       {inspected && (
         <>
-          {inspected.type != 'ParseError' && afterFirstInspection && (
-            <ParsedCredentialInfo inspectedResult={inspected} />
-          )}
-          {inspected.type === 'ParseError' && (
+          {inspected.success && afterFirstInspection && <ParsedCredentialInfo inspectedResult={inspected} />}
+          {!inspected.success && (
             <>
               {inspected.errors.map((error, i) => {
                 return (

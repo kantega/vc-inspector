@@ -41,7 +41,7 @@ type ParsedJson = {
 type ParsedCredential = ParsedJson | ParsedJWT | ParsedCBOR;
 
 function credentialToJSON(credential: string): Result<ParsedCredential, Error[]> {
-  const parsers = [safeJsonParse, safeJWTParse];
+  const parsers = [safeJsonParse, safeJWTParse, safeCBORParse];
   let errors = [];
 
   for (const parser of parsers) {
@@ -87,7 +87,7 @@ export type ParseError = {
 
 export type SuccessfullParse = {
   success: true;
-  parsedJson: unknown;
+  parsedJson: ParsedCredential;
   calculatedAttributes: CalculatedAttributes;
 };
 

@@ -3,6 +3,7 @@ import { isStrRecord } from '@/utils/assertTypes';
 import { cn } from '@/utils/styling';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
+import { Claim, CredentialSubject } from '../../../inspector/calculatedAttributes/credentialSubject';
 
 type LeafNode = {
   kind: 'leaf';
@@ -37,11 +38,17 @@ export function nested(values: LabeledValues[]): NestedNodes {
   return { kind: 'nested', values: values };
 }
 
-export function fromJSON(json: Record<string, unknown>): LabeledValues[] {
+export function fromJSON(json: Record<string, unknown> | undefined): LabeledValues[] {
+  if (!json) {
+    return [];
+  }
+
   const entries = Object.entries(json);
   let values: LabeledValues[] = [];
+
   for (let i = 0; i < entries.length; i++) {
     const [key, value] = entries[i];
+
     if (Array.isArray(value)) {
       values.push({ label: key, value: node(value.join(', ')) });
     } else if (isStrRecord(value)) {
