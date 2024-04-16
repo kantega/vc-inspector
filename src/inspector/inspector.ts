@@ -25,6 +25,7 @@ export default function inspect(credential: string): InspectionResult {
       type: 'InvalidCredential',
       parsedJson: parsedJson.value,
       error: parsedSchema.error,
+      calculatedAttributes: calculateAttributes(parsedJson.value.payload),
     };
   }
 

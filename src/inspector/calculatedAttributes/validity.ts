@@ -48,8 +48,8 @@ export function parseValidityDates(parsedJson: unknown): ParserResult<Validity> 
 
 function W3CV2ValidityDatesParser(obj: unknown): Result<ValidityDates> {
   const schema = z.object({
-    validFrom: z.date().optional(),
-    validUntil: z.date().optional(),
+    validFrom: z.coerce.date().optional(),
+    validUntil: z.coerce.date().optional(),
   });
 
   const parsed = schema.safeParse(obj);
@@ -69,8 +69,8 @@ function W3CV2ValidityDatesParser(obj: unknown): Result<ValidityDates> {
 
 function W3CV1ValidityDatesParser(obj: unknown): Result<ValidityDates> {
   const schema = z.object({
-    issuanceDate: z.date(),
-    expirationDate: z.date().optional(),
+    issuanceDate: z.coerce.date(),
+    expirationDate: z.coerce.date().optional(),
   });
 
   const parsed = schema.safeParse(obj);
@@ -89,6 +89,7 @@ function W3CV1ValidityDatesParser(obj: unknown): Result<ValidityDates> {
 }
 
 function MDOCValidityDatesParse(obj: unknown): Result<ValidityDates> {
+  console.log(obj);
   const schema = z.object({
     issuerSigned: z.object({
       issuerAuth: z.tuple([
@@ -96,10 +97,11 @@ function MDOCValidityDatesParse(obj: unknown): Result<ValidityDates> {
         z.any(),
         z.object({
           validityInfo: z.object({
-            validFrom: z.date(), // TODO: Check if actually is required
-            validUntil: z.date(), // TODO: Check if actually is required
+            validFrom: z.coerce.date(), // TODO: Check if actually is required
+            validUntil: z.coerce.date(), // TODO: Check if actually is required
           }),
         }),
+        z.any(),
       ]),
     }),
   });
