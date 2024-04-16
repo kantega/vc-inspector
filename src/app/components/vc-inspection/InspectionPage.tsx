@@ -34,7 +34,7 @@ export default function InspectionPage() {
     <div
       className={cn(
         'flex min-h-screen w-full flex-col items-center gap-5 transition-all duration-200 sm:w-5/6',
-        onceSuccessfullyParsed && '-mt-12',
+        onceSuccessfullyParsed && '-mt-6',
       )}
     >
       <div className="w-full items-center text-center">
