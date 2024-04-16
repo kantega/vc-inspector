@@ -18,21 +18,12 @@ export default function inspect(credential: string): InspectionResult {
     };
   }
 
-  const parsedSchema = VCSchema.safeParse(parsedJson.value.payload);
-
-  if (!parsedSchema.success) {
-    return {
-      type: 'InvalidCredential',
-      parsedJson: parsedJson.value,
-      error: parsedSchema.error,
-      calculatedAttributes: calculateAttributes(parsedJson.value.payload),
-    };
-  }
+  // const parsedSchema = VCSchema.safeParse(parsedJson.value.payload);
 
   return {
-    type: 'ValidCredential',
-    parsedJson: parsedSchema.data,
-    calculatedAttributes: calculateAttributes(parsedSchema.data),
+    type: 'Parsed',
+    parsedJson: parsedJson.value,
+    calculatedAttributes: calculateAttributes(parsedJson.value.payload),
   };
 }
 
@@ -89,20 +80,13 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
   }
 }
 
-export type ParseErrorResult = {
-  type: 'ParseError';
-  errors: Error[];
-};
-
-export type InvalidCredentialResult = {
-  type: 'InvalidCredential';
-  parsedJson: ParsedCredential;
-  error: ZodError;
-};
-export type ValidCredentialResult = {
-  type: 'ValidCredential';
-  parsedJson: VC;
-  calculatedAttributes: CalculatedAttributes;
-};
-
-export type InspectionResult = ParseErrorResult | InvalidCredentialResult | ValidCredentialResult;
+export type InspectionResult =
+  | {
+      type: 'ParseError';
+      errors: Error[];
+    }
+  | {
+      type: 'Parsed';
+      parsedJson: unknown;
+      calculatedAttributes: CalculatedAttributes;
+    };

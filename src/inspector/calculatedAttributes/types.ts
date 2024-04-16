@@ -43,6 +43,6 @@ export function addReasonIfUndefined<T>(obj: T | undefined, reason: string): Rea
   return { kind: 'none', reason };
 }
 
-export function toSome<T>(obj: T): { kind: 'some'; value: T } {
+export function isSome<T>(obj: T): { kind: 'some'; value: T } {
   return { kind: 'some', value: obj };
 }

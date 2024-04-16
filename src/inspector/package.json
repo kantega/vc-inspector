@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "base64url": "^3.0.1",
+    "cbor": "^9.0.2",
+    "cose-js": "^0.9.0",
     "jose": "^5.2.4",
     "zod": "^3.22.4"
   }

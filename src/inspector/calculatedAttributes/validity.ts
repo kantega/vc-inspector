@@ -24,11 +24,11 @@ const validityParsers: StandardParsers<ValiditySchemaType, ValidityDates> = [
  *
  * Returns a list of all standards and if they are compliant
  */
-export function parseValidityDates(parsedJson: unknown): ParserResult<Validity> {
+export function parseValidityDates(obj: unknown): ParserResult<Validity> {
   const results: Partial<ParserResult<Validity>> = {};
 
   for (const parser of validityParsers) {
-    const validityDates = parser.parser(parsedJson);
+    const validityDates = parser.parser(obj);
 
     if (validityDates.kind === 'error') {
       results[parser.standard] = validityDates;
