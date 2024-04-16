@@ -13,7 +13,10 @@ type FeedbackBoxProps = JSX.IntrinsicElements['div'] & {};
  */
 export default function FeedbackBox({ className, ...props }: FeedbackBoxProps) {
   return (
-    <div className={cn('flex flex-col items-center justify-center gap-8 rounded-xl  p-10', className)} {...props}>
+    <div
+      className={cn('flex flex-col items-center justify-center gap-8 rounded-xl p-10  text-center', className)}
+      {...props}
+    >
       <h2 className="text-2xl ">
         Want to provide <span className="font-semibold">feedback</span> or{' '}
         <span className="font-semibold">contribute</span>?
