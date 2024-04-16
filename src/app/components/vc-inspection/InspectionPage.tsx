@@ -6,7 +6,7 @@ import { Button } from '@/components/shadcn/button';
 import ParsedCredentialInfo from './ParsedCredentialInfo';
 import { cn } from '@/utils/styling';
 import { FileType } from 'lucide-react';
-import InformationBox from '../notices/InfoBox';
+import InformationBox from '@/components/notices/InfoBox';
 
 export default function InspectionPage() {
   const [value, setValue] = useState('');
@@ -15,8 +15,8 @@ export default function InspectionPage() {
   const [afterFirstInspection, setAfterFirstInspection] = useState(false);
 
   const onceSuccessfullyParsed = useMemo(
-    () => textAreaStatus !== 'active' && inspected?.type !== 'ParseError',
-    [textAreaStatus, inspected],
+    () => afterFirstInspection && inspected?.type !== 'ParseError',
+    [afterFirstInspection, inspected],
   );
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function InspectionPage() {
             }}
             onMinimizationChange={(m) => {
               setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button');
-              setAfterFirstInspection(true);
+              if (m) setAfterFirstInspection(true);
             }}
             requestMinimizationTo={textAreaStatus === 'min'}
           />
