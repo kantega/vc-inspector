@@ -138,8 +138,6 @@ importers:
 
   src/inspector:
     dependencies:
-<<<<<<< HEAD
-=======
       base64url:
         specifier: ^3.0.1
         version: 3.0.1
@@ -149,7 +147,6 @@ importers:
       cose-js:
         specifier: ^0.9.0
         version: 0.9.0
->>>>>>> a08f78f (Added cose-js for cbor verification)
       jose:
         specifier: ^5.2.4
         version: 5.2.4
