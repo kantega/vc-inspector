@@ -13,7 +13,7 @@ export default function inspect(credential: string): InspectionResult {
   const parsedJson = credentialToJSON(credential);
   if (parsedJson.kind == 'error') {
     return {
-      type: 'ParseError',
+      success: false,
       errors: parsedJson.error,
     };
   }
@@ -21,7 +21,7 @@ export default function inspect(credential: string): InspectionResult {
   // const parsedSchema = VCSchema.safeParse(parsedJson.value.payload);
 
   return {
-    type: 'Parsed',
+    success: true,
     parsedJson: parsedJson.value,
     calculatedAttributes: calculateAttributes(parsedJson.value.payload),
   };
@@ -80,13 +80,15 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
   }
 }
 
-export type InspectionResult =
-  | {
-      type: 'ParseError';
-      errors: Error[];
-    }
-  | {
-      type: 'Parsed';
-      parsedJson: unknown;
-      calculatedAttributes: CalculatedAttributes;
-    };
+export type ParseError = {
+  success: false;
+  errors: Error[];
+};
+
+export type SuccessfullParse = {
+  success: true;
+  parsedJson: unknown;
+  calculatedAttributes: CalculatedAttributes;
+};
+
+export type InspectionResult = ParseError | SuccessfullParse;

@@ -1,4 +1,3 @@
-import { InvalidCredentialResult, ValidCredentialResult } from '@inspector/inspector';
 import { getSomeValue, StandardRetriever } from '@inspector/calculatedAttributes/types';
 import { Standards } from '@inspector/calculatedAttributes/standards';
 import LabeledValueCard, { fromJSON, labeledValue, node } from '@/components/data-lists/LabeledValueCard';
@@ -8,9 +7,10 @@ import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import { isStrRecord } from '@/utils/assertTypes';
 import JSONPretty from 'react-json-pretty';
+import { InspectionResult } from '@inspector/inspector';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
-  inspectedResult: InvalidCredentialResult | ValidCredentialResult;
+  inspectedResult: InspectionResult;
 };
 
 function HLineWithText({ text }: { text: string }) {
@@ -26,7 +26,7 @@ function HLineWithText({ text }: { text: string }) {
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
  */
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
-  const validSchema = inspectedResult.type === 'ValidCredential';
+  const validSchema = inspectedResult.success;
   const dates = validSchema ? inspectedResult.calculatedAttributes.validityDates : undefined;
   const standard = new StandardRetriever(Standards.W3C_V2);
   const standardDates = dates ? standard.extractOk(dates) : undefined;
@@ -34,9 +34,9 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
   let subjectValues = undefined;
   let issuerValues = undefined;
   if (validSchema) {
-    const subject = inspectedResult.parsedJson.credentialSubject;
+    const subject = inspectedResult.calculatedAttributes.credentialSubject;
     subjectValues = fromJSON(subject);
-    const issuer = inspectedResult.parsedJson.issuer;
+    const issuer = inspectedResult.calculatedAttributes.issuer;
     if (typeof issuer == 'string') {
       issuerValues = [labeledValue('id', node(issuer))];
     } else if (issuer) {
