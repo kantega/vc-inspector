@@ -87,7 +87,7 @@ export default function MinimizingTextArea({
       style={{ height: minimized ? MINIMIZED_HEIGHT + 'px' : heightNotMinimized + 'px' }}
       placeholder="Paste your verifiable credential here"
       className={cn(
-        'rounded-md bg-light-gray p-4 text-2xl placeholder-readable-gray',
+        'rounded-md bg-light-gray p-4 placeholder-readable-gray',
         activeTransition && 'transition-all duration-200',
         minimized && 'overflow-hidden text-readable-gray',
         className,

@@ -59,14 +59,14 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
           ) : (
             <>
               <div>
-                <p className="text-xl">Valid from</p>
-                <p data-testid="valid-from-date" className="text-2xl font-semibold">
+                <p className="text-lg">Valid from</p>
+                <p data-testid="valid-from-date" className="text-xl font-semibold">
                   {fromDate ?? 'No start of validity'}
                 </p>
               </div>
               <div>
-                <p className="text-xl">Expires</p>
-                <p data-testid="valid-until-date" className="text-2xl font-semibold">
+                <p className="text-lg">Expires</p>
+                <p data-testid="valid-until-date" className="text-xl font-semibold">
                   {toDate ?? 'No expiration'}
                 </p>
               </div>

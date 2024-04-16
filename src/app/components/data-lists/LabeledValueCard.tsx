@@ -61,11 +61,11 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
     <>
       {values.map(({ label: l, value: v }) => (
         <CardContent className="py-1" key={l}>
-          <p className="text-2xl text-readable-gray">{l}</p>
+          <p className="text-lg text-readable-gray">{l}</p>
           {v.kind === 'leaf' && (
             <p
               className={cn(
-                'relative break-words text-2xl font-semibold',
+                'relative break-words text-lg font-semibold',
                 !root &&
                   "after:absolute after:-left-6 after:top-0 after:h-1/6 after:w-4 after:border-b-2 after:bg-transparent after:content-['']",
               )}

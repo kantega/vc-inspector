@@ -20,11 +20,11 @@ export default function AccordionSection({
   ...props
 }: AccordionSectionProps) {
   return (
-    <AccordionItem className={cn('accordion-item rounded-lg p-3 px-4', className)} {...props}>
+    <AccordionItem className={cn('accordion-item rounded-lg p-2 px-4', className)} {...props}>
       <AccordionTrigger className="gap-4">
         <div className={cn('flex items-center', TitleIcon && 'gap-2')}>
           {TitleIcon && <TitleIcon width={30} height={30} />}
-          <h3 className="text-2xl">{title}</h3>
+          <h3 className="text-xl">{title}</h3>
         </div>
       </AccordionTrigger>
       <AccordionContent className="text-xl">{children}</AccordionContent>

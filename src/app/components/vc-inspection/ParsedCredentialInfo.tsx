@@ -16,7 +16,7 @@ type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
 function HLineWithText({ text }: { text: string }) {
   return (
     <div className="relative mx-4 h-0 border-t-2 border-dark-gray p-2">
-      <p className="absolute -top-5 left-10 bg-light-purple p-1 text-xl text-readable-gray">{text}</p>
+      <p className="absolute -top-5 left-10 bg-light-purple p-1 text-lg text-readable-gray">{text}</p>
     </div>
   );
 }
@@ -119,7 +119,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             <HLineWithText text="JWT" />
             <AccordionSection value="decoded-to-json" title="Decoded JSON">
               <JSONPretty
-                className="break-words text-lg"
+                className="break-words"
                 stringStyle="color:#f92672;"
                 booleanStyle="color:#f92672;"
                 valueStyle="color:#f92672;"
@@ -134,7 +134,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             <AccordionSection title="Proof" value="proof"></AccordionSection>
             {context && (
               <AccordionSection title="Context" value="context">
-                <div className="text-xl">
+                <div className="">
                   {context.map((el) => (
                     <p key={el}>{el}</p>
                   ))}
