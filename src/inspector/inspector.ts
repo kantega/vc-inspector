@@ -4,8 +4,6 @@ import { CalculatedAttributes, calculateAttributes } from './calculatedAttribute
 import { ErrorReason, ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
-import cbor, { Decoder } from 'cbor';
-import { safeCBORParse } from './parsers/cbor';
 
 export default function inspect(credential: string): InspectionResult {
   const parsedJson = credentialToJSON(credential);
@@ -15,7 +13,6 @@ export default function inspect(credential: string): InspectionResult {
       errors: parsedJson.error,
     };
   }
-  console.log('Parsed: ', parsedJson);
 
   const parsedSchema = VCSchema.safeParse(parsedJson.value.payload);
 
@@ -48,7 +45,7 @@ type ParsedJson = {
 type ParsedCredential = ParsedJson | ParsedJWT;
 
 function credentialToJSON(credential: string): Result<ParsedCredential, Error[]> {
-  const parsers = [safeJsonParse, safeJWTParse, safeCBORParse];
+  const parsers = [safeJsonParse, safeJWTParse];
   let errors = [];
 
   for (const parser of parsers) {
@@ -89,16 +86,16 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
 
 export type InspectionResult =
   | {
-    type: 'ParseError';
-    errors: Error[];
-  }
+      type: 'ParseError';
+      errors: Error[];
+    }
   | {
-    type: 'InvalidCredential';
-    parsedJson: ParsedCredential;
-    error: ZodError;
-  }
+      type: 'InvalidCredential';
+      parsedJson: ParsedCredential;
+      error: ZodError;
+    }
   | {
-    type: 'ValidCredential';
-    parsedJson: VC;
-    calculatedAttributes: CalculatedAttributes;
-  };
+      type: 'ValidCredential';
+      parsedJson: VC;
+      calculatedAttributes: CalculatedAttributes;
+    };
