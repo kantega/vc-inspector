@@ -60,5 +60,5 @@ function fromBase64url(credential: string): Result<TypedByteArray> {
   }
 
   // Webpack does not support base64url on Buffer.from i think
-  return { kind: 'ok', value: { byteType: 'base64url', byteArray: base64url.decode(credential) } };
+  return { kind: 'ok', value: { byteType: 'base64url', byteArray } };
 }
