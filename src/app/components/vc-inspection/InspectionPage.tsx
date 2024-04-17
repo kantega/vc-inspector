@@ -27,7 +27,9 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
       return;
     }
 
-    const inspectedResult = inspect(value);
+    const trimmedValue = value.trim();
+    const inspectedResult = inspect(trimmedValue);
+
     console.log(inspectedResult);
     setInspected(inspectedResult);
   }, [textAreaStatus]); // eslint-disable-line react-hooks/exhaustive-deps
