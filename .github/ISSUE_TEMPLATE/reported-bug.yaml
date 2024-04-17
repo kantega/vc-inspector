@@ -31,12 +31,13 @@ body:
   - type: dropdown
     id: inspector-or-website
     attributes:
-      label: Part
+      label: Part of repository
       description: Is this a problem related to the inspector package or the website surrounding it. Feel free to add the corresponding label as well.
       options:
         - Inspector
         - Website
         - Both
+        - Unknown
     validations:
       required: true
   - type: dropdown

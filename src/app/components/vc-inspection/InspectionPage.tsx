@@ -8,7 +8,9 @@ import { cn } from '@/utils/styling';
 import { FileType } from 'lucide-react';
 import InformationBox from '@/components/notices/InfoBox';
 
-export default function InspectionPage() {
+type InspectionPageProps = JSX.IntrinsicElements['div'] & {};
+
+export default function InspectionPage({ className, ...props }: InspectionPageProps) {
   const [value, setValue] = useState('');
   const [inspected, setInspected] = useState<InspectionResult | null>();
   const [textAreaStatus, setTextAreaStatus] = useState<'active-button' | 'min' | 'active'>('active');
@@ -33,7 +35,7 @@ export default function InspectionPage() {
   return (
     <div
       className={cn(
-        'flex min-h-screen w-full flex-col items-center gap-5 transition-all duration-200 sm:w-5/6',
+        'flex w-full flex-col items-center gap-5 transition-all duration-200 sm:w-5/6',
         onceSuccessfullyParsed && '-mt-6',
       )}
     >
