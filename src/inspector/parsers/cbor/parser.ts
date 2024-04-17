@@ -1,0 +1,50 @@
+import { Result, firstOk } from '../../calculatedAttributes/errors';
+import cbor from 'cbor';
+import { anyToByteArray } from './toByteArray';
+import { CBOR } from './cborSchema';
+
+export type ParsedCBOR = {
+  type: 'CBOR';
+  byteType: 'hex' | 'base64' | 'base64url';
+  payload: CBOR;
+};
+
+export function safeCBORParse(credential: string): Result<ParsedCBOR> {
+  const decoded = firstOk(anyToByteArray(credential));
+
+  if (decoded.kind === 'error') {
+    return {
+      kind: 'error',
+      error: {
+        name: 'No byteformat detected',
+        message: 'Not one of the supported byte formats (hex, base64url, base64)',
+      },
+    };
+  }
+
+  let cborDecoded = undefined;
+  try {
+    cborDecoded = cbor.decodeFirstSync(decoded.value.byteArray, {
+      max_depth: 500,
+      tags: { 24: (x: Uint8Array) => cbor.decodeFirstSync(x) },
+    });
+  } catch (e) {
+    return { kind: 'error', error: e as Error };
+  }
+
+  // Sometimes the issuer auth is tagged, hence this
+  if (cborDecoded.issuerSigned.issuerAuth[2] instanceof Uint8Array) {
+    cborDecoded.issuerSigned.issuerAuth[2] = cbor.decodeFirstSync(cborDecoded.issuerSigned.issuerAuth[2], {
+      tags: { 24: (x: Uint8Array) => cbor.decodeFirstSync(x) },
+    });
+  }
+
+  return {
+    kind: 'ok',
+    value: {
+      type: 'CBOR',
+      byteType: decoded.value.byteType,
+      payload: cborDecoded,
+    },
+  };
+}

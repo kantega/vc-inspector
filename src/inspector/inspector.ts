@@ -5,6 +5,7 @@ import { ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
 import { requiredErrorMap } from './errorHandling';
+import { ParsedCBOR, safeCBORParse } from './parsers/cbor/parser';
 
 z.setErrorMap(requiredErrorMap);
 
@@ -12,25 +13,17 @@ export default function inspect(credential: string): InspectionResult {
   const parsedJson = credentialToJSON(credential);
   if (parsedJson.kind == 'error') {
     return {
-      type: 'ParseError',
+      success: false,
       errors: parsedJson.error,
     };
   }
 
-  const parsedSchema = VCSchema.safeParse(parsedJson.value.payload);
-
-  if (!parsedSchema.success) {
-    return {
-      type: 'InvalidCredential',
-      parsedJson: parsedJson.value,
-      error: parsedSchema.error,
-    };
-  }
+  // const parsedSchema = VCSchema.safeParse(parsedJson.value.payload);
 
   return {
-    type: 'ValidCredential',
-    parsedJson: parsedSchema.data,
-    calculatedAttributes: calculateAttributes(parsedSchema.data),
+    success: true,
+    parsedJson: parsedJson.value,
+    calculatedAttributes: calculateAttributes(parsedJson.value.payload),
   };
 }
 
@@ -45,10 +38,10 @@ type ParsedJson = {
   payload: JSON;
 };
 
-type ParsedCredential = ParsedJson | ParsedJWT;
+type ParsedCredential = ParsedJson | ParsedJWT | ParsedCBOR;
 
 function credentialToJSON(credential: string): Result<ParsedCredential, Error[]> {
-  const parsers = [safeJsonParse, safeJWTParse];
+  const parsers = [safeJsonParse, safeJWTParse, safeCBORParse];
   let errors = [];
 
   for (const parser of parsers) {
@@ -87,20 +80,15 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
   }
 }
 
-export type ParseErrorResult = {
-  type: 'ParseError';
+export type ParseError = {
+  success: false;
   errors: Error[];
 };
 
-export type InvalidCredentialResult = {
-  type: 'InvalidCredential';
+export type SuccessfullParse = {
+  success: true;
   parsedJson: ParsedCredential;
-  error: ZodError;
-};
-export type ValidCredentialResult = {
-  type: 'ValidCredential';
-  parsedJson: VC;
   calculatedAttributes: CalculatedAttributes;
 };
 
-export type InspectionResult = ParseErrorResult | InvalidCredentialResult | ValidCredentialResult;
+export type InspectionResult = ParseError | SuccessfullParse;
