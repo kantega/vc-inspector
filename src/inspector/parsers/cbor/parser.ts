@@ -2,6 +2,7 @@ import { Result, firstOk } from '../../calculatedAttributes/errors';
 import cbor from 'cbor';
 import { anyToByteArray } from './toByteArray';
 import { CBOR } from './cborSchema';
+import { getErrorMessage } from '../../errorHandling';
 
 export type ParsedCBOR = {
   type: 'CBOR';
@@ -16,8 +17,8 @@ export function safeCBORParse(credential: string): Result<ParsedCBOR> {
     return {
       kind: 'error',
       error: {
-        name: 'No byteformat detected',
-        message: 'Not one of the supported byte formats (hex, base64url, base64)',
+        name: 'CBOR Parse Error',
+        message: 'No one of the supported byte formats (hex, base64url, base64) given',
       },
     };
   }
@@ -29,7 +30,7 @@ export function safeCBORParse(credential: string): Result<ParsedCBOR> {
       tags: { 24: (x: Uint8Array) => cbor.decodeFirstSync(x) },
     });
   } catch (e) {
-    return { kind: 'error', error: e as Error };
+    return { kind: 'error', error: { name: 'CBOR Parse Error', message: getErrorMessage(e) } };
   }
 
   // Sometimes the issuer auth is tagged, hence this
