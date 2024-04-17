@@ -22,10 +22,15 @@ export function safeCBORParse(credential: string): Result<ParsedCBOR> {
     };
   }
 
-  let cborDecoded = cbor.decodeFirstSync(decoded.value.byteArray, {
-    max_depth: 500,
-    tags: { 24: (x: Uint8Array) => cbor.decodeFirstSync(x) },
-  });
+  let cborDecoded = undefined;
+  try {
+    cborDecoded = cbor.decodeFirstSync(decoded.value.byteArray, {
+      max_depth: 500,
+      tags: { 24: (x: Uint8Array) => cbor.decodeFirstSync(x) },
+    });
+  } catch (e) {
+    return { kind: 'error', error: e as Error };
+  }
 
   // Sometimes the issuer auth is tagged, hence this
   if (cborDecoded.issuerSigned.issuerAuth[2] instanceof Uint8Array) {
