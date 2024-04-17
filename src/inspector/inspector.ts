@@ -4,7 +4,7 @@ import { CalculatedAttributes, calculateAttributes } from './calculatedAttribute
 import { ReasonedError, Result } from './calculatedAttributes/errors';
 import * as jose from 'jose';
 import { JWTPayload } from 'jose';
-import { requiredErrorMap } from './errorHandling';
+import { getErrorMessage, requiredErrorMap } from './errorHandling';
 import { ParsedCBOR, safeCBORParse } from './parsers/cbor/parser';
 
 z.setErrorMap(requiredErrorMap);
@@ -40,7 +40,7 @@ type ParsedJson = {
 
 type ParsedCredential = ParsedJson | ParsedJWT | ParsedCBOR;
 
-function credentialToJSON(credential: string): Result<ParsedCredential, Error[]> {
+function credentialToJSON(credential: string): Result<ParsedCredential, ReasonedError[]> {
   const parsers = [safeJsonParse, safeJWTParse, safeCBORParse];
   let errors = [];
 
@@ -60,7 +60,7 @@ function safeJsonParse(credential: string): Result<ParsedJson> {
   try {
     return { kind: 'ok', value: { type: 'JSON', payload: JSON.parse(credential) } };
   } catch (e) {
-    return { kind: 'error', error: e as ReasonedError };
+    return { kind: 'error', error: { name: 'JSON Parse Error', message: getErrorMessage(e) } };
   }
 }
 
@@ -76,13 +76,13 @@ function safeJWTParse(credential: string): Result<ParsedJWT> {
       },
     };
   } catch (e) {
-    return { kind: 'error', error: e as ReasonedError };
+    return { kind: 'error', error: { name: 'JWT Parse Error', message: getErrorMessage(e) } };
   }
 }
 
 export type ParseError = {
   success: false;
-  errors: Error[];
+  errors: ReasonedError[];
 };
 
 export type SuccessfullParse = {

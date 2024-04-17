@@ -25,3 +25,8 @@ export const requiredErrorMap: z.ZodErrorMap = (error, ctx) => {
 export function zodRequiredErrorMessage(message: string) {
   return { required_error: message };
 }
+
+export function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message;
+  return String(error);
+}

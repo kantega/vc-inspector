@@ -90,9 +90,9 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             <>
               {inspected.errors.map((error, i) => {
                 return (
-                  <p key={i} className="text-red-800">
-                    {error.message}
-                  </p>
+                  <InformationBox key={i} messageType="error" title={error.name} className="w-full">
+                    <p>{error.message}</p>
+                  </InformationBox>
                 );
               })}
             </>
