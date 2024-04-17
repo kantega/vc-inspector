@@ -25,7 +25,7 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"],
   "typedocOptions": {
-    "entryPoints": ["src/app/page.tsx"],
-    "out": "docs"
+    "entryPoints": ["src/inspector/inspector.ts"],
+    "out": "public/inspector-docs"
   }
 }
