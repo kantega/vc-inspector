@@ -36,17 +36,17 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
   const subject = standard.extractOk(inspectedResult.calculatedAttributes.credentialSubject);
   const subjectValues = subject
     ? subject.claims.map((claim) => {
-      // TODO: Current limitation, nested claims will not work
-      if (typeof claim.value === 'object') {
-        // This fixes Tagged types
-        if (claim.value && 'value' in claim.value) {
-          return { label: claim.key, value: toNode(claim.value.value as ReactNode) };
+        // TODO: Current limitation, nested claims will not work
+        if (typeof claim.value === 'object') {
+          // This fixes Tagged types
+          if (claim.value && 'value' in claim.value) {
+            return { label: claim.key, value: toNode(claim.value.value as ReactNode) };
+          }
+          console.log(claim.value);
+          return { label: claim.key, value: toNode('Nested value (current limitation, will be fixed asap)') };
         }
-        console.log(claim.value);
-        return { label: claim.key, value: toNode('Nested value (current limitation, will be fixed asap)') };
-      }
-      return { label: claim.key, value: toNode(claim.value as ReactNode) };
-    })
+        return { label: claim.key, value: toNode(claim.value as ReactNode) };
+      })
     : [];
 
   const issuer = standard.extractOk(inspectedResult.calculatedAttributes.issuer);
