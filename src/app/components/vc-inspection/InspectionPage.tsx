@@ -43,10 +43,15 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
         {onceSuccessfullyParsed ? (
           <div className="flex w-full justify-between gap-2 p-3">
             <p className="text-xl">Verifiable Credential</p>
-            <span className="flex">
-              <FileType />
-              <p>JWT-VC</p>
-            </span>
+            {inspected?.success && (
+              <>
+                <div className="flex items-center">
+                  <FileType size="1.2em" />
+                  <span className="ml-1">Format: </span>
+                  <span className="ml-1.5 rounded bg-light-gray p-0.5">{inspected.parsedJson.type}</span>
+                </div>
+              </>
+            )}
           </div>
         ) : (
           <div className="m-6 flex flex-col gap-6">
