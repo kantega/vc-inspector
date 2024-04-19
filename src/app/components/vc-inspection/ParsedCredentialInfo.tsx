@@ -106,7 +106,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
   let issuerValues: LabeledValues[] = [];
   if (issuer.kind === 'ok') {
     issuerValues = fromJSON(issuer.value.attributes); // Inspector needs to support more attributes
-    issuerValues.push(labeledValue('id', toNode(issuer.value.id)));
+    issuerValues.unshift(labeledValue('id', toNode(issuer.value.id)));
   }
 
   return (

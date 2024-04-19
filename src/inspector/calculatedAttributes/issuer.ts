@@ -20,7 +20,7 @@ export function parseIssuer(obj: unknown): ParserResult<Issuer> {
 
 function W3CIssueParser(obj: unknown): Result<Issuer> {
   const schema = z.object({
-    issuer: z.string().or(z.object({ id: z.string() })),
+    issuer: z.string().or(z.object({ id: z.string() }).and(z.record(z.unknown()))),
   });
 
   const parsed = schema.safeParse(obj);
@@ -33,7 +33,7 @@ function W3CIssueParser(obj: unknown): Result<Issuer> {
   if (typeof issuer === 'string') {
     return toOk({ id: issuer, attributes: {} });
   } else {
-    const { id, ...attributes } = issuer as { id: string };
+    const { id, ...attributes } = issuer;
 
     return toOk({ id, attributes });
   }
