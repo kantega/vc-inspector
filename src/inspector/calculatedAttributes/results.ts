@@ -11,6 +11,7 @@ export type ReasonedError = {
 };
 
 export type Result<T, E = ReasonedError> = { kind: 'ok'; value: T } | { kind: 'error'; error: E };
+
 export function toError<E>(error: E): { kind: 'error'; error: E } {
   return { kind: 'error', error };
 }

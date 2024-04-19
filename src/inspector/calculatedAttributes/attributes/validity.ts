@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { Result } from './errors';
-import { Standards } from './standards';
-import { ParserResult, ReasonedOptional, StandardParsers, addReasonIfUndefined, toSome } from './types';
+import { ParserResult, ReasonedOptional, StandardParsers, addReasonIfUndefined, toSome } from '../types';
+import { Standards } from '../standards';
+import { Result } from '../results';
 
 export type Validity = {
   isValid: boolean;

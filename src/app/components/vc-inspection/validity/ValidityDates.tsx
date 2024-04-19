@@ -1,15 +1,13 @@
 'use client';
-import { cn } from '@/utils/styling';
 import { CircleCheck, CircleX } from 'lucide-react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/shadcn/accordion';
+import { Accordion } from '@/components/shadcn/accordion';
 import { AccordionSingleProps } from '@radix-ui/react-accordion';
-import { useEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
 import AccordionSection from '@/components/notices/AccordionSection';
+import { ReasonedOptional } from '@inspector/calculatedAttributes/types';
 
 type ValidityDatesProps = Omit<AccordionSingleProps, 'type'> & {
-  validFrom?: Date;
-  validUntil?: Date;
+  validFrom: ReasonedOptional<Date>;
+  validUntil: ReasonedOptional<Date>;
   withinDates: boolean;
 };
 
@@ -33,15 +31,6 @@ function formatDate(datetime?: Date): string | undefined {
  */
 export default function ValidityDates({ withinDates, validFrom, validUntil, className, ...props }: ValidityDatesProps) {
   const Icon = withinDates ? CircleCheck : CircleX;
-  const [fromDate, setFromDate] = useState<string>();
-  const [toDate, setToDate] = useState<string>();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setFromDate(formatDate(validFrom));
-    setToDate(formatDate(validUntil));
-    setLoading(false);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Accordion defaultValue="validity-dates" className={className} type="single" collapsible {...props}>
@@ -54,24 +43,20 @@ export default function ValidityDates({ withinDates, validFrom, validUntil, clas
         className={withinDates ? 'bg-light-green text-dark-green' : 'bg-light-red text-dark-red'}
       >
         <div className="flex flex-col gap-3 p-1">
-          {loading ? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            <>
-              <div>
-                <p className="text-lg">Valid from</p>
-                <p data-testid="valid-from-date" className="text-xl font-semibold">
-                  {fromDate ?? 'No start of validity'}
-                </p>
-              </div>
-              <div>
-                <p className="text-lg">Expires</p>
-                <p data-testid="valid-until-date" className="text-xl font-semibold">
-                  {toDate ?? 'No expiration'}
-                </p>
-              </div>
-            </>
-          )}
+          <>
+            <div>
+              <p className="text-lg">Valid from</p>
+              <p data-testid="valid-from-date" className="text-xl font-semibold">
+                {validFrom.kind === 'some' ? formatDate(validFrom.value) : validFrom.reason}
+              </p>
+            </div>
+            <div>
+              <p className="text-lg">Expires</p>
+              <p data-testid="valid-until-date" className="text-xl font-semibold">
+                {validUntil.kind === 'some' ? formatDate(validUntil.value) : validUntil.reason}
+              </p>
+            </div>
+          </>
         </div>
       </AccordionSection>
     </Accordion>
