@@ -45,6 +45,44 @@ function convertNestedClaims(claims: Claim[]): LabeledValues[] {
   });
 }
 
+function zodIssueOrMessage(error: Error) {
+  if (isZodError(error)) {
+    return (
+      <>
+        {error.issues.map((issue, i1) => {
+          if (issue.code === 'invalid_union') {
+            const errors = issue.unionErrors
+              .flatMap((i) => i.issues)
+              .map((unionIssue, i2) => {
+                const key = `${i1}-${i2}`;
+                if (unionIssue.code === 'invalid_type') {
+                  return (
+                    <p key={key}>
+                      Expected &apos;{unionIssue.expected}&apos;, but got &apos;{unionIssue.received}&apos; at{' '}
+                      {unionIssue.path.join(' -> ')}
+                    </p>
+                  );
+                }
+                return (
+                  <p key={key}>
+                    {unionIssue.path.slice(1).join(' -> ')} {unionIssue.message}
+                  </p>
+                );
+              });
+            return errors;
+          }
+          return (
+            <p key={i1}>
+              {issue.path.slice(1).join(' -> ')} {issue.message}
+            </p>
+          );
+        })}
+      </>
+    );
+  }
+  return <p>{error.message}</p>;
+}
+
 /**
  * Component to show everything relevant to a credential that can be parsed.
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
@@ -57,16 +95,19 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
 
   const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
 
-  const subjectResult = standard.getResult(inspectedResult.calculatedAttributes.credentialSubject);
-  const subject = standard.extractOk(inspectedResult.calculatedAttributes.credentialSubject);
+  const subject = standard.getResult(inspectedResult.calculatedAttributes.credentialSubject);
   let subjectValues: LabeledValues[] = [];
-  if (subject) {
-    subjectValues = convertNestedClaims(subject.claims);
-    if (subject.id) subjectValues.unshift(labeledValue('id', toNode(subject.id)));
+  if (subject.kind === 'ok') {
+    subjectValues = convertNestedClaims(subject.value.claims);
+    if (subject.value.id) subjectValues.unshift(labeledValue('id', toNode(subject.value.id)));
   }
 
-  const issuer = standard.extractOk(inspectedResult.calculatedAttributes.issuer);
-  const issuerValues = fromJSON(issuer);
+  const issuer = standard.getResult(inspectedResult.calculatedAttributes.issuer);
+  let issuerValues: LabeledValues[] = [];
+  if (issuer.kind === 'ok') {
+    issuerValues = fromJSON(issuer.value.attributes); // Inspector needs to support more attributes
+    issuerValues.push(labeledValue('id', toNode(issuer.value.id)));
+  }
 
   return (
     <div className={className} {...props}>
@@ -93,26 +134,22 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
         )}
         <Accordion
           type="multiple"
-          className="flex flex-col gap-4 [&>div]:bg-light-red [&>div]:text-dark-red"
+          className="flex flex-col gap-4 [&>div]:w-full [&>div]:bg-light-red [&>div]:text-dark-red"
           data-testid="inspection-issues"
         >
-          {subjectResult.kind === 'error' && (
+          {issuer.kind === 'error' && (
+            <AccordionSection titleIcon={CircleX} value="issuer-error" title={'Issuer'}>
+              {zodIssueOrMessage(issuer.error)}
+            </AccordionSection>
+          )}
+          {subject.kind === 'error' && (
             <AccordionSection titleIcon={CircleX} value="subject-error" title={'Credential subject'}>
-              {isZodError(subjectResult.error) ? (
-                subjectResult.error.issues.map((issue, i) => (
-                  <p key={i}>
-                    {' '}
-                    {issue.path.slice(1).join(' -> ')} {issue.message}{' '}
-                  </p>
-                ))
-              ) : (
-                <p>{subjectResult.error.message}</p>
-              )}
+              {zodIssueOrMessage(subject.error)}
             </AccordionSection>
           )}
           {dates.kind === 'error' && (
-            <AccordionSection titleIcon={CircleX} value="dates-error" title={dates.error.name}>
-              {dates.error.message}
+            <AccordionSection titleIcon={CircleX} value="dates-error" title={'Dates of validity'}>
+              {zodIssueOrMessage(dates.error)}
             </AccordionSection>
           )}
         </Accordion>
