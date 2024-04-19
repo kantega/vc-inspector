@@ -1,4 +1,4 @@
-import { Result } from '../../calculatedAttributes/results';
+import { Result } from '../../calculatedAttributes/errors';
 import { base64url } from 'jose';
 
 type TypedByteArray = {

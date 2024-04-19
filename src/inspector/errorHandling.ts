@@ -26,9 +26,6 @@ export function zodRequiredErrorMessage(message: string) {
   return { required_error: message };
 }
 
-/**
- * Function to get the error message from an error object
- */
 export function getErrorMessage(error: unknown) {
   if (error instanceof Error) return error.message;
   return String(error);

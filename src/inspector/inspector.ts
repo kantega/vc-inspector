@@ -1,39 +1,14 @@
-import z from 'zod';
+import z, { ZodError } from 'zod';
+import { VC, VCSchema } from './credentialSchemas/verifiableCredential';
 import { CalculatedAttributes, calculateAttributes } from './calculatedAttributes/calculateAttributes';
-import { ReasonedError, Result } from './calculatedAttributes/results';
-import { requiredErrorMap } from './errorHandling';
+import { ReasonedError, Result } from './calculatedAttributes/errors';
+import * as jose from 'jose';
+import { JWTPayload } from 'jose';
+import { getErrorMessage, requiredErrorMap } from './errorHandling';
 import { ParsedCBOR, safeCBORParse } from './parsers/cbor/parser';
-import { ParsedJson, safeJsonParse } from './parsers/json';
-import { ParsedJWT, safeJWTParse } from './parsers/jwt';
 
 z.setErrorMap(requiredErrorMap);
 
-export type ParseError = {
-  success: false;
-  errors: ReasonedError[];
-};
-
-export type SuccessfullParse = {
-  success: true;
-  parsedJson: ParsedCredential;
-  calculatedAttributes: CalculatedAttributes;
-};
-
-/**
- * This type represents the result of the inspection.
- * It can either be a ParseError or a SuccessfullParse.
- * The SuccessfullParse contains the parsed credential and the calculated attributes.
- * The ParseError contains the errors that occured during parsing.
- */
-export type InspectionResult = ParseError | SuccessfullParse;
-
-/**
- * This function is the entry point for the inspector.
- * It takes a credential and returns an InspectionResult.
- *
- * Current supported formats are JSON, JWT and CBOR.
- * Formats such as SD-JWT are not supported.
- */
 export default function inspect(credential: string): InspectionResult {
   const parsedJson = credentialToJSON(credential);
   if (parsedJson.kind == 'error') {
@@ -43,6 +18,8 @@ export default function inspect(credential: string): InspectionResult {
     };
   }
 
+  // const parsedSchema = VCSchema.safeParse(parsedJson.value.payload);
+
   return {
     success: true,
     parsedJson: parsedJson.value,
@@ -50,11 +27,19 @@ export default function inspect(credential: string): InspectionResult {
   };
 }
 
-export type ParsedCredential = ParsedJson | ParsedJWT | ParsedCBOR;
+type ParsedJWT = {
+  type: 'JWT';
+  jwtPayload: JWTPayload;
+  payload: JSON;
+};
 
-/**
- * This function takes a credential and tries to parse it as JSON, JWT and CBOR.
- */
+type ParsedJson = {
+  type: 'JSON';
+  payload: JSON;
+};
+
+type ParsedCredential = ParsedJson | ParsedJWT | ParsedCBOR;
+
 function credentialToJSON(credential: string): Result<ParsedCredential, ReasonedError[]> {
   const parsers = [safeJsonParse, safeJWTParse, safeCBORParse];
   let errors = [];
@@ -70,3 +55,40 @@ function credentialToJSON(credential: string): Result<ParsedCredential, Reasoned
 
   return { kind: 'error', error: errors };
 }
+
+function safeJsonParse(credential: string): Result<ParsedJson> {
+  try {
+    return { kind: 'ok', value: { type: 'JSON', payload: JSON.parse(credential) } };
+  } catch (e) {
+    return { kind: 'error', error: { name: 'JSON Parse Error', message: getErrorMessage(e) } };
+  }
+}
+
+function safeJWTParse(credential: string): Result<ParsedJWT> {
+  try {
+    const { vc, ...jwtPayload } = jose.decodeJwt(credential);
+    return {
+      kind: 'ok',
+      value: {
+        type: 'JWT',
+        payload: vc as JSON,
+        jwtPayload,
+      },
+    };
+  } catch (e) {
+    return { kind: 'error', error: { name: 'JWT Parse Error', message: getErrorMessage(e) } };
+  }
+}
+
+export type ParseError = {
+  success: false;
+  errors: ReasonedError[];
+};
+
+export type SuccessfullParse = {
+  success: true;
+  parsedJson: ParsedCredential;
+  calculatedAttributes: CalculatedAttributes;
+};
+
+export type InspectionResult = ParseError | SuccessfullParse;

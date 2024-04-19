@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { Result, toError, toOk } from '../results';
-import { Standards } from '../standards';
-import { ParserResult, StandardParsers, standardParsersToParserResult, unimplementedParser } from '../types';
+import { Result, toError, toOk } from './errors';
+import { Standards } from './standards';
+import { ParserResult, StandardParsers, standardParsersToParserResult, unimplementedParser } from './types';
 
 export type Issuer = {
   id: string;

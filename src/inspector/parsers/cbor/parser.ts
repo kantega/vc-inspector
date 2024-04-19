@@ -1,4 +1,4 @@
-import { Result, firstOk } from '../../calculatedAttributes/results';
+import { Result, firstOk } from '../../calculatedAttributes/errors';
 import cbor from 'cbor';
 import { anyToByteArray } from './toByteArray';
 import { CBOR } from './cborSchema';
@@ -23,7 +23,7 @@ export function safeCBORParse(credential: string): Result<ParsedCBOR> {
     };
   }
 
-  let cborDecoded;
+  let cborDecoded = undefined;
   try {
     cborDecoded = cbor.decodeFirstSync(decoded.value.byteArray, {
       max_depth: 500,
