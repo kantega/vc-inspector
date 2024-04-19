@@ -1,9 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/shadcn/card';
-import { isPrimitive, isStrRecord } from '@/utils/assertTypes';
+import { isPrimitive, isStrRecord } from '@inspector/assertTypes';
 import { cn } from '@/utils/styling';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
-import { Claim, CredentialSubject } from '@inspector/calculatedAttributes/credentialSubject';
 
 type LeafNode = {
   kind: 'leaf';

@@ -1,5 +1,6 @@
 import { ReasonedError, Result } from './errors';
 import { Standards } from './standards';
+import { ZodError } from 'zod';
 
 export type ParserResult<T> = Record<Standards, Result<T>>;
 export type ReasonedOptional<T> = { kind: 'some'; value: T } | { kind: 'none'; reason: string };
@@ -57,4 +58,8 @@ export function addReasonIfUndefined<T>(obj: T | undefined, reason: string): Rea
 
 export function toSome<T>(obj: T): { kind: 'some'; value: T } {
   return { kind: 'some', value: obj };
+}
+
+export function isZodError(obj: unknown): obj is ZodError {
+  return obj instanceof Error && 'issues' in obj;
 }

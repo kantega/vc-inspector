@@ -13,9 +13,10 @@ import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
-import { ReactNode } from 'react';
-import { isPrimitive, isStrRecord } from '@/utils/assertTypes';
-import { Claim } from '../../../inspector/calculatedAttributes/credentialSubject';
+import { Claim } from '@inspector/calculatedAttributes/credentialSubject';
+import { isPrimitive } from '@inspector/assertTypes';
+import { isClaimList } from '../../../inspector/calculatedAttributes/credentialSubject';
+import { isZodError } from '../../../inspector/calculatedAttributes/types';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -32,18 +33,15 @@ function HLineWithText({ text }: { text: string }) {
 function convertNestedClaims(claims: Claim[]): LabeledValues[] {
   return claims.map((c) => {
     let toPush = undefined;
-    // What if the claims array in c.value is empty? Do not add anyway
-    if (Array.isArray(c.value) && c.value.length > 0 && 'value' in c.value[0]) {
+    if (isClaimList(c.value)) {
       toPush = toNested(convertNestedClaims(c.value));
-    } else if (isStrRecord(c.value)) {
-      toPush = toNested(fromJSON(c.value));
     } else if (isPrimitive(c.value)) {
       toPush = toNode(c.value);
     }
     if (toPush) {
       return labeledValue(c.key, toPush);
     }
-    return labeledValue(c.key, toNode('Unknown value: ' + c.value));
+    return labeledValue(c.key, toNode(`Unknown value '${c.value}'`));
   });
 }
 
@@ -54,7 +52,7 @@ function convertNestedClaims(claims: Claim[]): LabeledValues[] {
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
   // TODO: More dynamic types
   const standard = new StandardRetriever(
-    inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
+    inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V1,
   );
 
   const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
@@ -93,7 +91,25 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             validUntil={getSomeValue(dates.value.validityDates.validUntil)}
           />
         )}
-        <Accordion type="multiple" className="flex flex-col gap-4" data-testid="inspection-issues">
+        <Accordion
+          type="multiple"
+          className="flex flex-col gap-4 [&>div]:bg-light-red [&>div]:text-dark-red"
+          data-testid="inspection-issues"
+        >
+          {subjectResult.kind === 'error' && (
+            <AccordionSection titleIcon={CircleX} value="subject-error" title={'Credential subject'}>
+              {isZodError(subjectResult.error) ? (
+                subjectResult.error.issues.map((issue, i) => (
+                  <p key={i}>
+                    {' '}
+                    {issue.path.slice(1).join(' -> ')} {issue.message}{' '}
+                  </p>
+                ))
+              ) : (
+                <p>{subjectResult.error.message}</p>
+              )}
+            </AccordionSection>
+          )}
           {dates.kind === 'error' && (
             <AccordionSection titleIcon={CircleX} value="dates-error" title={dates.error.name}>
               {dates.error.message}
