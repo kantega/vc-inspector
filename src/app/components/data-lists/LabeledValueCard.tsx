@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/shadcn/card';
-import { isStrRecord } from '@/utils/assertTypes';
+import { isPrimitive, isStrRecord } from '@/utils/assertTypes';
 import { cn } from '@/utils/styling';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
@@ -15,7 +15,7 @@ type NestedNodes = {
   values: LabeledValues[];
 };
 
-type LabeledValues = {
+export type LabeledValues = {
   label: string;
   value: LeafNode | NestedNodes;
 };
@@ -53,7 +53,7 @@ export function fromJSON(json: Record<string, unknown> | undefined): LabeledValu
       values.push({ label: key, value: node(value.join(', ')) });
     } else if (isStrRecord(value)) {
       values.push({ label: key, value: nested(fromJSON(value)) });
-    } else if (typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number') {
+    } else if (isPrimitive(value)) {
       values.push({ label: key, value: node(value) });
     }
   }

@@ -1,6 +1,12 @@
 import { getSomeValue, StandardRetriever } from '@inspector/calculatedAttributes/types';
 import { Standards } from '@inspector/calculatedAttributes/standards';
-import LabeledValueCard, { fromJSON, labeledValue, node as toNode } from '@/components/data-lists/LabeledValueCard';
+import LabeledValueCard, {
+  fromJSON,
+  labeledValue,
+  LabeledValues,
+  nested as toNested,
+  node as toNode,
+} from '@/components/data-lists/LabeledValueCard';
 import { CircleUser, CircleX, FilePenLine } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 import { Accordion } from '@/components/shadcn/accordion';
@@ -8,6 +14,8 @@ import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
 import { ReactNode } from 'react';
+import { isPrimitive, isStrRecord } from '@/utils/assertTypes';
+import { Claim } from '../../../inspector/calculatedAttributes/credentialSubject';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -21,6 +29,24 @@ function HLineWithText({ text }: { text: string }) {
   );
 }
 
+function convertNestedClaims(claims: Claim[]): LabeledValues[] {
+  return claims.map((c) => {
+    let toPush = undefined;
+    // What if the claims array in c.value is empty? Do not add anyway
+    if (Array.isArray(c.value) && c.value.length > 0 && 'value' in c.value[0]) {
+      toPush = toNested(convertNestedClaims(c.value));
+    } else if (isStrRecord(c.value)) {
+      toPush = toNested(fromJSON(c.value));
+    } else if (isPrimitive(c.value)) {
+      toPush = toNode(c.value);
+    }
+    if (toPush) {
+      return labeledValue(c.key, toPush);
+    }
+    return labeledValue(c.key, toNode('Unknown value: ' + c.value));
+  });
+}
+
 /**
  * Component to show everything relevant to a credential that can be parsed.
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
@@ -31,23 +57,15 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
     inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
   );
 
-  const dates = standard.extractOk(inspectedResult.calculatedAttributes.validityDates);
+  const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
 
+  const subjectResult = standard.getResult(inspectedResult.calculatedAttributes.credentialSubject);
   const subject = standard.extractOk(inspectedResult.calculatedAttributes.credentialSubject);
-  const subjectValues = subject
-    ? subject.claims.map((claim) => {
-        // TODO: Current limitation, nested claims will not work
-        if (typeof claim.value === 'object') {
-          // This fixes Tagged types
-          if (claim.value && 'value' in claim.value) {
-            return { label: claim.key, value: toNode(claim.value.value as ReactNode) };
-          }
-          console.log(claim.value);
-          return { label: claim.key, value: toNode('Nested value (current limitation, will be fixed asap)') };
-        }
-        return { label: claim.key, value: toNode(claim.value as ReactNode) };
-      })
-    : [];
+  let subjectValues: LabeledValues[] = [];
+  if (subject) {
+    subjectValues = convertNestedClaims(subject.claims);
+    if (subject.id) subjectValues.unshift(labeledValue('id', toNode(subject.id)));
+  }
 
   const issuer = standard.extractOk(inspectedResult.calculatedAttributes.issuer);
   const issuerValues = fromJSON(issuer);
@@ -68,14 +86,20 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
           className="row-span-2"
           data-testid="subject-card"
         />
-        {dates && (
+        {dates.kind == 'ok' && (
           <ValidityDates
-            withinDates={dates.isValid}
-            validFrom={getSomeValue(dates.validityDates.validFrom)}
-            validUntil={getSomeValue(dates.validityDates.validUntil)}
+            withinDates={dates.value.isValid}
+            validFrom={getSomeValue(dates.value.validityDates.validFrom)}
+            validUntil={getSomeValue(dates.value.validityDates.validUntil)}
           />
         )}
-        <Accordion type="multiple" className="flex flex-col gap-4" data-testid="inspection-issues"></Accordion>
+        <Accordion type="multiple" className="flex flex-col gap-4" data-testid="inspection-issues">
+          {dates.kind === 'error' && (
+            <AccordionSection titleIcon={CircleX} value="dates-error" title={dates.error.name}>
+              {dates.error.message}
+            </AccordionSection>
+          )}
+        </Accordion>
       </div>
 
       <Accordion type="single" collapsible className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
