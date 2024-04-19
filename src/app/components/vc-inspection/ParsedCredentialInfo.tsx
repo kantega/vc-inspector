@@ -1,13 +1,13 @@
-import { getSomeValue, StandardRetriever } from '@inspector/calculatedAttributes/types';
 import { Standards } from '@inspector/calculatedAttributes/standards';
-import LabeledValueCard, { fromJSON, labeledValue, node as toNode } from '@/components/data-lists/LabeledValueCard';
-import { CircleUser, CircleX, FilePenLine } from 'lucide-react';
+import LabeledValueCard, { fromJSON, node as toNode } from '@/components/data-lists/LabeledValueCard';
+import { CircleUser, FilePenLine } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
 import { ReactNode } from 'react';
+import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -71,8 +71,8 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
         {dates && (
           <ValidityDates
             withinDates={dates.isValid}
-            validFrom={getSomeValue(dates.validityDates.validFrom)}
-            validUntil={getSomeValue(dates.validityDates.validUntil)}
+            validFrom={dates.validityDates.validFrom}
+            validUntil={dates.validityDates.validUntil}
           />
         )}
         <Accordion type="multiple" className="flex flex-col gap-4" data-testid="inspection-issues"></Accordion>

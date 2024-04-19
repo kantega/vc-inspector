@@ -3,7 +3,6 @@ import { isStrRecord } from '@/utils/assertTypes';
 import { cn } from '@/utils/styling';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
-import { Claim, CredentialSubject } from '@inspector/calculatedAttributes/credentialSubject';
 
 type LeafNode = {
   kind: 'leaf';
