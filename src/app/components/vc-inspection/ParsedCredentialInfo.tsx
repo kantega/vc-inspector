@@ -98,7 +98,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
           <HLineWithText text="Credential" />
           <div className="flex flex-col gap-4">
             <AccordionSection title="Proof" value="proof">
-              <UnderConstruction />
+              <UnderConstruction size="medium" />
             </AccordionSection>
           </div>
         </div>
