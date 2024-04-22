@@ -1,7 +1,7 @@
-import { CredentialSubject, parseCredentialSubject } from './credentialSubject';
-import { Issuer, parseIssuer } from './issuer';
+import { CredentialSubject, parseCredentialSubject } from './attributes/credentialSubject';
+import { Issuer, parseIssuer } from './attributes/issuer';
 import { ParserResult } from './types';
-import { Validity, parseValidityDates } from './validity';
+import { Validity, parseValidityDates } from './attributes/validity';
 
 export type CalculatedAttributes = {
   validityDates: ParserResult<Validity>;

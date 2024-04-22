@@ -1,4 +1,3 @@
-import { getSomeValue, StandardRetriever } from '@inspector/calculatedAttributes/types';
 import { Standards } from '@inspector/calculatedAttributes/standards';
 import LabeledValueCard, {
   fromJSON,
@@ -13,10 +12,12 @@ import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
-import { Claim } from '@inspector/calculatedAttributes/credentialSubject';
+import { Claim } from '@inspector/calculatedAttributes/attributes/credentialSubject';
 import { isPrimitive } from '@inspector/assertTypes';
-import { isClaimList } from '@inspector/calculatedAttributes/credentialSubject';
+import { isClaimList } from '@inspector/calculatedAttributes/attributes/credentialSubject';
 import ZodIssueFormatter from '@/components/vc-inspection/ZodIssueFormatter';
+import UnderConstruction from '@/components/notices/UnderConstruction';
+import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -90,8 +91,8 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
         {dates.kind == 'ok' && (
           <ValidityDates
             withinDates={dates.value.isValid}
-            validFrom={getSomeValue(dates.value.validityDates.validFrom)}
-            validUntil={getSomeValue(dates.value.validityDates.validUntil)}
+            validFrom={dates.value.validityDates.validFrom}
+            validUntil={dates.value.validityDates.validUntil}
           />
         )}
         <Accordion
@@ -135,7 +136,9 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
         <div>
           <HLineWithText text="Credential" />
           <div className="flex flex-col gap-4">
-            <AccordionSection title="Proof" value="proof"></AccordionSection>
+            <AccordionSection title="Proof" value="proof">
+              <UnderConstruction />
+            </AccordionSection>
           </div>
         </div>
       </Accordion>

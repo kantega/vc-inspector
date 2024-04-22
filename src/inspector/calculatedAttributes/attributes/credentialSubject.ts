@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { Result, toError, toOk } from './errors';
-import { Standards } from './standards';
-import { ParserResult, StandardParsers, standardParsersToParserResult } from './types';
-import { Primitive, isPrimitive, isStrRecord } from '../assertTypes';
+import { Result, toError, toOk } from '../results';
+import { Primitive, isPrimitive, isStrRecord } from '../../assertTypes';
+import { Standards } from '../standards';
+import { ParserResult, StandardParsers, standardParsersToParserResult } from '../types';
 
 export type CredentialSubject = {
   id?: string;
