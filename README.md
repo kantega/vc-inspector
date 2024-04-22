@@ -8,6 +8,10 @@ Will be aligned with eIDAS 2.0
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Inspector documentation
+
+Documentation to the inspector package can be found [here](https://vc-inspector.vercel.app/inspector-docs/index.html)
+
 ## Getting Started
 
 First, run the development server:
