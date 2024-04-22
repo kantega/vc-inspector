@@ -15,8 +15,8 @@ import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
 import { Claim } from '@inspector/calculatedAttributes/credentialSubject';
 import { isPrimitive } from '@inspector/assertTypes';
-import { isClaimList } from '../../../inspector/calculatedAttributes/credentialSubject';
-import { isZodError } from '../../../inspector/calculatedAttributes/types';
+import { isClaimList } from '@inspector/calculatedAttributes/credentialSubject';
+import ZodIssueFormatter from '@/components/vc-inspection/ZodIssueFormatter';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -45,44 +45,6 @@ function convertNestedClaims(claims: Claim[]): LabeledValues[] {
   });
 }
 
-function zodIssueOrMessage(error: Error) {
-  if (isZodError(error)) {
-    return (
-      <>
-        {error.issues.map((issue, i1) => {
-          if (issue.code === 'invalid_union') {
-            const errors = issue.unionErrors
-              .flatMap((i) => i.issues)
-              .map((unionIssue, i2) => {
-                const key = `${i1}-${i2}`;
-                if (unionIssue.code === 'invalid_type') {
-                  return (
-                    <p key={key}>
-                      Expected &apos;{unionIssue.expected}&apos;, but got &apos;{unionIssue.received}&apos; at{' '}
-                      {unionIssue.path.join(' -> ')}
-                    </p>
-                  );
-                }
-                return (
-                  <p key={key}>
-                    {unionIssue.path.slice(1).join(' -> ')} {unionIssue.message}
-                  </p>
-                );
-              });
-            return errors;
-          }
-          return (
-            <p key={i1}>
-              {issue.path.slice(1).join(' -> ')} {issue.message}
-            </p>
-          );
-        })}
-      </>
-    );
-  }
-  return <p>{error.message}</p>;
-}
-
 /**
  * Component to show everything relevant to a credential that can be parsed.
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
@@ -90,7 +52,7 @@ function zodIssueOrMessage(error: Error) {
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
   // TODO: More dynamic types
   const standard = new StandardRetriever(
-    inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V1,
+    inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
   );
 
   const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
@@ -139,17 +101,17 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
         >
           {issuer.kind === 'error' && (
             <AccordionSection titleIcon={CircleX} value="issuer-error" title={'Issuer'}>
-              {zodIssueOrMessage(issuer.error)}
+              <ZodIssueFormatter error={issuer.error} />
             </AccordionSection>
           )}
           {subject.kind === 'error' && (
             <AccordionSection titleIcon={CircleX} value="subject-error" title={'Credential subject'}>
-              {zodIssueOrMessage(subject.error)}
+              <ZodIssueFormatter error={subject.error} />
             </AccordionSection>
           )}
           {dates.kind === 'error' && (
             <AccordionSection titleIcon={CircleX} value="dates-error" title={'Dates of validity'}>
-              {zodIssueOrMessage(dates.error)}
+              <ZodIssueFormatter error={dates.error} />
             </AccordionSection>
           )}
         </Accordion>
