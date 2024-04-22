@@ -1,5 +1,5 @@
 node_modules/
 dist/
-docs/
+public/inspector-docs/
 prettier.config.js
 pnpm-lock.yaml
