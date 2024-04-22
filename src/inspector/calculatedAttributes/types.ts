@@ -1,53 +1,19 @@
-import { ReasonedError, Result } from './errors';
+import { ReasonedError, Result } from './results';
 import { Standards } from './standards';
 
+/**
+ * ParserResult is a record of the results of parsing an object with a parser for each standard.
+ */
 export type ParserResult<T> = Record<Standards, Result<T>>;
-export type ReasonedOptional<T> = { kind: 'some'; value: T } | { kind: 'none'; reason: string };
-
-export function getSomeValue<T>(optional: ReasonedOptional<T>): T | undefined {
-  if (optional.kind === 'some') return optional.value;
-}
 
 /**
- * Simple class to store the standard used and retrieve results
- * with the same standard.
+ * Optional type that includes a reason for why the value is not present.
  */
-export class StandardRetriever {
-  private standard: Standards;
-  public constructor(standard: Standards) {
-    this.standard = standard;
-  }
-  /**
-   * Turn the result type of a standard into its contained
-   * type if it is ok or undefined otherwise.
-   */
-  public extractOk<T>(standardResults: ParserResult<T>): T | undefined {
-    let res = standardResults[this.standard];
-    if (res.kind === 'ok') return res.value;
-  }
+export type ReasonedOptional<T> = { kind: 'some'; value: T } | { kind: 'none'; reason: string };
 
-  /**
-   * Get the result type from the standard
-   */
-  public getResult<T>(standardResults: ParserResult<T>): Result<T> {
-    return standardResults[this.standard];
-  }
-}
-
-export type StandardParsers<T> = { standard: Standards; parser: (obj: unknown) => Result<T> }[];
-
-/*
- * Helper method for converting standardParsers to Parser Result.
- *
- * Note that this does not take into consideration if the standardParsers does not contain all th e ParserResult */
-export function standardParsersToParserResult<T>(standardParsers: StandardParsers<T>, obj: unknown): ParserResult<T> {
-  return Object.fromEntries(standardParsers.map(({ standard, parser }) => [standard, parser(obj)])) as ParserResult<T>;
-}
-
-export function unimplementedParser(_: unknown): { kind: 'error'; error: ReasonedError } {
-  return { kind: 'error', error: { name: 'Unimplemented', message: 'Parser is not implemented' } };
-}
-
+/**
+ * Helper method for {@link ReasonedOptional} that adds a reason if the object is undefined.
+ */
 export function addReasonIfUndefined<T>(obj: T | undefined, reason: string): ReasonedOptional<T> {
   if (obj) {
     return { kind: 'some', value: obj };
@@ -58,3 +24,33 @@ export function addReasonIfUndefined<T>(obj: T | undefined, reason: string): Rea
 export function toSome<T>(obj: T): { kind: 'some'; value: T } {
   return { kind: 'some', value: obj };
 }
+
+export function toNone(reason: string): { kind: 'none'; reason: string } {
+  return { kind: 'none', reason };
+}
+/**
+ * StandardParsers is a list of parsers that are associated with a standard.
+ */
+export type StandardParsers<T> = { standard: Standards; parser: (obj: unknown) => Result<T> }[];
+
+/*
+ * Helper method for converting standardParsers to Parser Result.
+ *
+ * Note that this does not take into consideration if the standardParsers does not contain all the ParserResult
+ */
+export function standardParsersToParserResult<T>(standardParsers: StandardParsers<T>, obj: unknown): ParserResult<T> {
+  return Object.fromEntries(standardParsers.map(({ standard, parser }) => [standard, parser(obj)])) as ParserResult<T>;
+}
+
+/**
+ * Helper variable for defining a unimplemented parser for a standard that is not implemented yet.
+ */
+export const unimplementedParser: (obj: unknown) => { kind: 'error'; error: ReasonedError } = (_: unknown) => {
+  return {
+    kind: 'error',
+    error: {
+      name: 'Unimplemented',
+      message: 'Parser is not implemented',
+    },
+  };
+};
