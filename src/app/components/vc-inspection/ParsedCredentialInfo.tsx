@@ -7,6 +7,7 @@ import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
 import { ReactNode } from 'react';
+import UnderConstruction from '../notices/UnderConstruction';
 import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
@@ -96,7 +97,9 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
         <div>
           <HLineWithText text="Credential" />
           <div className="flex flex-col gap-4">
-            <AccordionSection title="Proof" value="proof"></AccordionSection>
+            <AccordionSection title="Proof" value="proof">
+              <UnderConstruction />
+            </AccordionSection>
           </div>
         </div>
       </Accordion>
