@@ -9,8 +9,11 @@ export default function ZodIssueFormatter({ error }: { error: Error }) {
       <>
         {error.issues.map((issue, i1) => {
           if (issue.code === 'invalid_union') {
-            const errors = Array.from(new Set(issue.unionErrors))
-              .flatMap((i) => Array.from(new Set(i.issues)))
+            // TODO: Find out why zod has list in union errors with the same error
+            const errors = issue.unionErrors
+              .map((i) => i.issues.at(0))
+              .filter((i) => i !== undefined)
+              .map((i) => i!)
               .map((unionIssue, i2) => {
                 const key = `${i1}-${i2}`;
                 if (unionIssue.code === 'invalid_type') {

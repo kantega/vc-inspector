@@ -18,6 +18,7 @@ import { isClaimList } from '@inspector/calculatedAttributes/attributes/credenti
 import ZodIssueFormatter from '@/components/vc-inspection/ZodIssueFormatter';
 import UnderConstruction from '@/components/notices/UnderConstruction';
 import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
+import InformationBox from '../notices/InfoBox';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -75,47 +76,37 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
   return (
     <div className={className} {...props}>
       <div className="grid grid-cols-2 gap-8">
-        <LabeledValueCard
-          title="Issuer"
-          titleIcon={FilePenLine}
-          values={issuerValues ?? []}
-          data-testid="issuer-card"
-        />
-        <LabeledValueCard
-          title="Subject"
-          titleIcon={CircleUser}
-          values={subjectValues ?? []}
-          className="row-span-2"
-          data-testid="subject-card"
-        />
-        {dates.kind == 'ok' && (
+        {issuer.kind === 'ok' ? (
+          <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
+        ) : (
+          <InformationBox title="Issuer" messageType="error">
+            <ZodIssueFormatter error={issuer.error} />
+          </InformationBox>
+        )}
+        {subject.kind === 'ok' ? (
+          <LabeledValueCard
+            title="Subject"
+            titleIcon={CircleUser}
+            values={subjectValues}
+            className="row-span-2"
+            data-testid="subject-card"
+          />
+        ) : (
+          <InformationBox title="Credential subject" messageType="error">
+            <ZodIssueFormatter error={subject.error} />
+          </InformationBox>
+        )}
+        {dates.kind == 'ok' ? (
           <ValidityDates
             withinDates={dates.value.isValid}
             validFrom={dates.value.validityDates.validFrom}
             validUntil={dates.value.validityDates.validUntil}
           />
+        ) : (
+          <InformationBox title="Dates of validity" messageType="error">
+            <ZodIssueFormatter error={dates.error} />
+          </InformationBox>
         )}
-        <Accordion
-          type="multiple"
-          className="flex flex-col gap-4 [&>div]:w-full [&>div]:bg-light-red [&>div]:text-dark-red"
-          data-testid="inspection-issues"
-        >
-          {issuer.kind === 'error' && (
-            <AccordionSection titleIcon={CircleX} value="issuer-error" title={'Issuer'}>
-              <ZodIssueFormatter error={issuer.error} />
-            </AccordionSection>
-          )}
-          {subject.kind === 'error' && (
-            <AccordionSection titleIcon={CircleX} value="subject-error" title={'Credential subject'}>
-              <ZodIssueFormatter error={subject.error} />
-            </AccordionSection>
-          )}
-          {dates.kind === 'error' && (
-            <AccordionSection titleIcon={CircleX} value="dates-error" title={'Dates of validity'}>
-              <ZodIssueFormatter error={dates.error} />
-            </AccordionSection>
-          )}
-        </Accordion>
       </div>
 
       <Accordion type="single" collapsible className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
