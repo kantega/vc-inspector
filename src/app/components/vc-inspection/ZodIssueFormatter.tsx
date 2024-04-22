@@ -9,8 +9,8 @@ export default function ZodIssueFormatter({ error }: { error: Error }) {
       <>
         {error.issues.map((issue, i1) => {
           if (issue.code === 'invalid_union') {
-            const errors = issue.unionErrors
-              .flatMap((i) => i.issues)
+            const errors = Array.from(new Set(issue.unionErrors))
+              .flatMap((i) => Array.from(new Set(i.issues)))
               .map((unionIssue, i2) => {
                 const key = `${i1}-${i2}`;
                 if (unionIssue.code === 'invalid_type') {
@@ -23,7 +23,7 @@ export default function ZodIssueFormatter({ error }: { error: Error }) {
                 }
                 return (
                   <p key={key}>
-                    {unionIssue.path.slice(1).join(' -> ')} {unionIssue.message}
+                    {unionIssue.path.join(' -> ')}: {unionIssue.message}
                   </p>
                 );
               });
@@ -31,7 +31,7 @@ export default function ZodIssueFormatter({ error }: { error: Error }) {
           }
           return (
             <p key={i1}>
-              {issue.path.slice(1).join(' -> ')} {issue.message}
+              {issue.path.join(' -> ')}: {issue.message}
             </p>
           );
         })}
