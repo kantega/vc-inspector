@@ -6,7 +6,7 @@ import LabeledValueCard, {
   nested as toNested,
   node as toNode,
 } from '@/components/data-lists/LabeledValueCard';
-import { CircleUser, CircleX, FilePenLine } from 'lucide-react';
+import { CircleUser, FilePenLine } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
@@ -46,6 +46,13 @@ function convertNestedClaims(claims: Claim[]): LabeledValues[] {
     return labeledValue(c.key, toNode(`Unknown value '${c.value}'`));
   });
 }
+function ErrorBox({ title, error }: { title: string; error: Error }) {
+  return (
+    <InformationBox title={<span className="text-xl">{title}</span>} className="[&>*]:text-lg" messageType="error">
+      <ZodIssueFormatter error={error} />
+    </InformationBox>
+  );
+}
 
 /**
  * Component to show everything relevant to a credential that can be parsed.
@@ -79,9 +86,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
         {issuer.kind === 'ok' ? (
           <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
         ) : (
-          <InformationBox title="Issuer" messageType="error">
-            <ZodIssueFormatter error={issuer.error} />
-          </InformationBox>
+          <ErrorBox title="Issuer" error={issuer.error} />
         )}
         {subject.kind === 'ok' ? (
           <LabeledValueCard
@@ -92,9 +97,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             data-testid="subject-card"
           />
         ) : (
-          <InformationBox title="Credential subject" messageType="error">
-            <ZodIssueFormatter error={subject.error} />
-          </InformationBox>
+          <ErrorBox title="Credential subject" error={subject.error} />
         )}
         {dates.kind == 'ok' ? (
           <ValidityDates
@@ -103,9 +106,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
             validUntil={dates.value.validityDates.validUntil}
           />
         ) : (
-          <InformationBox title="Dates of validity" messageType="error">
-            <ZodIssueFormatter error={dates.error} />
-          </InformationBox>
+          <ErrorBox title="Dates of validity" error={dates.error} />
         )}
       </div>
 

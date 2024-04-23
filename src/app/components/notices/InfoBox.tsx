@@ -1,6 +1,7 @@
 import { cn } from '@/utils/styling';
 import { VariantProps, cva } from 'class-variance-authority';
 import { Info, CircleAlert, CircleX, CircleCheck, LucideIcon } from 'lucide-react';
+import { ReactNode } from 'react';
 
 const messageType = {
   neutral: 'bg-light-blue text-dark-blue',
@@ -18,9 +19,9 @@ export const infoBoxVariants = cva('rounded-2xl p-4 text-sm', {
   },
 });
 
-type InfoBoxProps = JSX.IntrinsicElements['div'] &
+type InfoBoxProps = Omit<JSX.IntrinsicElements['div'], 'title'> &
   VariantProps<typeof infoBoxVariants> & {
-    title: string;
+    title: ReactNode;
   };
 
 const icons: Record<keyof typeof messageType, LucideIcon> = {
