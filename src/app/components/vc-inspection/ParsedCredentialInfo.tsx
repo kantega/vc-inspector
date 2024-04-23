@@ -6,9 +6,10 @@ import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import UnderConstruction from '../notices/UnderConstruction';
 import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/shadcn/select';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -22,15 +23,24 @@ function HLineWithText({ text }: { text: string }) {
   );
 }
 
+const stringToStandard: Record<string, Standards> = {
+  w3c2: Standards.W3C_V2,
+  w3c1: Standards.W3C_V1,
+  mdoc: Standards.MDOC,
+  sdjwt: Standards.SD_JWT,
+};
+
 /**
  * Component to show everything relevant to a credential that can be parsed.
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
  */
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
-  // TODO: More dynamic types
-  const standard = new StandardRetriever(
+  const [selectedStandard, setSelectedStandard] = useState(
     inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
   );
+
+  // TODO: More dynamic types
+  const standard = new StandardRetriever(selectedStandard);
 
   const dates = standard.extractOk(inspectedResult.calculatedAttributes.validityDates);
 
@@ -55,6 +65,23 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
 
   return (
     <div className={className} {...props}>
+      <div className=" m-2 flex justify-center">
+        <Select
+          onValueChange={(s) => setSelectedStandard(stringToStandard[s])}
+          defaultValue={Object.entries(stringToStandard)
+            .find(([_key, standard]) => standard === selectedStandard)
+            ?.at(0)}
+        >
+          <SelectTrigger className="w-32 min-w-max">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="w3c2">W3C 2.0</SelectItem>
+            <SelectItem value="w3c1">W3C 1.1</SelectItem>
+            <SelectItem value="mdoc">MDOC</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="grid grid-cols-2 gap-8">
         <LabeledValueCard
           title="Issuer"
