@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/cose-js": "^0.8.3"
+    "@types/cose-js": "^0.8.3",
+    "vitest": "^1.5.0"
   }
 }
