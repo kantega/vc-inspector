@@ -136,8 +136,6 @@ Using other technologies like:
 
 ```sh
 pnpm dev
-
-[![LinkedIn][linkedin-shield]][linkedin-url]
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
@@ -146,7 +144,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser.
 
 ```sh
 pnpm storybook
-
 ```
 
 Open [http://localhost:6006](http://localhost:6006) with your browser.
@@ -160,6 +157,10 @@ pnpm husky
 ```
 
 to initialize husky pre-commits.
+
+#### Note:
+
+You need to run install each time a change to the inspector sub-package is made because it is its own package.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
