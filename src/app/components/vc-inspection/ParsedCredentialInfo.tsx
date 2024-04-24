@@ -67,17 +67,19 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
     <div className={className} {...props}>
       <div className=" m-2 flex justify-center">
         <Select
-          onValueChange={(s) => setSelectedStandard(stringToStandard[s])}
+          onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
           defaultValue={Object.entries(stringToStandard)
             .find(([_key, standard]) => standard === selectedStandard)
             ?.at(0)}
         >
-          <SelectTrigger className="w-32 min-w-max">
+          <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="w3c2">W3C 2.0</SelectItem>
-            <SelectItem value="w3c1">W3C 1.1</SelectItem>
+            <SelectItem data-testid="w3c1-option" value="w3c1">
+              W3C 1.1
+            </SelectItem>
             <SelectItem value="mdoc">MDOC</SelectItem>
           </SelectContent>
         </Select>
