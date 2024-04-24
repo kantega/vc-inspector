@@ -66,7 +66,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <!-- <li><a href="#usage">Usage</a></li> -->
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -91,9 +91,19 @@ Will be aligned with eIDAS 2.0
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This project is a next.js project.
 
 - [![Next][Next.js]][Next-url]
+
+Using other technologies like:
+
+- Tailwindcss
+- Chadcn/ui
+- Cypress
+- Vitest
+- Lucide
+- Storybook
+- Typedoc
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -132,7 +142,16 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-#### Pre-commits
+#### Storybook
+
+```sh
+pnpm storybook
+
+```
+
+Open [http://localhost:6006](http://localhost:6006) with your browser.
+
+#### Pre-commits (recommended)
 
 Before first commit, run:
 
@@ -159,6 +178,7 @@ to initialize husky pre-commits.
 ## Roadmap
 
 - [ ] Support for SD-JWT
+- [ ] Assure alignment with eIDAS 2.0
 
 See the [open issues](https://github.com/thomsen85/vc-inspector/issues) for a full list of proposed features (and known issues).
 
@@ -193,7 +213,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Thomas H. Svendal - thomassvendal@gmail.com
+Origial creator: Thomas H. Svendal - thomassvendal@gmail.com
+Origial creator: Carl J. Gutzkow - cjgutzkow@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
