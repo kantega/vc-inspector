@@ -213,8 +213,10 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Origial creator: Thomas H. Svendal - thomassvendal@gmail.com
-Origial creator: Carl J. Gutzkow - cjgutzkow@gmail.com
+Origial creators:
+
+- Thomas H. Svendal - thomassvendal@gmail.com
+- Carl J. Gutzkow - cjgutzkow@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -222,9 +224,7 @@ Origial creator: Carl J. Gutzkow - cjgutzkow@gmail.com
 
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-- [Lucide](https://react-icons.github.io/react-icons/search)
+- [Lucide](https://lucide.dev/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
