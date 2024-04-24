@@ -58,10 +58,11 @@ describe('Writing credentials to inspect', () => {
   it('changes validity dates on standard check from w3c 1.1 to 2.0', () => {
     let credential = copyCredential();
     credential.validFrom = '2010-01-01T00:00:00Z';
+    credential.issuanceDate = '2011-01-01T00:00:00Z';
     typeAndInspect(JSON.stringify(credential));
     cy.get("[data-testid='valid-from-date']").should('exist').contains('2010');
     cy.get('button').get("[data-testid='standard-selector']").should('exist').click();
     cy.get("[data-testid='w3c1-option']").click();
-    cy.get("[data-testid='valid-from-date']").should('exist').contains(CONTAINS_NO_DIGIT);
+    cy.get("[data-testid='valid-from-date']").should('exist').contains('2011');
   });
 });
