@@ -37,7 +37,7 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
   return (
     <div
       className={cn(
-        'flex w-full flex-col items-center gap-5 transition-all duration-200 sm:w-5/6',
+        'flex w-full flex-col items-center gap-2 transition-all duration-200 sm:w-5/6',
         onceSuccessfullyParsed && '-mt-6',
       )}
     >

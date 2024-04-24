@@ -84,11 +84,11 @@ function ErrorBox({ title, error }: { title: string; error: Error }) {
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
  */
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
+  // TODO: More dynamic types
   const [selectedStandard, setSelectedStandard] = useState(
     inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
   );
 
-  // TODO: More dynamic types
   const standard = new StandardRetriever(selectedStandard);
 
   const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
@@ -109,7 +109,7 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
 
   return (
     <div className={className} {...props}>
-      <div className=" m-2 flex justify-center">
+      <div className="m-2 flex justify-center">
         <Select
           onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
           defaultValue={Object.entries(stringToStandard)
