@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/thomsen85/vc-inspector">
-    <img src="images/logo-with-background.png" alt="Logo" width="300" style="background-color: white">
+    <img src="images/logo-with-background.png" alt="Logo" width="200" style="background-color: white">
   </a>
 
   <h3 align="center">VC-Inspector</h3>
