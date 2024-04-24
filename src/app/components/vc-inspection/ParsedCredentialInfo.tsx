@@ -46,9 +46,15 @@ function convertNestedClaims(claims: Claim[]): LabeledValues[] {
     return labeledValue(c.key, toNode(`Unknown value '${c.value}'`));
   });
 }
+
 function ErrorBox({ title, error }: { title: string; error: Error }) {
   return (
-    <InformationBox title={<span className="text-xl">{title}</span>} className="[&>*]:text-lg" messageType="error">
+    <InformationBox
+      data-testid={title}
+      title={<span className="text-xl">{title}</span>}
+      className="[&>*]:text-lg"
+      messageType="error"
+    >
       <ZodIssueFormatter error={error} />
     </InformationBox>
   );
