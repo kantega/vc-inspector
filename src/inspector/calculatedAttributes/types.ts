@@ -1,5 +1,6 @@
 import { ReasonedError, Result } from './results';
 import { Standards } from './standards';
+import { ZodError } from 'zod';
 
 /**
  * ParserResult is a record of the results of parsing an object with a parser for each standard.
@@ -28,6 +29,20 @@ export function toSome<T>(obj: T): { kind: 'some'; value: T } {
 export function toNone(reason: string): { kind: 'none'; reason: string } {
   return { kind: 'none', reason };
 }
+
+/**
+ * Casts an object to a ZodError if it contains defining
+ * fields of a ZodError connected and ZodIssues.
+ */
+export function isZodError(obj: unknown): obj is ZodError {
+  return (
+    obj instanceof Error &&
+    'issues' in obj &&
+    Array.isArray(obj.issues) &&
+    obj.issues.every((issue) => 'code' in issue && 'message' in issue)
+  );
+}
+
 /**
  * StandardParsers is a list of parsers that are associated with a standard.
  */

@@ -44,13 +44,12 @@ describe('Writing credentials to inspect', () => {
     typeAndInspect(JSON.stringify(credential));
     cy.get("[data-testid='issuer-card']").should('exist').contains('https://university.example/issuers/565049');
   });
-  // Issue has been craeted to handled cases of missing schema.
-  // it('notifies about missing data when credential subject is not present', () => {
-  //   let credential = copyCredential();
-  //   credential.credentialSubject = undefined;
-  //   typeAndInspect(JSON.stringify(credential));
-  //   cy.get("[data-testid='inspection-issues']").should('exist').contains('credentialSubject');
-  // });
+  it('notifies about missing data when credential subject is not present', () => {
+    let credential = copyCredential();
+    credential.credentialSubject = undefined;
+    typeAndInspect(JSON.stringify(credential));
+    cy.get("[data-testid='Credential subject']").should('exist').contains('credentialSubject');
+  });
   it('handles jwt credentials', () => {
     typeAndInspect(exampleJWTCred);
     cy.get("[data-testid='valid-from-date']").should('exist').contains('2010');

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { Result, toError, toOk } from '../results';
+import { Primitive, isPrimitive, isStrRecord } from '../../assertTypes';
 import { Standards } from '../standards';
 import { ParserResult, StandardParsers, standardParsersToParserResult } from '../types';
 
@@ -8,19 +9,25 @@ export type CredentialSubject = {
   claims: Claim[];
 };
 
+export type ClaimValue = Primitive | Claim[];
+
 export type Claim =
   | {
       sd: false;
       key: string;
-      value: unknown | Claim[];
+      value: ClaimValue;
     }
   | {
       sd: true;
       key: string;
-      value: unknown | Claim[];
+      value: ClaimValue;
       salt: Uint8Array;
       digestID?: number;
     };
+
+export function isClaimList(obj: ClaimValue): obj is Claim[] {
+  return Array.isArray(obj) && obj.every((c) => 'sd' in c && 'key' in c && 'value' in c);
+}
 
 const credentialSubjectParsers: StandardParsers<CredentialSubject> = [
   { standard: Standards.W3C_V1, parser: W3CCredentialSubjectParser },
@@ -74,9 +81,28 @@ function MDOCCredentialSubjectParser(obj: unknown): Result<CredentialSubject> {
 
   return toOk({ claims });
 }
+
+function unknownToClaimValue(claim: unknown): ClaimValue {
+  if (isStrRecord(claim)) {
+    return Object.entries(claim).map(([key, value]) => ({
+      sd: false,
+      key: key,
+      value: unknownToClaimValue(value),
+    }));
+  } else if (isPrimitive(claim)) {
+    return claim;
+  } else if (Array.isArray(claim)) {
+    return claim.map((c, i) => ({
+      sd: false,
+      key: `${i}`,
+      value: unknownToClaimValue(c),
+    }));
+  }
+  throw new Error(`Unknown claim value: ${claim}`);
+}
+
 function W3CCredentialSubjectParser(obj: unknown): Result<CredentialSubject> {
   const schema = z.object({
-    id: z.string().optional(),
     credentialSubject: z.record(z.string(), z.unknown()),
   });
 
@@ -85,15 +111,24 @@ function W3CCredentialSubjectParser(obj: unknown): Result<CredentialSubject> {
   if (!parsed.success) {
     return toError(parsed.error);
   }
+  const subject = parsed.data.credentialSubject;
 
-  // TODO: Add recursive types
-  const claims: Claim[] = Object.entries(parsed.data.credentialSubject).map(([key, value]) => {
-    return {
-      sd: false,
-      key,
-      value,
-    };
+  const id = typeof subject.id == 'string' ? subject.id : undefined;
+  delete subject.id;
+
+  try {
+    const claims = unknownToClaimValue(subject);
+    if (isClaimList(claims)) {
+      return toOk({ id, claims });
+    }
+  } catch (e) {
+    if (e instanceof Error) {
+      return toError(e);
+    }
+  }
+
+  return toError({
+    name: 'Invalid credential subject',
+    message: 'Expected credential subject to be a an object of claims. ' + String(subject),
   });
-
-  return toOk({ id: parsed.data.id, claims });
 }

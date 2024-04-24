@@ -92,7 +92,9 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
 
       {inspected && (
         <>
-          {inspected.success && afterFirstInspection && <ParsedCredentialInfo inspectedResult={inspected} />}
+          {inspected.success && afterFirstInspection && (
+            <ParsedCredentialInfo inspectedResult={inspected} className="w-11/12" />
+          )}
           {!inspected.success && (
             <>
               {inspected.errors.map((error, i) => {

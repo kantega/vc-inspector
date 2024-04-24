@@ -80,6 +80,7 @@ export default function MinimizingTextArea({
     <textarea
       {...props}
       ref={ref}
+      spellCheck={false}
       onMouseDown={() => setMinimizedAndTransition(false, false)}
       onMouseUp={() => setMinimizedAndTransition(false, true)}
       onFocus={() => setMinimizedAndTransition(false, true)}
