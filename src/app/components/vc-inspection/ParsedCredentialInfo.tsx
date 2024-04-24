@@ -83,35 +83,39 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
   return (
     <div className={className} {...props}>
       <div className="grid grid-cols-2 gap-8">
-        {issuer.kind === 'ok' ? (
-          <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
-        ) : (
-          <ErrorBox title="Issuer" error={issuer.error} />
-        )}
-        {subject.kind === 'ok' ? (
-          <LabeledValueCard
-            title="Subject"
-            titleIcon={CircleUser}
-            values={subjectValues}
-            className="row-span-2"
-            data-testid="subject-card"
-          />
-        ) : (
-          <ErrorBox title="Credential subject" error={subject.error} />
-        )}
-        {dates.kind == 'ok' ? (
-          <ValidityDates
-            withinDates={dates.value.isValid}
-            validFrom={dates.value.validityDates.validFrom}
-            validUntil={dates.value.validityDates.validUntil}
-          />
-        ) : (
-          <ErrorBox title="Dates of validity" error={dates.error} />
-        )}
+        <div className="flex flex-col gap-8">
+          {issuer.kind === 'ok' ? (
+            <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
+          ) : (
+            <ErrorBox title="Issuer" error={issuer.error} />
+          )}
+          {dates.kind == 'ok' ? (
+            <ValidityDates
+              withinDates={dates.value.isValid}
+              validFrom={dates.value.validityDates.validFrom}
+              validUntil={dates.value.validityDates.validUntil}
+            />
+          ) : (
+            <ErrorBox title="Dates of validity" error={dates.error} />
+          )}
+        </div>
+        <div className="flex flex-col gap-8">
+          {subject.kind === 'ok' ? (
+            <LabeledValueCard
+              title="Subject"
+              titleIcon={CircleUser}
+              values={subjectValues}
+              className="row-span-2"
+              data-testid="subject-card"
+            />
+          ) : (
+            <ErrorBox title="Credential subject" error={subject.error} />
+          )}
+        </div>
       </div>
 
       <Accordion type="single" collapsible className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
-        {!(inspectedResult.parsedJson.type === 'JSON') && ( // TODO: Use .format
+        {inspectedResult.parsedJson.type !== 'JSON' && ( // TODO: Use .format
           <div>
             <HLineWithText text="Raw JSON" />
             <AccordionSection value="decoded-to-json" title="Decoded JSON">
