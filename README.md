@@ -36,7 +36,7 @@
   <h3 align="center">VC-Inspector</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Open-sourced tool for inspecting verifiable credentials.
     <br />
     <a href="https://vc-inspector.vercel.app/inspector-docs/index.html"><strong>Explore the docs for the inspector»</strong></a>
     <br />
@@ -85,9 +85,7 @@ Open-sourced tool for inspecting verifiable credentials.
 
 Will be aligned with eIDAS 2.0
 
-### Created by Kantega
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<stong>Created by Kantega</stong>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -105,8 +103,6 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
 - npm
   ```sh
   npm install npm@latest -g
@@ -117,8 +113,6 @@ This is an example of how to list things you need to use the software and how to
   ```
 
 ### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 1. Clone the repo
    ```sh
@@ -152,14 +146,14 @@ to initialize husky pre-commits.
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+<!-- ## Usage -->
+<!---->
+<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
+<!---->
+<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
+<!---->
+<!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
+<!---->
 <!-- ROADMAP -->
 
 ## Roadmap
@@ -180,9 +174,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b <issue-number>/feature-name`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+4. Push to the Branch (`git push origin <issue-number>/feature-name`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -225,23 +219,9 @@ Use this space to list resources you find helpful and would like to give credit 
 [issues-shield]: https://img.shields.io/github/issues/thomsen85/vc-inspector.svg?style=for-the-badge
 [issues-url]: https://github.com/thomsen85/vc-inspector/issues
 [license-shield]: https://img.shields.io/github/license/thomsen85/vc-inspector.svg?style=for-the-badge
-[license-url]: https://github.com/thomsen85/vc-inspector/blob/master/LICENSE.txt
+[license-url]: https://github.com/thomsen85/vc-inspector/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
-
-## Development
-
-Before first commit, run:
-
-```bash
-pnpm husky
-```
-
-to initialize husky pre-commits.
-
-## Contribute
-
-TBA
