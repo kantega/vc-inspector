@@ -30,8 +30,17 @@ export function toNone(reason: string): { kind: 'none'; reason: string } {
   return { kind: 'none', reason };
 }
 
+/**
+ * Casts an object to a ZodError if it contains defining
+ * fields of a ZodError connected and ZodIssues.
+ */
 export function isZodError(obj: unknown): obj is ZodError {
-  return obj instanceof Error && 'issues' in obj;
+  return (
+    obj instanceof Error &&
+    'issues' in obj &&
+    Array.isArray(obj.issues) &&
+    obj.issues.every((issue) => 'code' in issue && 'message' in issue)
+  );
 }
 
 /**

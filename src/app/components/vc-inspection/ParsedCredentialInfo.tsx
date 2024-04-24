@@ -32,6 +32,13 @@ function HLineWithText({ text }: { text: string }) {
   );
 }
 
+/**
+ * Converts a list of credential subject claims to a
+ * labaled values list. Both structures can be nested.
+ * If a claim in claims is a list of claims, it is converted to a nested
+ * labaled value. An unhandled claim is prefixed with `Unknown value`
+ * followed by the stringified version of it.
+ */
 function convertNestedClaims(claims: Claim[]): LabeledValues[] {
   return claims.map((c) => {
     let toPush = undefined;
@@ -43,10 +50,13 @@ function convertNestedClaims(claims: Claim[]): LabeledValues[] {
     if (toPush) {
       return labeledValue(c.key, toPush);
     }
-    return labeledValue(c.key, toNode(`Unknown value '${c.value}'`));
+    return labeledValue(c.key, toNode(`Unknown value '${JSON.stringify(c.value)}'`));
   });
 }
 
+/**
+ * Simple box for show errors the same way.
+ */
 function ErrorBox({ title, error }: { title: string; error: Error }) {
   return (
     <InformationBox
