@@ -12,13 +12,15 @@ import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
+import { useState } from 'react';
+import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/shadcn/select';
 import { Claim } from '@inspector/calculatedAttributes/attributes/credentialSubject';
 import { isPrimitive } from '@inspector/assertTypes';
 import { isClaimList } from '@inspector/calculatedAttributes/attributes/credentialSubject';
 import ZodIssueFormatter from '@/components/vc-inspection/ZodIssueFormatter';
 import UnderConstruction from '@/components/notices/UnderConstruction';
-import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
-import InformationBox from '../notices/InfoBox';
+import InformationBox from '@/components/notices/InfoBox';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -31,6 +33,13 @@ function HLineWithText({ text }: { text: string }) {
     </div>
   );
 }
+
+const stringToStandard: Record<string, Standards> = {
+  w3c2: Standards.W3C_V2,
+  w3c1: Standards.W3C_V1,
+  mdoc: Standards.MDOC,
+  sdjwt: Standards.SD_JWT,
+};
 
 /**
  * Converts a list of credential subject claims to a
@@ -76,9 +85,11 @@ function ErrorBox({ title, error }: { title: string; error: Error }) {
  */
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
   // TODO: More dynamic types
-  const standard = new StandardRetriever(
+  const [selectedStandard, setSelectedStandard] = useState(
     inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
   );
+
+  const standard = new StandardRetriever(selectedStandard);
 
   const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
 
@@ -98,6 +109,25 @@ export default function ParsedCredentialInfo({ inspectedResult, className, ...pr
 
   return (
     <div className={className} {...props}>
+      <div className="m-2 flex justify-center">
+        <Select
+          onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
+          defaultValue={Object.entries(stringToStandard)
+            .find(([_key, standard]) => standard === selectedStandard)
+            ?.at(0)}
+        >
+          <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="w3c2">W3C 2.0</SelectItem>
+            <SelectItem data-testid="w3c1-option" value="w3c1">
+              W3C 1.1
+            </SelectItem>
+            <SelectItem value="mdoc">MDOC</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col gap-8">
           {issuer.kind === 'ok' ? (

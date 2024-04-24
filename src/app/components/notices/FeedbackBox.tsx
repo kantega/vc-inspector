@@ -23,7 +23,7 @@ export default function FeedbackBox({ className, ...props }: FeedbackBoxProps) {
       </h2>
       <Button variant="default" asChild>
         <Link href={GITHUB_LINK} className="items-center gap-3">
-          <Image src={GitHubCat} alt="GitHub invertocat" className="h-full w-full" width={40} height={40} />
+          <Image src={GitHubCat} alt="GitHub invertocat" className="h-full w-auto" width={40} height={40} />
           <p className="text-lg">See repository</p>
         </Link>
       </Button>
