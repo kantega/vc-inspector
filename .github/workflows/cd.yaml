@@ -1,5 +1,5 @@
 #
-name: Deploy Next.js site to Pages
+name: Continuous Deployment to Pages
 
 on:
   # Runs on pushes targeting the default branch
