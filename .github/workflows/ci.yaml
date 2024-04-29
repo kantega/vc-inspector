@@ -44,6 +44,10 @@ jobs:
         with:
           install:
             pnpm install -g serve@latest
-          build: |
+          build:
             pnpm build
           start: npx serve@latest out
+          # Only start tests when the server is up and running.
+          wait-on: http://localhost:3000/
+          # Should never take 10 sec
+          wait-on-timeout: 10
