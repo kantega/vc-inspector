@@ -42,5 +42,7 @@ jobs:
       - name: Cypress component integration
         uses: cypress-io/github-action@v6
         with:
-          build: pnpm build
+          build: |
+            pnpm build
+            pnpm install -g serve@latest
           start: npx serve@latest out
