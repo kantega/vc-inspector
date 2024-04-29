@@ -1,4 +1,3 @@
-
 <a name="readme-top"></a>
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -107,11 +106,11 @@ Using other technologies like:
    ```sh
    git clone git@github.com:kantega/vc-inspector.git
    ```
-3. cd into folder
+2. cd into folder
    ```sh
    cd vc-inspector
    ```
-2. Install packages
+3. Install packages
    ```sh
    pnpm install
    ```
@@ -147,7 +146,6 @@ to initialize husky pre-commits.
 You need to run install each time a change to the inspector sub-package is made because it is its own package.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ## Roadmap
 
