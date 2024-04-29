@@ -1,24 +1,5 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/thomsen85/vc-inspector/pull/73 -->
 
 <a name="readme-top"></a>
-
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -28,7 +9,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/thomsen85/vc-inspector">
+  <a href="https://github.com/kantega/vc-inspector">
     <img src="images/logo-with-background.png" alt="Logo" width="200" style="background-color: white">
   </a>
 
@@ -42,9 +23,9 @@
     <br />
     <a href="https://vc-inspector.vercel.app/">View Demo</a>
     ·
-    <a href="https://github.com/thomsen85/vc-inspector/issues/new?labels=bug&template=reported-bug.yaml">Report Bug</a>
+    <a href="https://github.com/kantega/vc-inspector/issues/new?labels=bug&template=reported-bug.yaml">Report Bug</a>
     ·
-    <a href="https://github.com/thomsen85/vc-inspector/issues/new?labels=feature&template=feature-request.yaml">Request Feature </a>
+    <a href="https://github.com/kantega/vc-inspector/issues/new?labels=feature&template=feature-request.yaml">Request Feature </a>
   </p>
 </div>
 
@@ -65,7 +46,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <!-- <li><a href="#usage">Usage</a></li> -->
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -125,7 +105,7 @@ Using other technologies like:
 
 1. Clone the repo
    ```sh
-   git clone git@github.com:thomsen85/vc-inspector.git
+   git clone git@github.com:kantega/vc-inspector.git
    ```
 2. Install packages
    ```sh
@@ -164,24 +144,13 @@ You need to run install each time a change to the inspector sub-package is made 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
-
-<!-- ## Usage -->
-<!---->
-<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
-<!---->
-<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
-<!---->
-<!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
-<!---->
-<!-- ROADMAP -->
 
 ## Roadmap
 
 - [ ] Support for SD-JWT
 - [ ] Assure alignment with eIDAS 2.0
 
-See the [open issues](https://github.com/thomsen85/vc-inspector/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/kantega/vc-inspector/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -232,16 +201,16 @@ Original creators:
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/thomsen85/vc-inspector.svg?style=for-the-badge
-[contributors-url]: https://github.com/thomsen85/vc-inspector/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/thomsen85/vc-inspector.svg?style=for-the-badge
-[forks-url]: https://github.com/thomsen85/vc-inspector/network/members
-[stars-shield]: https://img.shields.io/github/stars/thomsen85/vc-inspector.svg?style=for-the-badge
-[stars-url]: https://github.com/thomsen85/vc-inspector/stargazers
-[issues-shield]: https://img.shields.io/github/issues/thomsen85/vc-inspector.svg?style=for-the-badge
-[issues-url]: https://github.com/thomsen85/vc-inspector/issues
-[license-shield]: https://img.shields.io/github/license/thomsen85/vc-inspector.svg?style=for-the-badge
-[license-url]: https://github.com/thomsen85/vc-inspector/blob/main/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/kantega/vc-inspector.svg?style=for-the-badge
+[contributors-url]: https://github.com/kantega/vc-inspector/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/kantega/vc-inspector.svg?style=for-the-badge
+[forks-url]: https://github.com/kantega/vc-inspector/network/members
+[stars-shield]: https://img.shields.io/github/stars/kantega/vc-inspector.svg?style=for-the-badge
+[stars-url]: https://github.com/kantega/vc-inspector/stargazers
+[issues-shield]: https://img.shields.io/github/issues/kantega/vc-inspector.svg?style=for-the-badge
+[issues-url]: https://github.com/kantega/vc-inspector/issues
+[license-shield]: https://img.shields.io/github/license/kantega/vc-inspector.svg?style=for-the-badge
+[license-url]: https://github.com/kantega/vc-inspector/blob/main/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
