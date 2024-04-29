@@ -107,6 +107,10 @@ Using other technologies like:
    ```sh
    git clone git@github.com:kantega/vc-inspector.git
    ```
+3. cd into folder
+   ```sh
+   cd vc-inspector
+   ```
 2. Install packages
    ```sh
    pnpm install
