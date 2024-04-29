@@ -43,4 +43,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           build: pnpm build
-          start: npm start
+          start: npx serve@latest out
