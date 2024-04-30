@@ -5,7 +5,7 @@ import MinimizingTextArea from '@/components/vc-inspection/MinimizingTextArea';
 import { Button } from '@/components/shadcn/button';
 import ParsedCredentialInfo from './ParsedCredentialInfo';
 import { cn } from '@/utils/styling';
-import { FileType } from 'lucide-react';
+import { FileType, Pencil } from 'lucide-react';
 import InformationBox from '@/components/notices/InfoBox';
 
 type InspectionPageProps = JSX.IntrinsicElements['div'] & {};
@@ -64,7 +64,7 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             </InformationBox>
           </div>
         )}
-        <div className="w-full">
+        <div className="relative w-full">
           <MinimizingTextArea
             className="w-full"
             data-testid="inspector-textarea"
@@ -79,6 +79,14 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             }}
             requestMinimizationTo={textAreaStatus === 'min'}
           />
+          {textAreaStatus === 'min' && (
+            <button
+              onClick={() => setTextAreaStatus('active-button')}
+              className="absolute right-3 top-3 border-l-2 border-readable-gray py-1 pl-3 text-readable-gray"
+            >
+              <Pencil className="h-5" />
+            </button>
+          )}
           <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
         </div>
       </div>
