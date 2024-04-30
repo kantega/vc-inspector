@@ -82,9 +82,9 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
           {textAreaStatus === 'min' && (
             <button
               onClick={() => setTextAreaStatus('active-button')}
-              className="absolute right-3 top-2 border-l-2 border-readable-gray py-1 pl-3 text-readable-gray"
+              className="absolute right-3 top-3 border-l-2 border-readable-gray py-1 pl-3 text-readable-gray"
             >
-              <Pencil className="scale-75" />
+              <Pencil className="h-5" />
             </button>
           )}
           <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
