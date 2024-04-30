@@ -79,7 +79,14 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             }}
             requestMinimizationTo={textAreaStatus === 'min'}
           />
-          {textAreaStatus === 'min' && <Pencil className="absolute right-4 top-3 scale-110 text-readable-gray" />}
+          {textAreaStatus === 'min' && (
+            <button
+              onClick={() => setTextAreaStatus('active-button')}
+              className="absolute right-3 top-2 border-l-2 border-readable-gray py-1 pl-3 text-readable-gray"
+            >
+              <Pencil className="scale-75" />
+            </button>
+          )}
           <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
         </div>
       </div>
