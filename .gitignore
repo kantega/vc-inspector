@@ -39,3 +39,6 @@ next-env.d.ts
 
 # intellij files
 .idea
+
+# storybook
+storybook-static/
