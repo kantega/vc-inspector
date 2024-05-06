@@ -17,10 +17,10 @@
   <p align="center">
     Open-sourced tool for inspecting verifiable credentials.
     <br />
-    <a href="https://vc-inspector.vercel.app/inspector-docs/index.html"><strong>Explore the docs for the inspector»</strong></a>
+    <a href="https://kantega.github.io/vc-inspector/inspector-docs/index.html"><strong>Explore the docs for the inspector»</strong></a>
     <br />
     <br />
-    <a href="https://vc-inspector.vercel.app/">View Demo</a>
+    <a href="https://kantega.github.io/vc-inspector/">View Demo</a>
     ·
     <a href="https://github.com/kantega/vc-inspector/issues/new?labels=bug&template=reported-bug.yaml">Report Bug</a>
     ·
