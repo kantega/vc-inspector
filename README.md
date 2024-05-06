@@ -89,18 +89,20 @@ Using other technologies like:
 
 ## Getting Started
 
-### Prerequisites
+Note: Remember to follow theses in steps.
+
+### 1 - Prerequisites
 
 - npm
   ```sh
   npm install npm@latest -g
   ```
-- pnpm (recommended)
+- pnpm
   ```sh
-  npm install pnpm -g
+  npm install pnpm@9.0.6 -g
   ```
 
-### Installation
+### 2 - Installation
 
 1. Clone the repo
    ```sh
@@ -140,10 +142,6 @@ pnpm husky
 ```
 
 to initialize husky pre-commits.
-
-#### Note:
-
-You need to run install each time a change to the inspector sub-package is made because it is its own package.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -193,6 +191,12 @@ Original creators:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
+
+## FAQ:
+
+### Error when running storybook (SB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack):
+
+Found this issue when using pnpm version 8. Use pnpm version 9.0.6.
 
 ## Acknowledgments
 
