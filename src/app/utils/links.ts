@@ -1,1 +1,1 @@
-export const GITHUB_LINK = 'https://github.com/thomsen85/vc-inspector';
+export const GITHUB_LINK = 'https://github.com/kantega/vc-inspector';
