@@ -17,7 +17,7 @@ const config = {
       colors: {
         'dark-purple': '#2C0040',
         'light-purple': '#F6F4F7',
-        'readable-gray': '#8E8C8C',
+        'readable-gray': '#707070',
         'light-gray': '#EBEBEB',
         'dark-gray': '#C6C6C6',
         'light-blue': '#CCD5FF',

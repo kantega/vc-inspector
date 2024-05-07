@@ -79,6 +79,7 @@ export default function MinimizingTextArea({
   return (
     <textarea
       {...props}
+      aria-label="Verifiable Credential Text Area"
       ref={ref}
       spellCheck={false}
       onMouseDown={() => setMinimizedAndTransition(false, false)}
