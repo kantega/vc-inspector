@@ -22,7 +22,7 @@ export default function RevealInfoButton({
   return clicked ? (
     <div className="flex items-center">
       {showHideButton && (
-        <Button variant="ghost" className="" onClick={() => setClicked(false)}>
+        <Button variant="ghost" aria-label="show or hide" className="" onClick={() => setClicked(false)}>
           <EyeOff />
         </Button>
       )}

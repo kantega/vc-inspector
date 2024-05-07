@@ -33,7 +33,7 @@ export default function NavigationDrawer({ links, currentPath, className, ...pro
       </Link>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger asChild>
-          <button type="button">
+          <button type="button" aria-label="Open Drawer">
             <Menu width={40} height={40} />
           </button>
         </DrawerTrigger>
