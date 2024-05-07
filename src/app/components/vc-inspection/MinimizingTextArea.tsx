@@ -86,6 +86,7 @@ export default function MinimizingTextArea({
       onMouseUp={() => setMinimizedAndTransition(false, true)}
       onFocus={() => setMinimizedAndTransition(false, true)}
       onPaste={() => setMinimizedAndTransition(true, true)}
+      aria-hidden={minimized}
       style={{ height: minimized ? MINIMIZED_HEIGHT + 'px' : heightNotMinimized + 'px' }}
       placeholder="Paste your verifiable credential here"
       className={cn(

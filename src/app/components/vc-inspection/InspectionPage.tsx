@@ -64,29 +64,34 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             </InformationBox>
           </div>
         )}
-        <div className="relative w-full">
-          <MinimizingTextArea
-            className="w-full"
-            data-testid="inspector-textarea"
-            value={value}
-            onChange={(e) => {
-              setTextAreaStatus('active-button');
-              setValue(e.target.value);
-            }}
-            onMinimizationChange={(m) => {
-              setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button');
-              if (m) setAfterFirstInspection(true);
-            }}
-            requestMinimizationTo={textAreaStatus === 'min'}
-          />
-          {textAreaStatus === 'min' && (
-            <button
-              onClick={() => setTextAreaStatus('active-button')}
-              className="absolute right-3 top-3 border-l-2 border-readable-gray py-1 pl-3 text-readable-gray"
-            >
-              <Pencil className="h-5" />
-            </button>
-          )}
+        <div className=" w-full">
+          <div className="relative flex overflow-hidden rounded-md">
+            <MinimizingTextArea
+              className="w-full"
+              data-testid="inspector-textarea"
+              value={value}
+              onChange={(e) => {
+                setTextAreaStatus('active-button');
+                setValue(e.target.value);
+              }}
+              onMinimizationChange={(m) => {
+                setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button');
+                if (m) setAfterFirstInspection(true);
+              }}
+              requestMinimizationTo={textAreaStatus === 'min'}
+            />
+            {textAreaStatus === 'min' && (
+              <button
+                onClick={() => setTextAreaStatus('active-button')}
+                className="absolute right-0 top-0 flex h-full w-12 items-center justify-center border-readable-gray bg-light-gray text-readable-gray"
+                aria-label="Edit"
+              >
+                <div className="border-l-2 border-readable-gray pl-2">
+                  <Pencil className="h-5" />
+                </div>
+              </button>
+            )}
+          </div>
           <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
         </div>
       </div>
