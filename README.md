@@ -41,14 +41,22 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#1---install-prerequisites">1 - Install Prerequisites</a></li>
+        <li><a href="#2---installation">2 - Installation</a></li>
+        <li><a href="#3---start-development-environment">3 - Start development environment</a></li>
+        <li><a href="#other">Other</a></li>
+        <ul>
+          <li><a href="#storybook">Storybook</a></li>
+          <li><a href="#documentation">Documentation</a></li>
+          <li><a href="#pre-commits-recommended">Pre-Commits</a></li>
+        </ul>
       </ul>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -91,7 +99,9 @@ Using other technologies like:
 
 Note: Remember to follow theses in steps.
 
-### 1 - Prerequisites
+### 1 - Install Prerequisites
+
+This project uses pnpm as a package manager. Others may work, but issues with other package managers will not be fixed.
 
 - npm
   ```sh
@@ -117,7 +127,7 @@ Note: Remember to follow theses in steps.
    pnpm install
    ```
 
-### Start development environment
+### 3 - Start development environment
 
 ```sh
 pnpm dev
@@ -125,7 +135,13 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
+### Other
+
+Other possibilties, <b>remember to complete the two first installation above before running any of these</b>.
+
 #### Storybook
+
+Storybook shows compoents in isolations, to start storybook run:
 
 ```sh
 pnpm storybook
@@ -133,8 +149,25 @@ pnpm storybook
 
 Open [http://localhost:6006](http://localhost:6006) with your browser.
 
+#### Documentation
+
+Documentaion is hosted <a href="https://kantega.github.io/vc-inspector/inspector-docs/index.html">here</a>, but can be generated locally to, run
+
+```sh
+pnpm typedoc
+```
+
+to generate the documentation (Note: a lot of warnings are generated but this is fine.)
+
+Than you can open the ./out/inspector-docs/index.html with a browser or serve it with:
+
+```sh
+pnpx http-server out/inspector-docs/
+```
+
 #### Pre-commits (recommended)
 
+Pre-commits runs before a commit and runs linting and formating.
 Before first commit, run:
 
 ```bash
@@ -192,7 +225,7 @@ Original creators:
 
 <!-- ACKNOWLEDGMENTS -->
 
-## FAQ:
+## FAQ
 
 ### Error when running storybook (SB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack):
 
