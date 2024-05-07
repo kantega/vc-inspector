@@ -91,7 +91,9 @@ Using other technologies like:
 
 Note: Remember to follow theses in steps.
 
-### 1 - Prerequisites
+### 1 - Install Prerequisites
+
+This project uses pnpm as a package manager. Others may work, but issues with other package managers will not be fixed.
 
 - npm
   ```sh
@@ -117,7 +119,7 @@ Note: Remember to follow theses in steps.
    pnpm install
    ```
 
-### Start development environment
+### 3 - Start development environment
 
 ```sh
 pnpm dev
@@ -125,7 +127,13 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
+### Other
+
+Other possibilties, <b>remember to complete the two first installation above before running any of these</b>.
+
 #### Storybook
+
+Storybook shows compoents in isolations, to start storybook run:
 
 ```sh
 pnpm storybook
@@ -133,8 +141,25 @@ pnpm storybook
 
 Open [http://localhost:6006](http://localhost:6006) with your browser.
 
+#### Documentation
+
+Documentaion is hosted <a href="https://kantega.github.io/vc-inspector/inspector-docs/index.html">here</a>, but can be generated locally to, run
+
+```sh
+pnpm typedoc
+```
+
+to generate the documentation (Note: a lot of warnings are generated but this is fine.)
+
+Than you can open the ./out/inspector-docs/index.html with a browser or serve it with:
+
+```sh
+pnpx http-server out/inspector-docs/
+```
+
 #### Pre-commits (recommended)
 
+Pre-commits run before a comming and runs linting and formating
 Before first commit, run:
 
 ```bash
