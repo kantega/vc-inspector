@@ -1,119 +1,163 @@
 [
   {
-    "@context": ["https://www.w3.org/2018/credentials/v1"],
-    "type": ["VerifiableCredential", "IDCard"],
-    "id": "urn:credential:34502108-4540",
-    "issuer": "did:web:asgard-state.auth0lab.com",
-    "issuanceDate": "2020-07-20T13:58:53Z",
-    "credentialSubject": {
-      "id": "urn:id-card:personal:1",
-      "personalIdentifier": "34502108",
-      "name": "Hanna Herwitz",
-      "dateOfBirth": "1984-09-17",
-      "placeOfBirth": "Asgard City",
-      "currentAddress": "24th Street 210, Asgard City, 1023",
-      "gender": "Female"
-    },
-    "credentialStatus": {
-      "id": "https://asgard-state.auth0lab.com/vcs/credential/status/14",
-      "type": "CredentialStatusList2017"
-    },
-    "proof": {
-      "type": "Ed25519Signature2020",
-      "created": "2020-07-20T13:58:53Z",
-      "proofPurpose": "assertionMethod",
-      "verificationMethod": "https://asgard-state.auth0lab.com/keys/1",
-      "proofValue": "z2ty8BNvrKCvAXGqJVXF8aZ1jK5o5uXFvhXJksUXhn61uSwJJmWdcntfqvZTLbWmQHpieyhdcrG43em37Jo8bswvR"
+    "format": "json",
+    "standard": "W3C VC 1",
+    "data": {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+      ],
+      "type": [
+        "VerifiableCredential",
+        "IDCard"
+      ],
+      "id": "urn:credential:34502108-4540",
+      "issuer": "did:web:asgard-state.auth0lab.com",
+      "issuanceDate": "2020-07-20T13:58:53Z",
+      "credentialSubject": {
+        "id": "urn:id-card:personal:1",
+        "personalIdentifier": "34502108",
+        "name": "Hanna Herwitz",
+        "dateOfBirth": "1984-09-17",
+        "placeOfBirth": "Asgard City",
+        "currentAddress": "24th Street 210, Asgard City, 1023",
+        "gender": "Female"
+      },
+      "credentialStatus": {
+        "id": "https://asgard-state.auth0lab.com/vcs/credential/status/14",
+        "type": "CredentialStatusList2017"
+      },
+      "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2020-07-20T13:58:53Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "https://asgard-state.auth0lab.com/keys/1",
+        "proofValue": "z2ty8BNvrKCvAXGqJVXF8aZ1jK5o5uXFvhXJksUXhn61uSwJJmWdcntfqvZTLbWmQHpieyhdcrG43em37Jo8bswvR"
+      }
     }
   },
   {
-    "@context": ["https://www.w3.org/2018/credentials/v1"],
-    "type": ["VerifiableCredential", "UniversityDegree"],
-    "id": "urn:credential:34502108-4540",
-    "issuer": "did:web:socrates-university.auth0lab.com",
-    "issuanceDate": "2020-07-20T13:58:53Z",
-    "credentialSubject": {
-      "id": "urn:university:eng:90312",
-      "entitlementIdentifier": "90312",
-      "name": "Hanna Herwitz",
-      "title": "Electrical Engineer",
-      "description": "Hanna graduated with honors as an Electrical Engineer",
-      "dateOfIssue": "2019-06-15",
-      "expiryDate": "2025-03-01",
-      "directedBy": "Socrates University",
-      "location": "United States"
-    },
-    "credentialStatus": {
-      "id": "https://socrates-university.auth0lab.com/vcs/credential/status/14",
-      "type": "CredentialStatusList2017"
-    },
-    "proof": {
-      "type": "Ed25519Signature2020",
-      "created": "2020-07-20T13:58:53Z",
-      "proofPurpose": "assertionMethod",
-      "verificationMethod": "https://socrates-university.auth0lab.com/keys/1",
-      "proofValue": "z2ty8BNvrKCvAXGqJVXF8aZ1jK5o5uXFvhXJksUXhn61uSwJJmWdcntfqvZTLbWmQHpieyhdcrG43em37Jo8bswvR"
+    "data": {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+      ],
+      "type": [
+        "VerifiableCredential",
+        "UniversityDegree"
+      ],
+      "id": "urn:credential:34502108-4540",
+      "issuer": "did:web:socrates-university.auth0lab.com",
+      "issuanceDate": "2020-07-20T13:58:53Z",
+      "credentialSubject": {
+        "id": "urn:university:eng:90312",
+        "entitlementIdentifier": "90312",
+        "name": "Hanna Herwitz",
+        "title": "Electrical Engineer",
+        "description": "Hanna graduated with honors as an Electrical Engineer",
+        "dateOfIssue": "2019-06-15",
+        "expiryDate": "2025-03-01",
+        "directedBy": "Socrates University",
+        "location": "United States"
+      },
+      "credentialStatus": {
+        "id": "https://socrates-university.auth0lab.com/vcs/credential/status/14",
+        "type": "CredentialStatusList2017"
+      },
+      "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2020-07-20T13:58:53Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "https://socrates-university.auth0lab.com/keys/1",
+        "proofValue": "z2ty8BNvrKCvAXGqJVXF8aZ1jK5o5uXFvhXJksUXhn61uSwJJmWdcntfqvZTLbWmQHpieyhdcrG43em37Jo8bswvR"
+      }
     }
   },
   {
-    "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/examples/v2"],
-    "type": "VerifiablePresentation",
-    "verifiableCredential": [
-      {
-        "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/examples/v2"],
-        "id": "http://university.example/credentials/1872",
-        "type": ["VerifiableCredential", "ExampleAlumniCredential"],
-        "issuer": "https://university.example/issuers/565049",
-        "validFrom": "2010-01-01T19:23:24Z",
-        "credentialSubject": {
-          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-          "alumniOf": {
-            "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
-            "name": "Example University"
+    "data": {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/examples/v2"
+      ],
+      "type": "VerifiablePresentation",
+      "verifiableCredential": [
+        {
+          "@context": [
+            "https://www.w3.org/ns/credentials/v2",
+            "https://www.w3.org/ns/credentials/examples/v2"
+          ],
+          "id": "http://university.example/credentials/1872",
+          "type": [
+            "VerifiableCredential",
+            "ExampleAlumniCredential"
+          ],
+          "issuer": "https://university.example/issuers/565049",
+          "validFrom": "2010-01-01T19:23:24Z",
+          "credentialSubject": {
+            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+            "alumniOf": {
+              "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
+              "name": "Example University"
+            }
           }
         }
-      }
-    ]
+      ]
+    }
   },
   {
-    "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/examples/v2"],
-    "id": "http://university.example/credentials/58473",
-    "type": ["VerifiableCredential", "ExampleAlumniCredential"],
-    "issuer": "did:example:2g55q912ec3476eba2l9812ecbfe",
-    "validFrom": "2010-01-01T00:00:00Z",
-    "credentialSubject": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "alumniOf": {
-        "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
-        "name": "Example University"
+    "data": {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/examples/v2"
+      ],
+      "id": "http://university.example/credentials/58473",
+      "type": [
+        "VerifiableCredential",
+        "ExampleAlumniCredential"
+      ],
+      "issuer": "did:example:2g55q912ec3476eba2l9812ecbfe",
+      "validFrom": "2010-01-01T00:00:00Z",
+      "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "alumniOf": {
+          "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
+          "name": "Example University"
+        }
       }
     }
   },
   {
-    "@context": [
-      "https://www.w3.org/ns/credentials/v2",
-      "https://www.w3.org/ns/credentials/examples/v2",
-      "https://w3id.org/security/suites/ed25519-2020/v1"
-    ],
-    "id": "http://university.example/credentials/3732",
-    "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-    "issuer": "https://university.example/issuers/565049",
-    "validFrom": "2010-01-01T00:00:00Z",
-    "credentialSubject": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "degree": {
-        "type": "ExampleBachelorDegree",
-        "name": "Bachelor of Science and Arts"
+    "data": {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/examples/v2",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+      ],
+      "id": "http://university.example/credentials/3732",
+      "type": [
+        "VerifiableCredential",
+        "ExampleDegreeCredential"
+      ],
+      "issuer": "https://university.example/issuers/565049",
+      "validFrom": "2010-01-01T00:00:00Z",
+      "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "degree": {
+          "type": "ExampleBachelorDegree",
+          "name": "Bachelor of Science and Arts"
+        }
+      },
+      "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2024-04-02T13:56:28Z",
+        "verificationMethod": "https://university.example/issuers/565049#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "zCiy2mJHxTY2t4prBYmAz9JGhanfsYKfYPGF5h4qzp8ccKaAceUs8cpjN2MzQigztoAR1nje8jW8szrfUqZ1THUM"
       }
-    },
-    "proof": {
-      "type": "Ed25519Signature2020",
-      "created": "2024-04-02T13:56:28Z",
-      "verificationMethod": "https://university.example/issuers/565049#key-1",
-      "proofPurpose": "assertionMethod",
-      "proofValue": "zCiy2mJHxTY2t4prBYmAz9JGhanfsYKfYPGF5h4qzp8ccKaAceUs8cpjN2MzQigztoAR1nje8jW8szrfUqZ1THUM"
     }
   },
-  "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvZXhhbXBsZXMvdjIiXSwiaWQiOiJodHRwOi8vdW5pdmVyc2l0eS5leGFtcGxlL2NyZWRlbnRpYWxzLzM3MzIiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiRXhhbXBsZURlZ3JlZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJ2YWxpZEZyb20iOiIyMDEwLTAxLTAxVDAwOjAwOjAwWiIsImNyZWRlbnRpYWxTdWJqZWN0Ijp7ImlkIjoiZGlkOmV4YW1wbGU6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiZGVncmVlIjp7InR5cGUiOiJFeGFtcGxlQmFjaGVsb3JEZWdyZWUiLCJuYW1lIjoiQmFjaGVsb3Igb2YgU2NpZW5jZSBhbmQgQXJ0cyJ9fX0sImlzcyI6Imh0dHBzOi8vdW5pdmVyc2l0eS5leGFtcGxlL2lzc3VlcnMvNTY1MDQ5IiwianRpIjoiaHR0cDovL3VuaXZlcnNpdHkuZXhhbXBsZS9jcmVkZW50aWFscy8zNzMyIiwic3ViIjoiZGlkOmV4YW1wbGU6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIn0._r9zLrB2Og2HtnfyYFnfRdlzbqLtGLkc7UfWWcqRoB9vlyUmfsDAAg25bB_CozCQzg4s6jNlgSNVy54EHxDoAg",
-  "eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjhkYzg2NzE0YWJjNzA5MmQzZTFkMmE2MDBiZmIwODg0In0.eyJ2YyI6eyJpZCI6Imh0dHA6Ly91bml2ZXJzaXR5LmV4YW1wbGUvY3JlZGVudGlhbHMvMzczMiIsInR5cGUiOlsiVmVyaWZpYWJsZUNyZWRlbnRpYWwiLCJFeGFtcGxlRGVncmVlQ3JlZGVudGlhbCJdLCJpc3N1ZXIiOiJodHRwczovL3VuaXZlcnNpdHkuZXhhbXBsZS9pc3N1ZXJzLzU2NTA0OSIsInZhbGlkRnJvbSI6IjIwMTAtMDEtMDFUMDA6MDA6MDBaIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiaWQiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJkZWdyZWUiOnsidHlwZSI6IkV4YW1wbGVCYWNoZWxvckRlZ3JlZSIsIm5hbWUiOiJCYWNoZWxvciBvZiBTY2llbmNlIGFuZCBBcnRzIn19fSwiaXNzIjoiaHR0cHM6Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJqdGkiOiJodHRwOi8vdW5pdmVyc2l0eS5leGFtcGxlL2NyZWRlbnRpYWxzLzM3MzIiLCJzdWIiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEifQ.H1MXJ5xldUwF2Y-epS7iR3VtXQkWFzlRZ3Xk0O_7fXErrrZ_nk-UysZSub8w6PwuJPKYFgUc4PbNr21PT--PqQ"
+  {
+    "data": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvZXhhbXBsZXMvdjIiXSwiaWQiOiJodHRwOi8vdW5pdmVyc2l0eS5leGFtcGxlL2NyZWRlbnRpYWxzLzM3MzIiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiRXhhbXBsZURlZ3JlZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJ2YWxpZEZyb20iOiIyMDEwLTAxLTAxVDAwOjAwOjAwWiIsImNyZWRlbnRpYWxTdWJqZWN0Ijp7ImlkIjoiZGlkOmV4YW1wbGU6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiZGVncmVlIjp7InR5cGUiOiJFeGFtcGxlQmFjaGVsb3JEZWdyZWUiLCJuYW1lIjoiQmFjaGVsb3Igb2YgU2NpZW5jZSBhbmQgQXJ0cyJ9fX0sImlzcyI6Imh0dHBzOi8vdW5pdmVyc2l0eS5leGFtcGxlL2lzc3VlcnMvNTY1MDQ5IiwianRpIjoiaHR0cDovL3VuaXZlcnNpdHkuZXhhbXBsZS9jcmVkZW50aWFscy8zNzMyIiwic3ViIjoiZGlkOmV4YW1wbGU6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIn0._r9zLrB2Og2HtnfyYFnfRdlzbqLtGLkc7UfWWcqRoB9vlyUmfsDAAg25bB_CozCQzg4s6jNlgSNVy54EHxDoAg"
+  },
+  {
+    "data": "eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjhkYzg2NzE0YWJjNzA5MmQzZTFkMmE2MDBiZmIwODg0In0.eyJ2YyI6eyJpZCI6Imh0dHA6Ly91bml2ZXJzaXR5LmV4YW1wbGUvY3JlZGVudGlhbHMvMzczMiIsInR5cGUiOlsiVmVyaWZpYWJsZUNyZWRlbnRpYWwiLCJFeGFtcGxlRGVncmVlQ3JlZGVudGlhbCJdLCJpc3N1ZXIiOiJodHRwczovL3VuaXZlcnNpdHkuZXhhbXBsZS9pc3N1ZXJzLzU2NTA0OSIsInZhbGlkRnJvbSI6IjIwMTAtMDEtMDFUMDA6MDA6MDBaIiwiY3JlZGVudGlhbFN1YmplY3QiOnsiaWQiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJkZWdyZWUiOnsidHlwZSI6IkV4YW1wbGVCYWNoZWxvckRlZ3JlZSIsIm5hbWUiOiJCYWNoZWxvciBvZiBTY2llbmNlIGFuZCBBcnRzIn19fSwiaXNzIjoiaHR0cHM6Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJqdGkiOiJodHRwOi8vdW5pdmVyc2l0eS5leGFtcGxlL2NyZWRlbnRpYWxzLzM3MzIiLCJzdWIiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEifQ.H1MXJ5xldUwF2Y-epS7iR3VtXQkWFzlRZ3Xk0O_7fXErrrZ_nk-UysZSub8w6PwuJPKYFgUc4PbNr21PT--PqQ"
+  }
 ]
