@@ -1,14 +1,26 @@
 import { Standards } from '@inspector/calculatedAttributes/standards';
-import LabeledValueCard, { fromJSON, node as toNode } from '@/components/data-lists/LabeledValueCard';
+import LabeledValueCard, {
+  fromJSON,
+  labeledValue,
+  LabeledValues,
+  nested as toNested,
+  node as toNode,
+} from '@/components/data-lists/LabeledValueCard';
 import { CircleUser, FilePenLine } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 import { Accordion } from '@/components/shadcn/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
-import { ReactNode } from 'react';
-import UnderConstruction from '../notices/UnderConstruction';
+import { useState } from 'react';
 import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/shadcn/select';
+import { Claim } from '@inspector/calculatedAttributes/attributes/credentialSubject';
+import { isPrimitive } from '@inspector/assertTypes';
+import { isClaimList } from '@inspector/calculatedAttributes/attributes/credentialSubject';
+import ZodIssueFormatter from '@/components/vc-inspection/ZodIssueFormatter';
+import UnderConstruction from '@/components/notices/UnderConstruction';
+import InformationBox from '@/components/notices/InfoBox';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
@@ -22,65 +34,134 @@ function HLineWithText({ text }: { text: string }) {
   );
 }
 
+const stringToStandard: Record<string, Standards> = {
+  w3c2: Standards.W3C_V2,
+  w3c1: Standards.W3C_V1,
+  mdoc: Standards.MDOC,
+  sdjwt: Standards.SD_JWT,
+};
+
+/**
+ * Converts a list of credential subject claims to a
+ * labaled values list. Both structures can be nested.
+ * If a claim in claims is a list of claims, it is converted to a nested
+ * labaled value. An unhandled claim is prefixed with `Unknown value`
+ * followed by the stringified version of it.
+ */
+function convertNestedClaims(claims: Claim[]): LabeledValues[] {
+  return claims.map((c) => {
+    let toPush = undefined;
+    if (isClaimList(c.value)) {
+      toPush = toNested(convertNestedClaims(c.value));
+    } else if (isPrimitive(c.value)) {
+      toPush = toNode(c.value);
+    }
+    if (toPush) {
+      return labeledValue(c.key, toPush);
+    }
+    return labeledValue(c.key, toNode(`Unknown value '${JSON.stringify(c.value)}'`));
+  });
+}
+
+/**
+ * Simple box for show errors the same way.
+ */
+function ErrorBox({ title, error }: { title: string; error: Error }) {
+  return (
+    <InformationBox
+      data-testid={title}
+      title={<span className="text-xl">{title}</span>}
+      className="[&>*]:text-lg"
+      messageType="error"
+    >
+      <ZodIssueFormatter error={error} />
+    </InformationBox>
+  );
+}
+
 /**
  * Component to show everything relevant to a credential that can be parsed.
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
  */
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
   // TODO: More dynamic types
-  const standard = new StandardRetriever(
+  const [selectedStandard, setSelectedStandard] = useState(
     inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
   );
 
-  const dates = standard.extractOk(inspectedResult.calculatedAttributes.validityDates);
+  const standard = new StandardRetriever(selectedStandard);
 
-  const subject = standard.extractOk(inspectedResult.calculatedAttributes.credentialSubject);
-  const subjectValues = subject
-    ? subject.claims.map((claim) => {
-        // TODO: Current limitation, nested claims will not work
-        if (typeof claim.value === 'object') {
-          // This fixes Tagged types
-          if (claim.value && 'value' in claim.value) {
-            return { label: claim.key, value: toNode(claim.value.value as ReactNode) };
-          }
-          console.log(claim.value);
-          return { label: claim.key, value: toNode('Nested value (current limitation, will be fixed asap)') };
-        }
-        return { label: claim.key, value: toNode(claim.value as ReactNode) };
-      })
-    : [];
+  const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
 
-  const issuer = standard.extractOk(inspectedResult.calculatedAttributes.issuer);
-  const issuerValues = fromJSON(issuer);
+  const subject = standard.getResult(inspectedResult.calculatedAttributes.credentialSubject);
+  let subjectValues: LabeledValues[] = [];
+  if (subject.kind === 'ok') {
+    subjectValues = convertNestedClaims(subject.value.claims);
+    if (subject.value.id) subjectValues.unshift(labeledValue('id', toNode(subject.value.id)));
+  }
+
+  const issuer = standard.getResult(inspectedResult.calculatedAttributes.issuer);
+  let issuerValues: LabeledValues[] = [];
+  if (issuer.kind === 'ok') {
+    issuerValues = fromJSON(issuer.value.attributes); // Inspector needs to support more attributes
+    issuerValues.unshift(labeledValue('id', toNode(issuer.value.id)));
+  }
 
   return (
     <div className={className} {...props}>
+      <div className="m-2 flex justify-center">
+        <Select
+          onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
+          defaultValue={Object.entries(stringToStandard)
+            .find(([_key, standard]) => standard === selectedStandard)
+            ?.at(0)}
+        >
+          <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="w3c2">W3C 2.0</SelectItem>
+            <SelectItem data-testid="w3c1-option" value="w3c1">
+              W3C 1.1
+            </SelectItem>
+            <SelectItem value="mdoc">MDOC</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="grid grid-cols-2 gap-8">
-        <LabeledValueCard
-          title="Issuer"
-          titleIcon={FilePenLine}
-          values={issuerValues ?? []}
-          data-testid="issuer-card"
-        />
-        <LabeledValueCard
-          title="Subject"
-          titleIcon={CircleUser}
-          values={subjectValues ?? []}
-          className="row-span-2"
-          data-testid="subject-card"
-        />
-        {dates && (
-          <ValidityDates
-            withinDates={dates.isValid}
-            validFrom={dates.validityDates.validFrom}
-            validUntil={dates.validityDates.validUntil}
-          />
-        )}
-        <Accordion type="multiple" className="flex flex-col gap-4" data-testid="inspection-issues"></Accordion>
+        <div className="flex flex-col gap-8">
+          {issuer.kind === 'ok' ? (
+            <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
+          ) : (
+            <ErrorBox title="Issuer" error={issuer.error} />
+          )}
+          {dates.kind == 'ok' ? (
+            <ValidityDates
+              withinDates={dates.value.isValid}
+              validFrom={dates.value.validityDates.validFrom}
+              validUntil={dates.value.validityDates.validUntil}
+            />
+          ) : (
+            <ErrorBox title="Dates of validity" error={dates.error} />
+          )}
+        </div>
+        <div className="flex flex-col gap-8">
+          {subject.kind === 'ok' ? (
+            <LabeledValueCard
+              title="Subject"
+              titleIcon={CircleUser}
+              values={subjectValues}
+              className="row-span-2"
+              data-testid="subject-card"
+            />
+          ) : (
+            <ErrorBox title="Credential subject" error={subject.error} />
+          )}
+        </div>
       </div>
 
       <Accordion type="single" collapsible className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
-        {!(inspectedResult.parsedJson.type === 'JSON') && ( // TODO: Use .format
+        {inspectedResult.parsedJson.type !== 'JSON' && ( // TODO: Use .format
           <div>
             <HLineWithText text="Raw JSON" />
             <AccordionSection value="decoded-to-json" title="Decoded JSON">

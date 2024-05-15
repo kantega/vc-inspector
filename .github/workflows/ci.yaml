@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9.0.6
       - name: Install dependencies
         run: pnpm install
 
@@ -42,5 +42,10 @@ jobs:
       - name: Cypress component integration
         uses: cypress-io/github-action@v6
         with:
+          install: pnpm install -g serve@latest
           build: pnpm build
-          start: npm start
+          start: npx serve@latest out
+          # Only start tests when the server is up and running.
+          wait-on: http://localhost:3000/
+          # Should never take 10 sec
+          wait-on-timeout: 10

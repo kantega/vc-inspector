@@ -5,7 +5,7 @@ import MinimizingTextArea from '@/components/vc-inspection/MinimizingTextArea';
 import { Button } from '@/components/shadcn/button';
 import ParsedCredentialInfo from './ParsedCredentialInfo';
 import { cn } from '@/utils/styling';
-import { FileType } from 'lucide-react';
+import { FileType, Pencil } from 'lucide-react';
 import InformationBox from '@/components/notices/InfoBox';
 
 type InspectionPageProps = JSX.IntrinsicElements['div'] & {};
@@ -37,7 +37,7 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
   return (
     <div
       className={cn(
-        'flex w-full flex-col items-center gap-5 transition-all duration-200 sm:w-5/6',
+        'flex w-full flex-col items-center gap-2 transition-all duration-200 sm:w-5/6',
         onceSuccessfullyParsed && '-mt-6',
       )}
     >
@@ -64,21 +64,34 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             </InformationBox>
           </div>
         )}
-        <div className="w-full">
-          <MinimizingTextArea
-            className="w-full"
-            data-testid="inspector-textarea"
-            value={value}
-            onChange={(e) => {
-              setTextAreaStatus('active-button');
-              setValue(e.target.value);
-            }}
-            onMinimizationChange={(m) => {
-              setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button');
-              if (m) setAfterFirstInspection(true);
-            }}
-            requestMinimizationTo={textAreaStatus === 'min'}
-          />
+        <div className=" w-full">
+          <div className="relative flex overflow-hidden rounded-md">
+            <MinimizingTextArea
+              className="w-full"
+              data-testid="inspector-textarea"
+              value={value}
+              onChange={(e) => {
+                setTextAreaStatus('active-button');
+                setValue(e.target.value);
+              }}
+              onMinimizationChange={(m) => {
+                setTextAreaStatus(m ? 'min' : textAreaStatus === 'active' ? 'active' : 'active-button');
+                if (m) setAfterFirstInspection(true);
+              }}
+              requestMinimizationTo={textAreaStatus === 'min'}
+            />
+            {textAreaStatus === 'min' && (
+              <button
+                onClick={() => setTextAreaStatus('active-button')}
+                className="absolute right-0 top-0 flex h-full w-12 items-center justify-center border-readable-gray bg-light-gray text-readable-gray"
+                aria-label="Edit"
+              >
+                <div className="border-l-2 border-readable-gray pl-2">
+                  <Pencil className="h-5" />
+                </div>
+              </button>
+            )}
+          </div>
           <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
         </div>
       </div>
@@ -92,7 +105,9 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
 
       {inspected && (
         <>
-          {inspected.success && afterFirstInspection && <ParsedCredentialInfo inspectedResult={inspected} />}
+          {inspected.success && afterFirstInspection && (
+            <ParsedCredentialInfo inspectedResult={inspected} className="w-11/12" />
+          )}
           {!inspected.success && (
             <>
               {inspected.errors.map((error, i) => {

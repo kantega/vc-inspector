@@ -44,16 +44,25 @@ describe('Writing credentials to inspect', () => {
     typeAndInspect(JSON.stringify(credential));
     cy.get("[data-testid='issuer-card']").should('exist').contains('https://university.example/issuers/565049');
   });
-  // Issue has been craeted to handled cases of missing schema.
-  // it('notifies about missing data when credential subject is not present', () => {
-  //   let credential = copyCredential();
-  //   credential.credentialSubject = undefined;
-  //   typeAndInspect(JSON.stringify(credential));
-  //   cy.get("[data-testid='inspection-issues']").should('exist').contains('credentialSubject');
-  // });
+  it('notifies about missing data when credential subject is not present', () => {
+    let credential = copyCredential();
+    credential.credentialSubject = undefined;
+    typeAndInspect(JSON.stringify(credential));
+    cy.get("[data-testid='Credential subject']").should('exist').contains('credentialSubject');
+  });
   it('handles jwt credentials', () => {
     typeAndInspect(exampleJWTCred);
     cy.get("[data-testid='valid-from-date']").should('exist').contains('2010');
     cy.get("[data-testid='valid-until-date']").should('exist').contains(CONTAINS_NO_DIGIT);
+  });
+  it('changes validity dates on standard check from w3c 1.1 to 2.0', () => {
+    let credential = copyCredential();
+    credential.validFrom = '2010-01-01T00:00:00Z';
+    credential.issuanceDate = '2011-01-01T00:00:00Z';
+    typeAndInspect(JSON.stringify(credential));
+    cy.get("[data-testid='valid-from-date']").should('exist').contains('2010');
+    cy.get('button').get("[data-testid='standard-selector']").should('exist').click();
+    cy.get("[data-testid='w3c1-option']").click();
+    cy.get("[data-testid='valid-from-date']").should('exist').contains('2011');
   });
 });
