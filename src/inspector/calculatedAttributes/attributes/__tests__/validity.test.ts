@@ -35,7 +35,7 @@ const validResult = {
   },
 };
 
-test('parse W3C V2 validity dates with dates out of range', () => {
+test('parse validity dates with dates out of range | W3C VC2', () => {
   const obj = {
     validFrom: '2021-01-01',
     validUntil: '2021-12-31',
@@ -46,7 +46,7 @@ test('parse W3C V2 validity dates with dates out of range', () => {
   expect(result.W3C_V2).toEqual(invalidResult);
 });
 
-test('parse W3C V2 validity dates within date range', () => {
+test('parse validity dates within date range | W3C VC2', () => {
   const obj = {
     validFrom: '2021-01-01',
     validUntil: '2121-12-31',
