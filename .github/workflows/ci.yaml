@@ -19,25 +19,20 @@ jobs:
 
       - name: Check linting
         run: pnpm lint
-        continue-on-error: true
 
       - name: Check prettier formatting
         run: pnpm prettier:check
-        continue-on-error: true
 
       - name: Check typescript types
         run: pnpm types
-        continue-on-error: true
 
       - name: Check production build
         run: pnpm build
-        continue-on-error: true
 
       - name: Cypress component test
         uses: cypress-io/github-action@v6
         with:
           component: true
-        continue-on-error: true
 
       - name: Cypress component integration
         uses: cypress-io/github-action@v6

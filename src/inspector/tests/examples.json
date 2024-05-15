@@ -3,13 +3,8 @@
     "format": "json",
     "standard": "W3C VC 1",
     "data": {
-      "@context": [
-        "https://www.w3.org/2018/credentials/v1"
-      ],
-      "type": [
-        "VerifiableCredential",
-        "IDCard"
-      ],
+      "@context": ["https://www.w3.org/2018/credentials/v1"],
+      "type": ["VerifiableCredential", "IDCard"],
       "id": "urn:credential:34502108-4540",
       "issuer": "did:web:asgard-state.auth0lab.com",
       "issuanceDate": "2020-07-20T13:58:53Z",
@@ -37,13 +32,8 @@
   },
   {
     "data": {
-      "@context": [
-        "https://www.w3.org/2018/credentials/v1"
-      ],
-      "type": [
-        "VerifiableCredential",
-        "UniversityDegree"
-      ],
+      "@context": ["https://www.w3.org/2018/credentials/v1"],
+      "type": ["VerifiableCredential", "UniversityDegree"],
       "id": "urn:credential:34502108-4540",
       "issuer": "did:web:socrates-university.auth0lab.com",
       "issuanceDate": "2020-07-20T13:58:53Z",
@@ -73,22 +63,13 @@
   },
   {
     "data": {
-      "@context": [
-        "https://www.w3.org/ns/credentials/v2",
-        "https://www.w3.org/ns/credentials/examples/v2"
-      ],
+      "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/examples/v2"],
       "type": "VerifiablePresentation",
       "verifiableCredential": [
         {
-          "@context": [
-            "https://www.w3.org/ns/credentials/v2",
-            "https://www.w3.org/ns/credentials/examples/v2"
-          ],
+          "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/examples/v2"],
           "id": "http://university.example/credentials/1872",
-          "type": [
-            "VerifiableCredential",
-            "ExampleAlumniCredential"
-          ],
+          "type": ["VerifiableCredential", "ExampleAlumniCredential"],
           "issuer": "https://university.example/issuers/565049",
           "validFrom": "2010-01-01T19:23:24Z",
           "credentialSubject": {
@@ -104,15 +85,9 @@
   },
   {
     "data": {
-      "@context": [
-        "https://www.w3.org/ns/credentials/v2",
-        "https://www.w3.org/ns/credentials/examples/v2"
-      ],
+      "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/examples/v2"],
       "id": "http://university.example/credentials/58473",
-      "type": [
-        "VerifiableCredential",
-        "ExampleAlumniCredential"
-      ],
+      "type": ["VerifiableCredential", "ExampleAlumniCredential"],
       "issuer": "did:example:2g55q912ec3476eba2l9812ecbfe",
       "validFrom": "2010-01-01T00:00:00Z",
       "credentialSubject": {
@@ -132,10 +107,7 @@
         "https://w3id.org/security/suites/ed25519-2020/v1"
       ],
       "id": "http://university.example/credentials/3732",
-      "type": [
-        "VerifiableCredential",
-        "ExampleDegreeCredential"
-      ],
+      "type": ["VerifiableCredential", "ExampleDegreeCredential"],
       "issuer": "https://university.example/issuers/565049",
       "validFrom": "2010-01-01T00:00:00Z",
       "credentialSubject": {

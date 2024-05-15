@@ -21,7 +21,7 @@ describe('<ValidityDates />', () => {
     dateFrom().should('be.visible');
     dateUntil().should('be.visible');
   });
-  it('closes on click', () => {
+  it('closes on clicks on button', () => {
     cy.mount(
       <ValidityDates
         withinDates
@@ -32,8 +32,8 @@ describe('<ValidityDates />', () => {
     dateFrom().should('be.visible');
     dateUntil().should('be.visible');
     cy.get('button').click({ multiple: true });
-    dateFrom().should('not.be.visible');
-    dateUntil().should('not.be.visible');
+    dateFrom().should('not.exist');
+    dateUntil().should('not.exist');
   });
   it('has no numbers for date when not passed in', () => {
     cy.mount(
