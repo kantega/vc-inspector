@@ -8,13 +8,13 @@ import LabeledValueCard, {
 } from '@/components/data-lists/LabeledValueCard';
 import { CircleUser, FilePenLine } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
-import { Accordion } from '@/components/shadcn/accordion';
+import { Accordion } from '@/components/ui/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
 import { useState } from 'react';
 import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/shadcn/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Claim } from '@inspector/calculatedAttributes/attributes/credentialSubject';
 import { isPrimitive } from '@inspector/assertTypes';
 import { isClaimList } from '@inspector/calculatedAttributes/attributes/credentialSubject';

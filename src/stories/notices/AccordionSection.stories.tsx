@@ -1,5 +1,5 @@
 import AccordionSection from '@/components/notices/AccordionSection';
-import { Accordion } from '@/components/shadcn/accordion';
+import { Accordion } from '@/components/ui/accordion';
 import { AccordionSingleProps } from '@radix-ui/react-accordion';
 import { Meta, StoryObj } from '@storybook/react';
 import { CircleUser } from 'lucide-react';

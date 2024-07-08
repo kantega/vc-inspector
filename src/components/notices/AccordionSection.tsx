@@ -1,6 +1,6 @@
 'use client';
 import { AccordionItemProps } from '@radix-ui/react-accordion';
-import { AccordionItem, AccordionContent, AccordionTrigger } from '@/components/shadcn/accordion';
+import { AccordionItem, AccordionContent, AccordionTrigger } from '@/components/ui/accordion';
 import { LucideIcon } from 'lucide-react';
 
 import { ReactNode } from 'react';

@@ -3,7 +3,7 @@ import {
   NavigationMenu,
   NavigationMenuLink,
   NavigationMenuList,
-} from '@/components/shadcn/navigation-menu';
+} from '@/components/ui/navigation-menu';
 import { JSX } from 'react';
 import { NavigationLinks } from './Header';
 import Link from 'next/link';

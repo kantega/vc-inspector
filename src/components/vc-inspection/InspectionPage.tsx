@@ -2,7 +2,7 @@
 import inspect, { InspectionResult } from '@inspector/inspector';
 import { useEffect, useMemo, useState } from 'react';
 import MinimizingTextArea from '@/components/vc-inspection/MinimizingTextArea';
-import { Button } from '@/components/shadcn/button';
+import { Button } from '@/components/ui/button';
 import ParsedCredentialInfo from './ParsedCredentialInfo';
 import { FileType, Pencil } from 'lucide-react';
 import InformationBox from '@/components/notices/InfoBox';

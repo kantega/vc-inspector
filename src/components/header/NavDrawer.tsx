@@ -2,7 +2,7 @@
 
 import { NavigationLinks } from './Header';
 import inspectorLogo from '@/public/inspector-logo.svg';
-import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/shadcn/drawer';
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';

@@ -1,6 +1,6 @@
 'use client';
 import { CircleCheck, CircleX } from 'lucide-react';
-import { Accordion } from '@/components/shadcn/accordion';
+import { Accordion } from '@/components/ui/accordion';
 import { AccordionSingleProps } from '@radix-ui/react-accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
 import { ReasonedOptional } from '@inspector/calculatedAttributes/types';
