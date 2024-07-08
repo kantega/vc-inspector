@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Button } from '../shadcn/button';
+import { Button } from '../ui/button';
 import GitHubCat from '@/public/github-mark-white.svg';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
