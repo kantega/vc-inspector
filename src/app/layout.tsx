@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '@/globals.css';
+import '@/styles/globals.css';
 import Header from '@/components/header/Header';
 import { cn } from '@/utils/styling';
 
@@ -22,10 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, 'bg-light-purple')}>
-        <>
-          <Header />
-          <main className="container mx-auto">{children}</main>
-        </>
+        <Header />
+        <main className="container mx-auto">{children}</main>
       </body>
     </html>
   );

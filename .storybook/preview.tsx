@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
 import { Inter } from 'next/font/google';
-import '../src/app/globals.css';
+import '@/styles/globals.css';
 import React from 'react';
 
 const inter = Inter({

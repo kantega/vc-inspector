@@ -12,7 +12,7 @@ import Image from 'next/image';
 import kantegaLogo from '@/public/kantega-logo.png';
 import inspectorLogo from '@/public/inspector-logo.svg';
 import GitHubCat from '@/public/github-mark.svg';
-import { GITHUB_LINK } from '@/utils/links';
+import { Links } from '@/utils/links';
 
 type NavigationBarProps = JSX.IntrinsicElements['div'] & {
   links: NavigationLinks[];
@@ -46,7 +46,7 @@ export default function NavigationBar({ links, className, currentPath, ...props 
             </NavigationMenuLink>
           ))}
           <NavigationMenuLink asChild className="hover:opacity-80">
-            <Link href={GITHUB_LINK}>
+            <Link href={Links.GITHUB_LINK}>
               <Image src={GitHubCat} alt="GitHub invertocat link to repository" width={40} height={40} />
             </Link>
           </NavigationMenuLink>

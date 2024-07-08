@@ -50,7 +50,7 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
                 <div className="flex items-center">
                   <FileType size="1.2em" />
                   <span className="ml-1">Format: </span>
-                  <span className="ml-1.5 rounded bg-light-gray p-0.5">{inspected.parsedJson.type}</span>
+                  <span className="bg-light-gray ml-1.5 rounded p-0.5">{inspected.parsedJson.type}</span>
                 </div>
               </>
             )}
@@ -83,16 +83,16 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             {textAreaStatus === 'min' && (
               <button
                 onClick={() => setTextAreaStatus('active-button')}
-                className="absolute right-0 top-0 flex h-full w-12 items-center justify-center border-readable-gray bg-light-gray text-readable-gray"
+                className="border-readable-gray bg-light-gray text-readable-gray absolute right-0 top-0 flex h-full w-12 items-center justify-center"
                 aria-label="Edit"
               >
-                <div className="border-l-2 border-readable-gray pl-2">
+                <div className="border-readable-gray border-l-2 pl-2">
                   <Pencil className="h-5" />
                 </div>
               </button>
             )}
           </div>
-          <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
+          <div className="border-dark-gray mx-6 mt-4 h-0 border-t-2"></div>
         </div>
       </div>
       <Button

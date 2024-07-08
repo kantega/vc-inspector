@@ -3,7 +3,7 @@ import { Button } from '../shadcn/button';
 import GitHubCat from '@/public/github-mark-white.svg';
 import Link from 'next/link';
 import { cn } from '@/utils/styling';
-import { GITHUB_LINK } from '@/utils/links';
+import { Links } from '@/utils/links';
 
 type FeedbackBoxProps = JSX.IntrinsicElements['div'] & {};
 
@@ -22,7 +22,7 @@ export default function FeedbackBox({ className, ...props }: FeedbackBoxProps) {
         <span className="font-semibold">contribute</span>?
       </h2>
       <Button variant="default" asChild>
-        <Link href={GITHUB_LINK} className="items-center gap-3">
+        <Link href={Links.GITHUB_LINK} className="items-center gap-3">
           <Image src={GitHubCat} alt="GitHub invertocat" className="h-full w-auto" width={40} height={40} />
           <p className="text-lg">See repository</p>
         </Link>

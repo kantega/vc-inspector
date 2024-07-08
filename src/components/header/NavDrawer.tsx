@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { GITHUB_LINK } from '@/utils/links';
+import { Links } from '@/utils/links';
 import GitHubCat from '@/public/github-mark-white.svg';
 
 type NavigationDrawerProps = JSX.IntrinsicElements['div'] & {
@@ -50,7 +50,7 @@ export default function NavigationDrawer({ links, currentPath, className, ...pro
               </DrawerClose>
             ))}
             <DrawerClose asChild>
-              <Link href={GITHUB_LINK}>
+              <Link href={Links.GITHUB_LINK}>
                 <Image src={GitHubCat} alt="GitHub invertocat link to repository" width={40} height={40} />
               </Link>
             </DrawerClose>
