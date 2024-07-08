@@ -2,9 +2,6 @@
   "name": "vc-inpector",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "src/inspector"
-  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

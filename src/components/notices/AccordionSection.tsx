@@ -2,8 +2,9 @@
 import { AccordionItemProps } from '@radix-ui/react-accordion';
 import { AccordionItem, AccordionContent, AccordionTrigger } from '@/components/shadcn/accordion';
 import { LucideIcon } from 'lucide-react';
-import { cn } from '@/utils/styling';
+
 import { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 type AccordionSectionProps = Omit<AccordionItemProps, 'title'> & {
   title: ReactNode;

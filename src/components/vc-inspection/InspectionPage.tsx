@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from 'react';
 import MinimizingTextArea from '@/components/vc-inspection/MinimizingTextArea';
 import { Button } from '@/components/shadcn/button';
 import ParsedCredentialInfo from './ParsedCredentialInfo';
-import { cn } from '@/utils/styling';
 import { FileType, Pencil } from 'lucide-react';
 import InformationBox from '@/components/notices/InfoBox';
+import { cn } from '@/lib/utils';
 
 type InspectionPageProps = JSX.IntrinsicElements['div'] & {};
 
@@ -50,7 +50,7 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
                 <div className="flex items-center">
                   <FileType size="1.2em" />
                   <span className="ml-1">Format: </span>
-                  <span className="bg-light-gray ml-1.5 rounded p-0.5">{inspected.parsedJson.type}</span>
+                  <span className="ml-1.5 rounded bg-light-gray p-0.5">{inspected.parsedJson.type}</span>
                 </div>
               </>
             )}
@@ -83,16 +83,16 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
             {textAreaStatus === 'min' && (
               <button
                 onClick={() => setTextAreaStatus('active-button')}
-                className="border-readable-gray bg-light-gray text-readable-gray absolute right-0 top-0 flex h-full w-12 items-center justify-center"
+                className="absolute right-0 top-0 flex h-full w-12 items-center justify-center border-readable-gray bg-light-gray text-readable-gray"
                 aria-label="Edit"
               >
-                <div className="border-readable-gray border-l-2 pl-2">
+                <div className="border-l-2 border-readable-gray pl-2">
                   <Pencil className="h-5" />
                 </div>
               </button>
             )}
           </div>
-          <div className="border-dark-gray mx-6 mt-4 h-0 border-t-2"></div>
+          <div className="mx-6 mt-4 h-0 border-t-2 border-dark-gray"></div>
         </div>
       </div>
       <Button

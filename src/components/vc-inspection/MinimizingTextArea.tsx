@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/styling';
+import { cn } from '@/lib/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 type TextAreaProps = JSX.IntrinsicElements['textarea'] & {

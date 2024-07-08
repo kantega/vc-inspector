@@ -1,4 +1,4 @@
-import { cn } from '@/utils/styling';
+import { cn } from '@/lib/utils';
 
 type UnderConstructionProps = JSX.IntrinsicElements['div'];
 

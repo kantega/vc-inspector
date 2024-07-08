@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/utils/styling';
+
 import { NavigationLinks } from './Header';
 import inspectorLogo from '@/public/inspector-logo.svg';
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/shadcn/drawer';
@@ -9,6 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Links } from '@/utils/links';
 import GitHubCat from '@/public/github-mark-white.svg';
+import { cn } from '@/lib/utils';
 
 type NavigationDrawerProps = JSX.IntrinsicElements['div'] & {
   links: NavigationLinks[];

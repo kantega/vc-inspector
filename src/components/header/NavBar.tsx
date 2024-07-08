@@ -7,12 +7,12 @@ import {
 import { JSX } from 'react';
 import { NavigationLinks } from './Header';
 import Link from 'next/link';
-import { cn } from '@/utils/styling';
 import Image from 'next/image';
 import kantegaLogo from '@/public/kantega-logo.png';
 import inspectorLogo from '@/public/inspector-logo.svg';
 import GitHubCat from '@/public/github-mark.svg';
 import { Links } from '@/utils/links';
+import { cn } from '@/lib/utils';
 
 type NavigationBarProps = JSX.IntrinsicElements['div'] & {
   links: NavigationLinks[];

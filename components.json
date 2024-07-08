@@ -12,7 +12,6 @@
   },
   "aliases": {
     "components": "@/components",
-    "utils": "@/utils/styling",
-    "ui": "@/components/shadcn"
+    "utils": "@/lib/utils"
   }
 }

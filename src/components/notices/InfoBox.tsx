@@ -1,4 +1,4 @@
-import { cn } from '@/utils/styling';
+import { cn } from '@/lib/utils';
 import { VariantProps, cva } from 'class-variance-authority';
 import { Info, CircleAlert, CircleX, CircleCheck, LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';

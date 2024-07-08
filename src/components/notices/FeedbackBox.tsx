@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Button } from '../shadcn/button';
 import GitHubCat from '@/public/github-mark-white.svg';
 import Link from 'next/link';
-import { cn } from '@/utils/styling';
+import { cn } from '@/lib/utils';
 import { Links } from '@/utils/links';
 
 type FeedbackBoxProps = JSX.IntrinsicElements['div'] & {};
