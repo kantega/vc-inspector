@@ -23,13 +23,17 @@ import UnderConstruction from '@/components/notices/UnderConstruction';
 import InformationBox from '@/components/notices/InfoBox';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
+  inspectedResult: SuccessfullParse | null | undefined;
+};
+
+type InnerParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
 };
 
 function HLineWithText({ text }: { text: string }) {
   return (
-    <div className="relative mx-4 h-0 border-t-2 border-dark-gray p-2">
-      <p className="absolute -top-5 left-10 bg-light-purple p-1 text-lg text-readable-gray">{text}</p>
+    <div className="border-dark-gray relative mx-4 h-0 border-t-2 p-2">
+      <p className="bg-light-purple text-readable-gray absolute -top-5 left-10 p-1 text-lg">{text}</p>
     </div>
   );
 }
@@ -48,7 +52,7 @@ const stringToStandard: Record<string, Standards> = {
  * labaled value. An unhandled claim is prefixed with `Unknown value`
  * followed by the stringified version of it.
  */
-function convertNestedClaims(claims: Claim[]): LabeledValues[] {
+export function convertNestedClaims(claims: Claim[]): LabeledValues[] {
   return claims.map((c) => {
     let toPush = undefined;
     if (isClaimList(c.value)) {
@@ -84,6 +88,11 @@ function ErrorBox({ title, error }: { title: string; error: Error }) {
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
  */
 export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
+  if (!inspectedResult) return null;
+  return <InnerParsedCredentialInfo inspectedResult={inspectedResult} className={className} {...props} />;
+}
+
+function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: InnerParsedCredentialInfoProps) {
   // TODO: More dynamic types
   const [selectedStandard, setSelectedStandard] = useState(
     inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
