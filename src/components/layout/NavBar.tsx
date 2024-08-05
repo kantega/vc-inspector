@@ -30,7 +30,7 @@ export default function NavigationBar({ links, className, currentPath, ...props 
     <div className={cn(className)} {...props}>
       <NavigationMenu className="container max-w-screen-xl justify-between px-10 py-2">
         <Link href="/" className="flex gap-2 align-middle">
-          <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} height={20} />
+          <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} />
           <h1 className="text-dark-purple self-center text-xl font-bold">VC Inspector</h1>
         </Link>
         <NavigationMenuList className="gap-4">
@@ -47,13 +47,13 @@ export default function NavigationBar({ links, className, currentPath, ...props 
           ))}
           <NavigationMenuLink asChild className="hover:opacity-80">
             <Link href={Links.GITHUB_LINK}>
-              <Image src={GitHubCat} alt="GitHub invertocat link to repository" width={40} height={40} />
+              <Image src={GitHubCat} alt="GitHub invertocat link to repository" width={40} />
             </Link>
           </NavigationMenuLink>
         </NavigationMenuList>
         <Link href="https://www.kantega.no/">
           <p className="text-dark-purple">Crafted by</p>
-          <Image src={kantegaLogo} alt="Kantega Logo" width={100} height={100} />
+          <Image src={kantegaLogo} alt="Kantega Logo" width={100} />
         </Link>
       </NavigationMenu>
       <div className="border-dark-gray mx-4 h-0 border-t-2"></div>

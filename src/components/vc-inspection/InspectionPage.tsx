@@ -22,6 +22,8 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
     const trimmedValue = value.trim();
     const inspectedResult = inspect(trimmedValue);
 
+    console.log(inspectedResult);
+
     if (inspectedResult.success) {
       setInspected(inspectedResult);
     }
@@ -37,7 +39,7 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
   }, []);
 
   return (
-    <div className={cn('sm:w-5/6-mt-6 relative flex min-h-screen w-full gap-2 transition-all duration-200')}>
+    <div {...props} className={cn('sm:w-5/6-mt-6 relative flex min-h-screen w-full gap-2 transition-all duration-200')}>
       {/* todo: fix sticky maybe */}
       <div className=" w-1/2">
         <div className="flex w-full justify-between gap-2 p-3">
