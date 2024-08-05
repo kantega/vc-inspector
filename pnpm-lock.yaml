@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@inspector':
         specifier: file:src/inspector
-        version: link:src/inspector
+        version: inspector@file:src/inspector
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.19)(@types/react@18.2.55)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -3995,6 +3995,9 @@ packages:
   ini@2.0.0:
     resolution: {integrity: sha512-7PnF4oN3CvZF23ADhA5wRaYEQpJ8qygSkbtTXWBeXWXmEVRXK+1ITciHWwHhsjv1TmW0MgacIv6hEi5pX5NQdA==}
     engines: {node: '>=10'}
+
+  inspector@file:src/inspector:
+    resolution: {directory: src/inspector, type: directory}
 
   internal-slot@1.0.7:
     resolution: {integrity: sha512-NGnrKwXzSms2qUUih/ILZ5JBqNTSa1+ZmP6flaIp6KmSElgE9qdndzS3cqjrDovwFdmwsGsLdeFgB6suw+1e9g==}
@@ -11258,6 +11261,14 @@ snapshots:
   inherits@2.0.4: {}
 
   ini@2.0.0: {}
+
+  inspector@file:src/inspector:
+    dependencies:
+      base64url: 3.0.1
+      cbor: 9.0.2
+      cose-js: 0.9.0
+      jose: 5.2.4
+      zod: 3.22.4
 
   internal-slot@1.0.7:
     dependencies:
