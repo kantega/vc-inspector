@@ -167,7 +167,7 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
         )}
       </div>
 
-      <Accordion type="single" collapsible className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
+      <Accordion type="single" collapsible className="mt-5 flex w-full flex-col gap-8 [&_.accordion-item]:bg-white">
         {inspectedResult.parsedJson.type !== 'JSON' && ( // TODO: Use .format
           <div>
             <HLineWithText text="Raw JSON" />

@@ -24,8 +24,9 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
   }, [value]);
 
   return (
-    <div className={cn('sm:w-5/6-mt-6 flex w-full items-center gap-2 transition-all duration-200')}>
-      <div className="w-full items-center text-center">
+    <div className={cn('sm:w-5/6-mt-6 relative flex min-h-screen w-full gap-2 transition-all duration-200')}>
+      <div className="sticky top-0 w-full">
+        i am fucking sticky
         <div className="flex w-full justify-between gap-2 p-3">
           <p className="text-xl">Verifiable Credential</p>
           {inspected?.success && (
@@ -59,9 +60,6 @@ export default function InspectionPage({ className, ...props }: InspectionPagePr
           <div className="border-dark-gray mx-6 mt-4 h-0 border-t-2"></div>
         </div>
       </div>
-      <Button className={`bg-dark-purple px-6 `} data-testid="inspect-button">
-        Inspect
-      </Button>
 
       <ParsedCredentialInfo inspectedResult={inspected} className="w-11/12" />
       {/* {inspected &&

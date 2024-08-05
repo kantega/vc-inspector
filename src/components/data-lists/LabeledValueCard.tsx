@@ -4,6 +4,34 @@ import { isPrimitive, isStrRecord } from '@inspector/assertTypes';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
 
+/**
+ * Component to display a json/Record like structure.
+ * Nested values will also be displayed with an indent.
+ * Helper functions have been defined to facilitate
+ * adding labeled values.
+ */
+export default function LabeledValueCard({
+  titleIcon: TitleIcon,
+  title,
+  values,
+  className,
+  ...props
+}: LabeledValueCardProps) {
+  return (
+    <Card className={className} {...props}>
+      <CardHeader className="h-fit border-b-2 p-2">
+        <CardTitle className={cn('m-0 flex items-center p-0 text-base leading-none', TitleIcon && 'gap-3')}>
+          {TitleIcon && <TitleIcon size="1em" />}
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <NestedValues values={values} root />
+      </CardContent>
+    </Card>
+  );
+}
+
 type LeafNode = {
   kind: 'leaf';
   node: ReactNode;
@@ -67,7 +95,7 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
     <>
       {values.map(({ label: l, value: v }) => (
         <CardContent className="py-1" key={l}>
-          <p className="text-lg text-readable-gray">{l}</p>
+          <p className="text-readable-gray text-lg">{l}</p>
           {v.kind === 'leaf' && (
             <p
               className={cn(
@@ -80,38 +108,12 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
             </p>
           )}
           {v.kind === 'nested' && (
-            <div className="ml-2 border-l-2 border-light-gray">
+            <div className="border-light-gray ml-2 border-l-2">
               <NestedValues values={v.values} />
             </div>
           )}
         </CardContent>
       ))}
     </>
-  );
-}
-
-/**
- * Component to display a json/Record like structure.
- * Nested values will also be displayed with an indent.
- * Helper functions have been defined to facilitate
- * adding labeled values.
- */
-export default function LabeledValueCard({
-  titleIcon: TitleIcon,
-  title,
-  values,
-  className,
-  ...props
-}: LabeledValueCardProps) {
-  return (
-    <Card className={className} {...props}>
-      <CardHeader>
-        <CardTitle className={cn('flex items-center', TitleIcon && 'gap-3')}>
-          <span>{TitleIcon && <TitleIcon width={30} height={30} />}</span>
-          <span>{title}</span>
-        </CardTitle>
-      </CardHeader>
-      <NestedValues values={values} root />
-    </Card>
   );
 }
