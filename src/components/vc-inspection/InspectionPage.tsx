@@ -26,6 +26,7 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
 
     if (inspectedResult.success) {
       setInspected(inspectedResult);
+      setErrors([]);
     } else {
       setErrors(inspectedResult.errors);
     }
@@ -36,6 +37,7 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
 
     if (inspectedResult.success) {
       setInspected(inspectedResult);
+      setErrors([]);
     } else {
       setErrors(inspectedResult.errors);
     }
@@ -87,15 +89,19 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
         </div>
       </div>
 
-      <ParsedCredentialInfo inspectedResult={inspected} className="flex w-full flex-col gap-2 sm:w-1/2" />
+      <div>
+        <div className="flex flex-wrap gap-4">
+          {errors.map((error, i) => {
+            return (
+              <InformationBox key={i} messageType="error" title={error.name} className=" w-full">
+                <p>{error.message}</p>
+              </InformationBox>
+            );
+          })}
+        </div>
 
-      {errors.map((error, i) => {
-        return (
-          <InformationBox key={i} messageType="error" title={error.name} className="w-full">
-            <p>{error.message}</p>
-          </InformationBox>
-        );
-      })}
+        <ParsedCredentialInfo inspectedResult={inspected} className="flex w-full flex-col gap-2" />
+      </div>
     </div>
   );
 }
