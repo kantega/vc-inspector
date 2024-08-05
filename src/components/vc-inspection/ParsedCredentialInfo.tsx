@@ -30,66 +30,13 @@ type InnerParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
 };
 
-function HLineWithText({ text }: { text: string }) {
-  return (
-    <div className="border-dark-gray relative mx-4 h-0 border-t-2 p-2">
-      <p className="bg-light-purple text-readable-gray absolute -top-5 left-10 p-1 text-lg">{text}</p>
-    </div>
-  );
-}
-
-const stringToStandard: Record<string, Standards> = {
-  w3c2: Standards.W3C_V2,
-  w3c1: Standards.W3C_V1,
-  mdoc: Standards.MDOC,
-  sdjwt: Standards.SD_JWT,
-};
-
-/**
- * Converts a list of credential subject claims to a
- * labaled values list. Both structures can be nested.
- * If a claim in claims is a list of claims, it is converted to a nested
- * labaled value. An unhandled claim is prefixed with `Unknown value`
- * followed by the stringified version of it.
- */
-export function convertNestedClaims(claims: Claim[]): LabeledValues[] {
-  return claims.map((c) => {
-    let toPush = undefined;
-    if (isClaimList(c.value)) {
-      toPush = toNested(convertNestedClaims(c.value));
-    } else if (isPrimitive(c.value)) {
-      toPush = toNode(c.value);
-    }
-    if (toPush) {
-      return labeledValue(c.key, toPush);
-    }
-    return labeledValue(c.key, toNode(`Unknown value '${JSON.stringify(c.value)}'`));
-  });
-}
-
-/**
- * Simple box for show errors the same way.
- */
-function ErrorBox({ title, error }: { title: string; error: Error }) {
-  return (
-    <InformationBox
-      data-testid={title}
-      title={<span className="text-xl">{title}</span>}
-      className="[&>*]:text-lg"
-      messageType="error"
-    >
-      <ZodIssueFormatter error={error} />
-    </InformationBox>
-  );
-}
-
 /**
  * Component to show everything relevant to a credential that can be parsed.
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
  */
-export default function ParsedCredentialInfo({ inspectedResult, className, ...props }: ParsedCredentialInfoProps) {
+export default function ParsedCredentialInfo({ inspectedResult, ...props }: ParsedCredentialInfoProps) {
   if (!inspectedResult) return null;
-  return <InnerParsedCredentialInfo inspectedResult={inspectedResult} className={className} {...props} />;
+  return <InnerParsedCredentialInfo inspectedResult={inspectedResult} {...props} />;
 }
 
 function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: InnerParsedCredentialInfoProps) {
@@ -188,5 +135,58 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
         </div>
       </Accordion>
     </div>
+  );
+}
+
+function HLineWithText({ text }: { text: string }) {
+  return (
+    <div className="border-dark-gray relative mx-4 h-0 border-t-2 p-2">
+      <p className="bg-light-purple text-readable-gray absolute -top-5 left-10 p-1 text-lg">{text}</p>
+    </div>
+  );
+}
+
+const stringToStandard: Record<string, Standards> = {
+  w3c2: Standards.W3C_V2,
+  w3c1: Standards.W3C_V1,
+  mdoc: Standards.MDOC,
+  sdjwt: Standards.SD_JWT,
+};
+
+/**
+ * Converts a list of credential subject claims to a
+ * labaled values list. Both structures can be nested.
+ * If a claim in claims is a list of claims, it is converted to a nested
+ * labaled value. An unhandled claim is prefixed with `Unknown value`
+ * followed by the stringified version of it.
+ */
+export function convertNestedClaims(claims: Claim[]): LabeledValues[] {
+  return claims.map((c) => {
+    let toPush = undefined;
+    if (isClaimList(c.value)) {
+      toPush = toNested(convertNestedClaims(c.value));
+    } else if (isPrimitive(c.value)) {
+      toPush = toNode(c.value);
+    }
+    if (toPush) {
+      return labeledValue(c.key, toPush);
+    }
+    return labeledValue(c.key, toNode(`Unknown value '${JSON.stringify(c.value)}'`));
+  });
+}
+
+/**
+ * Simple box for show errors the same way.
+ */
+function ErrorBox({ title, error }: { title: string; error: Error }) {
+  return (
+    <InformationBox
+      data-testid={title}
+      title={<span className="text-xl">{title}</span>}
+      className="[&>*]:text-lg"
+      messageType="error"
+    >
+      <ZodIssueFormatter error={error} />
+    </InformationBox>
   );
 }

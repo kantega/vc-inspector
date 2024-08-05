@@ -10,8 +10,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import kantegaLogo from '@/public/kantega-logo.png';
 import inspectorLogo from '@/public/inspector-logo.svg';
-import GitHubCat from '@/public/github-mark.svg';
-import { Links } from '@/utils/links';
 import { cn } from '@/lib/utils';
 
 type NavigationBarProps = JSX.IntrinsicElements['div'] & {
@@ -45,11 +43,6 @@ export default function NavigationBar({ links, className, currentPath, ...props 
               </Link>
             </NavigationMenuLink>
           ))}
-          <NavigationMenuLink asChild className="hover:opacity-80">
-            <Link href={Links.GITHUB_LINK}>
-              <Image src={GitHubCat} alt="GitHub invertocat link to repository" width={40} />
-            </Link>
-          </NavigationMenuLink>
         </NavigationMenuList>
         <Link href="https://www.kantega.no/">
           <p className="text-dark-purple">Crafted by</p>

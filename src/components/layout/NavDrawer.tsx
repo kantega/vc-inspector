@@ -51,7 +51,7 @@ export default function NavigationDrawer({ links, currentPath, className, ...pro
               </DrawerClose>
             ))}
             <DrawerClose asChild>
-              <Link href={Links.GITHUB_LINK} className="mt-auto flex gap-4 text-sm">
+              <Link href={Links.GITHUB_LINK} className="mt-auto flex items-center gap-4 text-sm">
                 <Image src={GitHubCat} alt="GitHub invertocat link to repository" width={40} height={40} />
                 Github repository
               </Link>
