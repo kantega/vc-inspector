@@ -71,7 +71,7 @@ Open-sourced tool for inspecting verifiable credentials.
 
 Will be aligned with eIDAS 2.0
 
-<stong>Created by Kantega</stong>
+<stong>Crafted by Kantega</stong>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

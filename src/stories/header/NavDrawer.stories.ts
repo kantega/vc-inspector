@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import NavDrawer from '@/components/header/NavDrawer';
+import NavDrawer from '@/components/layout/NavDrawer';
 
 const meta = {
   title: 'Header/NavDrawer',

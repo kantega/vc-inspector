@@ -6,7 +6,6 @@ import examples from './examples.json';
 const devMode = process.env.NODE_ENV === 'development';
 
 /**
- *
  * A page for giving examples on how Verifiable Credentials
  * and Presentations might look and what they might contain.
  * Possible to inspect given examples.

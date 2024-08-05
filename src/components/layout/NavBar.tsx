@@ -31,7 +31,7 @@ export default function NavigationBar({ links, className, currentPath, ...props 
       <NavigationMenu className="container max-w-screen-xl justify-between px-10 py-2">
         <Link href="/" className="flex gap-2 align-middle">
           <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} height={20} />
-          <h1 className="self-center text-xl font-bold text-dark-purple">VC Inspector</h1>
+          <h1 className="text-dark-purple self-center text-xl font-bold">VC Inspector</h1>
         </Link>
         <NavigationMenuList className="gap-4">
           {links.map((l) => (
@@ -52,11 +52,11 @@ export default function NavigationBar({ links, className, currentPath, ...props 
           </NavigationMenuLink>
         </NavigationMenuList>
         <Link href="https://www.kantega.no/">
-          <p className="text-dark-purple">Created by:</p>
+          <p className="text-dark-purple">Crafted by</p>
           <Image src={kantegaLogo} alt="Kantega Logo" width={100} height={100} />
         </Link>
       </NavigationMenu>
-      <div className="mx-4 h-0 border-t-2 border-dark-gray"></div>
+      <div className="border-dark-gray mx-4 h-0 border-t-2"></div>
     </div>
   );
 }
