@@ -118,60 +118,56 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
 
   return (
     <div className={className} {...props}>
-      <div className="m-2 flex justify-center">
-        <Select
-          onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
-          defaultValue={Object.entries(stringToStandard)
-            .find(([_key, standard]) => standard === selectedStandard)
-            ?.at(0)}
-        >
-          <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="w3c2">W3C 2.0</SelectItem>
-            <SelectItem data-testid="w3c1-option" value="w3c1">
-              W3C 1.1
-            </SelectItem>
-            <SelectItem value="mdoc">MDOC</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="flex flex-col gap-8">
-        {issuer.kind === 'ok' ? (
-          <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
-        ) : (
-          <ErrorBox title="Issuer" error={issuer.error} />
-        )}
+      <Select
+        onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
+        defaultValue={Object.entries(stringToStandard)
+          .find(([_key, standard]) => standard === selectedStandard)
+          ?.at(0)}
+      >
+        <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="w3c2">W3C 2.0</SelectItem>
+          <SelectItem data-testid="w3c1-option" value="w3c1">
+            W3C 1.1
+          </SelectItem>
+          <SelectItem value="mdoc">MDOC</SelectItem>
+        </SelectContent>
+      </Select>
+      {issuer.kind === 'ok' ? (
+        <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
+      ) : (
+        <ErrorBox title="Issuer" error={issuer.error} />
+      )}
 
-        {subject.kind === 'ok' ? (
-          <LabeledValueCard
-            title="Subject"
-            titleIcon={CircleUser}
-            values={subjectValues}
-            className="row-span-2"
-            data-testid="subject-card"
-          />
-        ) : (
-          <ErrorBox title="Credential subject" error={subject.error} />
-        )}
-        {dates.kind == 'ok' ? (
-          <ValidityDates
-            className="w-full"
-            withinDates={dates.value.isValid}
-            validFrom={dates.value.validityDates.validFrom}
-            validUntil={dates.value.validityDates.validUntil}
-          />
-        ) : (
-          <ErrorBox title="Dates of validity" error={dates.error} />
-        )}
-      </div>
+      {subject.kind === 'ok' ? (
+        <LabeledValueCard
+          title="Subject"
+          titleIcon={CircleUser}
+          values={subjectValues}
+          className="row-span-2"
+          data-testid="subject-card"
+        />
+      ) : (
+        <ErrorBox title="Credential subject" error={subject.error} />
+      )}
+      {dates.kind == 'ok' ? (
+        <ValidityDates
+          className="w-full"
+          withinDates={dates.value.isValid}
+          validFrom={dates.value.validityDates.validFrom}
+          validUntil={dates.value.validityDates.validUntil}
+        />
+      ) : (
+        <ErrorBox title="Dates of validity" error={dates.error} />
+      )}
 
-      <Accordion type="single" collapsible className="mt-5 flex w-full flex-col gap-8 [&_.accordion-item]:bg-white">
+      <Accordion type="multiple" className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
         {inspectedResult.parsedJson.type !== 'JSON' && ( // TODO: Use .format
-          <div>
+          <>
             <HLineWithText text="Raw JSON" />
-            <AccordionSection value="decoded-to-json" title="Decoded JSON">
+            <AccordionSection value="decoded-to-json" title="Decoded JSON" className="px-0">
               <JSONPretty
                 className="break-words"
                 stringStyle="color:#f92672;"
@@ -180,7 +176,7 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
                 data={inspectedResult.parsedJson}
               />
             </AccordionSection>
-          </div>
+          </>
         )}
         <div>
           <HLineWithText text="Credential" />

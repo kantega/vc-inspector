@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, 'bg-light-purple')}>
         <Header />
-        <main className="container mx-auto">{children}</main>
+        <main className="container mx-auto mt-32">{children}</main>
       </body>
     </html>
   );
