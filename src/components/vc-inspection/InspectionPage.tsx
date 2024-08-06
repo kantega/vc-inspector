@@ -89,8 +89,8 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
         </div>
       </div>
 
-      <div>
-        <div className="flex flex-wrap gap-4">
+      <div className="flex w-1/2 flex-col">
+        <div className="flex w-full flex-wrap gap-4">
           {errors.map((error, i) => {
             return (
               <InformationBox key={i} messageType="error" title={error.name} className=" w-full">
@@ -99,7 +99,6 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
             );
           })}
         </div>
-
         <ParsedCredentialInfo inspectedResult={inspected} className="flex w-full flex-col gap-2" />
       </div>
     </div>
