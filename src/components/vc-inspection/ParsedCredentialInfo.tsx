@@ -6,7 +6,7 @@ import LabeledValueCard, {
   nested as toNested,
   node as toNode,
 } from '@/components/data-lists/LabeledValueCard';
-import { CircleUser, FilePenLine } from 'lucide-react';
+import { CircleUser, DownloadIcon, FilePenLine, Share, Share2, ShareIcon } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 import { Accordion } from '@/components/ui/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
@@ -87,7 +87,6 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
       ) : (
         <ErrorBox title="Issuer" error={issuer.error} />
       )}
-
       {subject.kind === 'ok' ? (
         <LabeledValueCard
           title="Subject"
@@ -109,7 +108,6 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
       ) : (
         <ErrorBox title="Dates of validity" error={dates.error} />
       )}
-
       <Accordion type="multiple" className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
         {inspectedResult.parsedJson.type !== 'JSON' && ( // TODO: Use .format
           <>
@@ -140,8 +138,8 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
 
 function HLineWithText({ text }: { text: string }) {
   return (
-    <div className="border-dark-gray relative mx-4 h-0 border-t-2 p-2">
-      <p className="bg-light-purple text-readable-gray absolute -top-5 left-10 p-1 text-lg">{text}</p>
+    <div className="relative mx-4 h-0 border-t-2 border-dark-gray p-2">
+      <p className="absolute -top-5 left-10 bg-light-purple p-1 text-lg text-readable-gray">{text}</p>
     </div>
   );
 }
