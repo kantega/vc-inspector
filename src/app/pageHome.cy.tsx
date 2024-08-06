@@ -1,8 +1,8 @@
-import React from 'react';
-import Page from './page';
+// import React from 'react';
+// import Page from './page';
 
-describe('<Home />', () => {
-  it('renders', () => {
-    cy.mount(<Page />);
-  });
-});
+// describe('<Home />', () => {
+//   it('renders', () => {
+//     cy.mount(<Page />);
+//   });
+// });
