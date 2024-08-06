@@ -95,7 +95,7 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
     <>
       {values.map(({ label: l, value: v }) => (
         <CardContent className="py-1" key={l}>
-          <p className="text-readable-gray text-lg">{l}</p>
+          <p className="text-lg text-readable-gray">{l}</p>
           {v.kind === 'leaf' && (
             <p
               className={cn(
@@ -108,7 +108,7 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
             </p>
           )}
           {v.kind === 'nested' && (
-            <div className="border-light-gray ml-2 border-l-2">
+            <div className="ml-2 border-l-2 border-light-gray">
               <NestedValues values={v.values} />
             </div>
           )}

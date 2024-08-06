@@ -30,7 +30,7 @@ export default function NavigationDrawer({ links, currentPath, className, ...pro
     <div className={cn(className, 'flex w-full justify-between p-3')} {...props}>
       <Link href="/" className="flex gap-2 align-middle">
         <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} />
-        <h1 className="text-dark-purple self-center text-xl font-bold">VC Inspector</h1>
+        <h1 className="self-center text-xl font-bold text-dark-purple">VC Inspector</h1>
       </Link>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger asChild>
