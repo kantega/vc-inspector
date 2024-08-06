@@ -19,12 +19,12 @@ export default function InformationBox({ className, title, messageType, children
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className="text-md flex gap-2 font-semibold">
+          <span className={cn(textVariants({ messageType }), 'text-md mx-2 flex items-center gap-2 font-semibold')}>
             <Icon width={20} height={20} /> {title}
           </span>
         </TooltipTrigger>
         <TooltipContent
-          className={cn(infoBoxVariants({ messageType }), className, 'z-50 max-w-60 bg-background text-foreground')}
+          className={cn(bgVariants({ messageType }), textVariants({ messageType }), className, 'z-50 max-w-60')}
         >
           {children}
         </TooltipContent>
@@ -40,7 +40,7 @@ const messageType = {
   success: 'bg-light-green text-dark-green',
 };
 
-export const infoBoxVariants = cva('rounded-2xl p-4 text-sm', {
+export const bgVariants = cva('', {
   variants: {
     messageType: messageType,
   },
@@ -49,8 +49,24 @@ export const infoBoxVariants = cva('rounded-2xl p-4 text-sm', {
   },
 });
 
+const messageTypeToText = {
+  neutral: 'text-dark-blue',
+  warning: 'text-dark-yellow',
+  error: 'text-dark-red',
+  success: 'text-dark-green',
+};
+
+export const textVariants = cva('', {
+  variants: {
+    messageType: messageTypeToText,
+  },
+  defaultVariants: {
+    messageType: 'neutral',
+  },
+});
+
 type InfoBoxProps = Omit<JSX.IntrinsicElements['div'], 'title'> &
-  VariantProps<typeof infoBoxVariants> & {
+  VariantProps<typeof bgVariants> & {
     title: ReactNode;
   };
 

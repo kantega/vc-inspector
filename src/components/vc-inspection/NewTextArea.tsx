@@ -18,7 +18,7 @@ export default function NewTextArea({ className, ...props }: TextAreaProps) {
       ref={ref}
       spellCheck={false}
       placeholder="Paste your verifiable credential here"
-      className={cn('bg-light-gray placeholder-readable-gray h-[50vh] rounded-md p-4', className)}
+      className={cn('placeholder-readable-gray bg-light-gray h-[50vh] rounded-md p-4', className)}
     />
   );
 }

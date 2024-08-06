@@ -21,6 +21,11 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
   const [errors, setErrors] = useState<ReasonedError[]>([]);
 
   useEffect(() => {
+    if (value === '') {
+      setInspected(null);
+      setErrors([]);
+      return;
+    }
     const trimmedValue = value.trim();
     const inspectedResult = inspect(trimmedValue);
 
