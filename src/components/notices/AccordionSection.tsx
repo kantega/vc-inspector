@@ -3,7 +3,7 @@ import { AccordionItemProps } from '@radix-ui/react-accordion';
 import { AccordionItem, AccordionContent, AccordionTrigger } from '@/components/ui/accordion';
 import { cn } from '@/lib/utils';
 
-type AccordionSectionProps = AccordionItemProps & {};
+type AccordionSectionProps = AccordionItemProps;
 /**
  * Extended accordion item for simpler styling.
  */
