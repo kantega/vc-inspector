@@ -14,7 +14,8 @@
     "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
     "test:component": "cypress run --component",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "check": "next lint && pnpm prettier --write && pnpm tsc --noEmit && pnpm next build"
   },
   "dependencies": {
     "@inspector": "file:src/inspector",
