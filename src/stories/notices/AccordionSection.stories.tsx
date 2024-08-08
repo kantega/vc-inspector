@@ -1,8 +1,7 @@
 import AccordionSection from '@/components/notices/AccordionSection';
-import { Accordion } from '@/components/shadcn/accordion';
+import { Accordion } from '@/components/ui/accordion';
 import { AccordionSingleProps } from '@radix-ui/react-accordion';
 import { Meta, StoryObj } from '@storybook/react';
-import { CircleUser } from 'lucide-react';
 import { ComponentProps } from 'react';
 
 type WrapperProps = ComponentProps<typeof AccordionSection> & {
@@ -43,14 +42,5 @@ export const WithIcon: Story = {
     value: 'acc',
     title: 'Title with icon',
     className: 'bg-blue-100',
-    titleIcon: CircleUser,
-  },
-};
-
-export const SmallerTitle: Story = {
-  args: {
-    value: 'acc',
-    className: 'border-2',
-    title: <p className="text-lg font-normal">Smaller title</p>,
   },
 };

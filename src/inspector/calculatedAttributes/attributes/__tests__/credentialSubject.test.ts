@@ -15,6 +15,7 @@ test('test nested class | W3C VC2 ', () => {
       },
     },
   };
+
   expect(parseCredentialSubject(obj).W3C_V2).toEqual({
     kind: 'ok',
     value: {
