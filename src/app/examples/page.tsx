@@ -32,7 +32,7 @@ export default function Examples() {
 function ExampleLink({ title, token, functional }: { title: string; token: string; functional: boolean }) {
   return (
     <Link
-      href={`/token/${token}`}
+      href={`/#vc-debugger?token=${token}`}
       className={cn(
         buttonVariants({ variant: 'default', size: 'default' }),
         'h-fit w-96 text-wrap text-xl',
