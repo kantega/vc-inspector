@@ -1,6 +1,6 @@
+'use client';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 import examples from './examples.json';
 
 const devMode = process.env.NODE_ENV === 'development';
@@ -30,9 +30,14 @@ export default function Examples() {
 }
 
 function ExampleLink({ title, token, functional }: { title: string; token: string; functional: boolean }) {
+  let pathName = '';
+  if (typeof window !== 'undefined') {
+    pathName = window.location.pathname.replace('/examples', '');
+  }
+  const href = `${pathName}/#vc-debugger?token=${token}`;
   return (
     <a
-      href={`/#vc-debugger?token=${token}`}
+      href={href}
       className={cn(
         buttonVariants({ variant: 'default', size: 'default' }),
         'h-fit w-96 text-wrap text-xl',
