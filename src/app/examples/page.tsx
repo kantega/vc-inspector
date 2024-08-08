@@ -34,7 +34,8 @@ function ExampleLink({ title, token, functional }: { title: string; token: strin
   if (typeof window !== 'undefined') {
     pathName = window.location.pathname.replace('/examples', '');
   }
-  const href = `${pathName}/#vc-debugger?token=${token}`;
+  const href = `${pathName}#vc-debugger?token=${token}`;
+
   return (
     <a
       href={href}
