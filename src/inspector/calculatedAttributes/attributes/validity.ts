@@ -89,7 +89,6 @@ function W3CV1ValidityDatesParser(obj: unknown): Result<ValidityDates> {
 }
 
 function MDOCValidityDatesParse(obj: unknown): Result<ValidityDates> {
-  console.log(obj);
   const schema = z.object({
     issuerSigned: z.object({
       issuerAuth: z.tuple([
