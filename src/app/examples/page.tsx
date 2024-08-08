@@ -31,7 +31,7 @@ export default function Examples() {
 
 function ExampleLink({ title, token, functional }: { title: string; token: string; functional: boolean }) {
   return (
-    <Link
+    <a
       href={`/#vc-debugger?token=${token}`}
       className={cn(
         buttonVariants({ variant: 'default', size: 'default' }),
@@ -40,6 +40,6 @@ function ExampleLink({ title, token, functional }: { title: string; token: strin
       )}
     >
       {title}
-    </Link>
+    </a>
   );
 }
