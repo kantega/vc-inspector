@@ -70,7 +70,7 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
             <Button
               className="gap-2"
               onClick={() => {
-                const shareUrl = `${window.location.origin}/token/${value}`;
+                const shareUrl = `${window.location.origin}/#vc-debugger?token=${value}`;
                 copyToClipboard(shareUrl);
                 setCopied(true);
                 setTimeout(() => {
