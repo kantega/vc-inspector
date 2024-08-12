@@ -28,11 +28,22 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
+    --violet-200: 251 95% 92%;
+    --violet-300: 252 95% 85%;
+    --violet-400: 255 92% 76%;
+
+    --violet-700: 263 70% 50%;
+    --violet-900: 264 67% 35%;
+
+    --purple-kantega-500: 271 91% 65%;
+    --purple-kantega-600: 263 69% 27%;
+    --purple-kantega-700: 263 70% 50%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0rem;
+    --radius: 0.25rem;
   }
 
   .dark {
@@ -59,6 +70,17 @@
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+
+    --violet-200: 251 95% 92%;
+    --violet-300: 252 95% 85%;
+    --violet-400: 255 92% 76%;
+
+    --violet-700: 263 70% 50%;
+    --violet-900: 264 67% 35%;
+
+    --purple-kantega-500: 271 91% 65%;
+    --purple-kantega-600: 263 69% 27%;
+    --purple-kantega-700: 263 70% 50%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;

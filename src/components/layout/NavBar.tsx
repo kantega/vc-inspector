@@ -1,15 +1,9 @@
-import {
-  navigationMenuTriggerStyle,
-  NavigationMenu,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from '@/components/ui/navigation-menu';
+import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { JSX } from 'react';
 import { NavigationLinks } from './Header';
 import Link from 'next/link';
 import Image from 'next/image';
 import kantegaLogo from '@/public/kantega-logo.png';
-import inspectorLogo from '@/public/inspector-logo.svg';
 import { cn } from '@/lib/utils';
 
 type NavigationBarProps = JSX.IntrinsicElements['div'] & {
@@ -25,31 +19,27 @@ type NavigationBarProps = JSX.IntrinsicElements['div'] & {
  */
 export default function NavigationBar({ links, className, currentPath, ...props }: NavigationBarProps) {
   return (
-    <div className={cn(className)} {...props}>
-      <NavigationMenu className="container max-w-screen-xl justify-between px-10 py-2">
-        <Link href="/" className="flex gap-2 align-middle">
-          <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} />
-          <h1 className="self-center text-xl font-bold text-dark-purple">VC Inspector</h1>
-        </Link>
-        <NavigationMenuList className="gap-4">
-          {links.map((l) => (
-            <NavigationMenuLink
-              key={l.to}
-              className={cn(navigationMenuTriggerStyle(), 'bg-light-purple text-readable-gray')}
-              asChild
-            >
-              <Link href={l.to}>
-                <p className={`border-dark-purple px-1 text-lg ${l.to === currentPath && 'border-b-2'}`}>{l.label}</p>
-              </Link>
-            </NavigationMenuLink>
-          ))}
-        </NavigationMenuList>
-        <Link href="https://www.kantega.no/">
-          <p className="text-dark-purple">Crafted by</p>
-          <Image src={kantegaLogo} alt="Kantega Logo" width={100} />
-        </Link>
-      </NavigationMenu>
-      <div className="mx-4 h-0 border-t-2 border-dark-gray"></div>
-    </div>
+    <nav className="flex h-full w-full items-center justify-between p-0 max-md:hidden">
+      <Link href="/" className="flex gap-2 px-10 align-middle">
+        <h1 className="self-center text-xl font-bold">POIROT</h1>
+      </Link>
+      <div className="flex items-center justify-center gap-4">
+        {links.map((link) => (
+          <Link key={link.to} className={cn(navigationMenuTriggerStyle(), 'bg-violet-kantega-700')} href={''}>
+            <Link href={link.to}>
+              <p
+                className={`border-dark-purple px-1 text-lg ${link.to === currentPath && 'underline decoration-purple-kantega-500 decoration-2 underline-offset-8'}`}
+              >
+                {link.label}
+              </p>
+            </Link>
+          </Link>
+        ))}
+      </div>
+      <Link href="https://www.kantega.no/" className="relative flex h-full items-center bg-violet-kantega-400 px-12">
+        <div className="absolute -bottom-1 -left-10 border-b-[100px] border-l-[50px] border-b-violet-kantega-400 border-l-violet-kantega-700"></div>
+        <Image src={kantegaLogo} alt="Kantega Logo" width={100} />
+      </Link>
+    </nav>
   );
 }

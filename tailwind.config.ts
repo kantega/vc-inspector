@@ -27,6 +27,18 @@ const config = {
         'dark-red': '#990000',
         'light-green': '#CAFFCC',
         'dark-green': '#07470D',
+        violet: {
+          'kantega-200': 'hsl(var(--violet-200))',
+          'kantega-300': 'hsl(var(--violet-300))',
+          'kantega-400': 'hsl(var(--violet-400))',
+          'kantega-700': 'hsl(var(--violet-700))',
+          'kantega-900': 'hsl(var(--violet-900))',
+        },
+        purple: {
+          'kantega-500': 'hsl(var(--purple-kantega-500))',
+          'kantega-600': 'hsl(var(--purple-kantega-600))',
+          'kantega-700': 'hsl(var(--purple-kantega-700))',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

@@ -31,8 +31,8 @@ const links: NavigationLinks[] = [
 export default function Header() {
   const pathName = usePathname();
   return (
-    <header className="fixed left-0 top-0 z-50 w-screen bg-background">
-      <NavigationBar currentPath={pathName} links={links} className="max-md:hidden" />
+    <header className="sticky left-0 top-0 z-50 ml-auto mr-auto mt-10 flex h-24 w-4/5 items-center justify-center overflow-hidden rounded-xl bg-violet-kantega-700 text-white">
+      <NavigationBar currentPath={pathName} links={links} />
       <NavigationDrawer currentPath={pathName} links={links} className="md:hidden" />
     </header>
   );

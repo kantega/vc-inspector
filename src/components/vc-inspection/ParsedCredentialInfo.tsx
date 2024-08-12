@@ -6,7 +6,7 @@ import LabeledValueCard, {
   nested as toNested,
   node as toNode,
 } from '@/components/data-lists/LabeledValueCard';
-import { CircleUser, DownloadIcon, FilePenLine, Share, Share2, ShareIcon } from 'lucide-react';
+import { CircleUser, DownloadIcon, FilePenLine, Share, Share2, ShareIcon, Unlock } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 import { Accordion } from '@/components/ui/accordion';
 import AccordionSection from '@/components/notices/AccordionSection';
@@ -65,23 +65,31 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
 
   return (
     <div className={className} {...props}>
-      <Select
-        onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
-        defaultValue={Object.entries(stringToStandard)
-          .find(([_key, standard]) => standard === selectedStandard)
-          ?.at(0)}
-      >
-        <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="w3c2">W3C 2.0</SelectItem>
-          <SelectItem data-testid="w3c1-option" value="w3c1">
-            W3C 1.1
-          </SelectItem>
-          <SelectItem value="mdoc">MDOC</SelectItem>
-        </SelectContent>
-      </Select>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="my-2 flex items-center gap-2 text-2xl font-bold">
+            <Unlock />
+            Decoded
+          </h1>
+        </div>
+        <Select
+          onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
+          defaultValue={Object.entries(stringToStandard)
+            .find(([_key, standard]) => standard === selectedStandard)
+            ?.at(0)}
+        >
+          <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="w3c2">W3C 2.0</SelectItem>
+            <SelectItem data-testid="w3c1-option" value="w3c1">
+              W3C 1.1
+            </SelectItem>
+            <SelectItem value="mdoc">MDOC</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       {issuer.kind === 'ok' ? (
         <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
       ) : (
