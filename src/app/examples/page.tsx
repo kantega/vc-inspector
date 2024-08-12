@@ -2,6 +2,8 @@
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import examples from './examples.json';
+import Image from 'next/image';
+import w3cLogo from '@/public/w3c.png';
 
 const devMode = process.env.NODE_ENV === 'development';
 
@@ -12,19 +14,24 @@ const devMode = process.env.NODE_ENV === 'development';
  */
 export default function Examples() {
   return (
-    <div className="flex w-full flex-col items-center gap-8">
-      <h2>Click any of the links to see the example in VC-inspector.</h2>
-      {examples.map((example) => {
-        if (!devMode && !example.functional) return null;
-        return (
-          <ExampleLink
-            key={example.title}
-            title={example.title}
-            token={example.token}
-            functional={example.functional}
-          />
-        );
-      })}
+    <div className="flex w-full flex-col gap-8">
+      <div>
+        <h1 className="text-3xl font-bold leading-tight text-white">Examples</h1>
+        <h2 className="m-0 leading-tight text-white">Click any of the links to see the example in VC-inspector.</h2>
+      </div>
+      <div className="flex flex-wrap gap-6">
+        {examples.map((example) => {
+          if (!devMode && !example.functional) return null;
+          return (
+            <ExampleLink
+              key={example.title}
+              title={example.title}
+              token={example.token}
+              functional={example.functional}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -40,11 +47,16 @@ function ExampleLink({ title, token, functional }: { title: string; token: strin
       href={href}
       className={cn(
         buttonVariants({ variant: 'default', size: 'default' }),
-        'h-fit w-96 text-wrap text-xl',
+        'h-96 w-96 text-wrap rounded-xl text-xl',
         !devMode ? 'bg-foreground' : functional ? 'bg-green-600' : 'bg-red-600',
       )}
     >
-      {title}
+      <div className="flex flex-col items-center justify-center gap-4">
+        <div className="flex h-32 w-32 items-center justify-center rounded-full bg-blue-300">
+          <Image src={w3cLogo} alt={title} width={100} height={100} />
+        </div>
+        {title}
+      </div>
     </a>
   );
 }
