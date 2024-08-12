@@ -1,6 +1,6 @@
 'use client';
 import InspectionPage from '@/components/vc-inspection/InspectionPage';
-import { ArrowRightIcon, InfoIcon } from 'lucide-react';
+import { ArrowRightIcon, InfoIcon, Shield, ShieldCheck } from 'lucide-react';
 import kantegaLogo from '@/public/credentials.png';
 import Image from 'next/image';
 
@@ -36,12 +36,12 @@ function UpperPagePart() {
           <a href="">Learn more!</a>
         </div>
       </div>
-      <div className="flex w-full justify-between rounded-xl bg-violet-kantega-200 p-6 text-base font-bold text-black">
+      <div className="flex w-full justify-between rounded-xl bg-violet-kantega-900 p-6 text-base font-bold text-white">
         <span className="flex gap-2">
-          <InfoIcon /> Always be careful sharing tokens. We do not record tokens, all validation and debugging is done
-          client side.
+          <ShieldCheck className="text-purple-500" /> Always be careful sharing tokens. We do not record tokens, all
+          validation and debugging is done client side.
         </span>
-        <ArrowRightIcon />
+        <ArrowRightIcon className="text-purple-600" />
       </div>
     </div>
   );

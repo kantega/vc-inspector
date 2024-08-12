@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { isPrimitive, isStrRecord } from '@inspector/assertTypes';
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
+import { Button } from '../ui/button';
 
 /**
  * Component to display a json/Record like structure.
@@ -18,17 +19,31 @@ export default function LabeledValueCard({
   ...props
 }: LabeledValueCardProps) {
   return (
-    <Card className={className} {...props}>
-      <CardHeader className="h-fit border-b-2 p-2">
-        <CardTitle className={cn('m-0 flex items-center p-0 text-base leading-none', TitleIcon && 'gap-3')}>
-          {TitleIcon && <TitleIcon size="1em" />}
-          {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <NestedValues values={values} root />
-      </CardContent>
-    </Card>
+    <>
+      <p className="my-1 flex items-center gap-2 text-sm text-green-500">
+        <p className="h-3 w-3 rounded-full border-2 border-green-500" />
+        {title}
+      </p>
+      <Card className={className} {...props}>
+        <CardHeader className="h-fit border-b-2 p-2">
+          <CardTitle
+            className={cn('m-0 flex items-center justify-between p-0 text-base leading-none', TitleIcon && 'gap-3')}
+          >
+            <span className="flex gap-2">
+              {TitleIcon && <TitleIcon size="1em" />}
+              {title}
+            </span>
+            <span>
+              <Button variant="link">Clear</Button>
+              <Button variant="link">Copy</Button>
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="border-l-8 border-green-200 bg-light-purple">
+          <NestedValues values={values} root />
+        </CardContent>
+      </Card>
+    </>
   );
 }
 

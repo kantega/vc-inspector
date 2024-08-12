@@ -67,14 +67,10 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
     <div className={className} {...props}>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="my-3 flex items-center gap-2 pb-1 text-2xl font-bold">
+          <h1 className="my-2 flex items-center gap-2 text-2xl font-bold">
             <Unlock />
             Decoded
           </h1>
-          <p className="my-1 flex items-center gap-2 text-sm text-green-500">
-            <p className="h-3 w-3 rounded-full border-2 border-green-500" />
-            OUTPUT
-          </p>
         </div>
         <Select
           onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
