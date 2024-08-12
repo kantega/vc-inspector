@@ -59,7 +59,7 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
     <div
       {...props}
       className={cn(
-        'sm:w-5/6-mt-6 relative flex min-h-screen w-full flex-col gap-2 transition-all duration-200 sm:flex-row',
+        'sm:w-5/6-mt-6 relative flex min-h-screen w-full flex-col gap-2 rounded-xl bg-white p-2 transition-all duration-200 sm:flex-row',
       )}
     >
       {/* todo: fix sticky maybe */}
