@@ -35,7 +35,7 @@ function UpperPagePart() {
           <p className=" font-normal">
             Check out Kantega.id for more resources on how Verifiable Credentials might help you or your company.
           </p>
-          <a href="" className="decoration-purple-kantega-200 underline decoration-2 underline-offset-8">
+          <a href="" className="underline decoration-purple-kantega-200 decoration-2 underline-offset-8">
             Learn more <span>→</span>
           </a>
         </div>
@@ -59,7 +59,7 @@ function BottomPagePart() {
         <div className="mr-20 flex w-2/5 flex-col gap-4">
           <h1 className="text-4xl ">Want to learn more about Verifiable Credentials?</h1>
           <p>Check out Kantega.id for more resources on how Verifiable Credentials might help you or your company.</p>
-          <a href="" className="decoration-purple-kantega-200 underline decoration-2 underline-offset-8">
+          <a href="" className="underline decoration-purple-kantega-200 decoration-2 underline-offset-8">
             Learn more <span>→</span>
           </a>
         </div>
