@@ -25,11 +25,11 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          'relative flex flex-col justify-center bg-gradient-to-b from-purple-kantega-600 via-purple-kantega-700 via-[532px] to-light-purple to-[532px]',
+          'relative flex flex-col justify-center bg-gradient-to-b from-purple-kantega-700 via-purple-kantega-600 via-[564px] to-light-purple to-[564px]',
         )}
       >
         <Header />
-        <main className="container mx-auto mb-60 mt-16 flex min-h-screen flex-col gap-2">{children}</main>
+        <main className="container mx-auto mb-60 mt-16 flex min-h-screen flex-col gap-3">{children}</main>
         <Footer />
       </body>
     </html>

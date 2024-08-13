@@ -19,7 +19,7 @@ export default function Examples() {
         <h1 className="text-3xl font-bold leading-tight text-white">Examples</h1>
         <h2 className="m-0 leading-tight text-white">Click any of the links to see the example in VC-inspector.</h2>
       </div>
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap justify-center gap-6">
         {examples.map((example) => {
           if (!devMode && !example.functional) return null;
           return (
