@@ -31,10 +31,13 @@ const config = {
           'kantega-200': 'hsl(var(--violet-200))',
           'kantega-300': 'hsl(var(--violet-300))',
           'kantega-400': 'hsl(var(--violet-400))',
+          'kantega-500': 'hsl(var(--violet-500))',
           'kantega-700': 'hsl(var(--violet-700))',
           'kantega-900': 'hsl(var(--violet-900))',
         },
         purple: {
+          'kantega-200': 'hsl(var(--purple-kantega-200))',
+          'kantega-400': 'hsl(var(--purple-kantega-400))',
           'kantega-500': 'hsl(var(--purple-kantega-500))',
           'kantega-600': 'hsl(var(--purple-kantega-600))',
           'kantega-700': 'hsl(var(--purple-kantega-700))',

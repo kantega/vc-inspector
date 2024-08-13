@@ -173,7 +173,7 @@ function UpperSection({
   copied: boolean;
 }) {
   return (
-    <div className="flex h-20 w-full items-center justify-between px-10">
+    <div className="flex h-20 w-full items-center justify-between border-b-2 border-dashed border-purple-kantega-600 px-10">
       <h1 className="text-3xl"> Verifiable Credential</h1>
       {value !== '' && (
         <Button

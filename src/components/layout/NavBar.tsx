@@ -25,10 +25,10 @@ export default function NavigationBar({ links, className, currentPath, ...props 
       </Link>
       <div className="flex items-center justify-center gap-4">
         {links.map((link) => (
-          <Link key={link.to} className={cn(navigationMenuTriggerStyle(), 'bg-violet-kantega-700')} href={''}>
+          <Link key={link.to} className={cn(navigationMenuTriggerStyle(), 'bg-purple-kantega-600')} href={''}>
             <Link href={link.to}>
               <p
-                className={`border-dark-purple px-1 text-lg ${link.to === currentPath && 'underline decoration-purple-kantega-500 decoration-2 underline-offset-8'}`}
+                className={`border-dark-purple px-1 text-lg ${link.to === currentPath && 'underline decoration-purple-kantega-200 decoration-2 underline-offset-8'}`}
               >
                 {link.label}
               </p>
@@ -36,8 +36,8 @@ export default function NavigationBar({ links, className, currentPath, ...props 
           </Link>
         ))}
       </div>
-      <Link href="https://www.kantega.no/" className="relative flex h-full items-center bg-violet-kantega-400 px-12">
-        <div className="absolute -bottom-1 -left-10 border-b-[100px] border-l-[50px] border-b-violet-kantega-400 border-l-violet-kantega-700"></div>
+      <Link href="https://www.kantega.no/" className="relative flex h-full items-center bg-purple-kantega-400 px-12">
+        <div className="absolute -bottom-1 -left-10 border-b-[100px] border-l-[50px] border-b-purple-kantega-400 border-l-purple-kantega-600"></div>
         <Image src={kantegaLogo} alt="Kantega Logo" width={100} />
       </Link>
     </nav>
