@@ -2,8 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { isPrimitive, isStrRecord } from '@inspector/assertTypes';
 import { LucideIcon } from 'lucide-react';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Button } from '../ui/button';
+import { useBoolean } from 'usehooks-ts';
+import JSONPretty from 'react-json-pretty';
 
 /**
  * Component to display a json/Record like structure.
@@ -15,13 +17,18 @@ export default function LabeledValueCard({
   titleIcon: TitleIcon,
   title,
   values,
+  jsonData,
+  color,
+  secondaryColor,
+  showJson,
   className,
   ...props
 }: LabeledValueCardProps) {
+  const { value, setTrue, setFalse } = useBoolean(showJson ?? false);
   return (
     <>
-      <p className="my-1 flex items-center gap-2 text-sm text-green-500">
-        <span className="h-3 w-3 rounded-full border-2 border-green-500" />
+      <p className="my-1 flex items-center gap-2 text-sm text-green-500" style={{ color: color }}>
+        <span className="h-3 w-3 rounded-full border-2 border-green-500" style={{ borderColor: color }} />
         {title}
       </p>
       <Card className={className} {...props}>
@@ -30,8 +37,12 @@ export default function LabeledValueCard({
             className={cn('m-0 flex items-center justify-between p-0 text-base leading-none', TitleIcon && 'gap-3')}
           >
             <span className="flex gap-2">
-              {TitleIcon && <TitleIcon size="1em" />}
-              {title}
+              <Button variant={value ? 'secondary' : 'link'} className="rounded-xl" onClick={setTrue}>
+                JSON
+              </Button>
+              <Button variant={!value ? 'secondary' : 'link'} className="rounded-xl" onClick={setFalse}>
+                PARSED
+              </Button>
             </span>
             <span>
               <Button variant="link">Clear</Button>
@@ -39,8 +50,24 @@ export default function LabeledValueCard({
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="border-l-8 border-green-200 bg-light-purple">
-          <NestedValues values={values} root />
+        <CardContent
+          className="overflow-auto border-l-8 border-green-200 bg-light-purple p-4"
+          style={{ borderColor: secondaryColor }}
+        >
+          {!value && <NestedValues values={values} root />}
+          {value && (
+            <JSONPretty
+              theme={{
+                main: 'line-height:1.3;color:#1176fe;overflow:auto;',
+                error: 'line-height:1.3;color:#1176fe;overflow:auto;',
+                key: 'color:#f92672;',
+                string: 'color:#fd971f;',
+                value: 'color:#a6e22e;',
+                boolean: 'color:#ac81fe;',
+              }}
+              data={jsonData}
+            />
+          )}
         </CardContent>
       </Card>
     </>
@@ -66,6 +93,9 @@ type LabeledValueCardProps = Omit<JSX.IntrinsicElements['div'], 'ref'> & {
   titleIcon?: LucideIcon;
   title: string;
   values: LabeledValues[];
+  jsonData: Record<string, unknown>;
+  secondaryColor?: string;
+  showJson?: boolean;
 };
 
 export function labeledValue(label: string, value: LeafNode | NestedNodes): LabeledValues {
@@ -109,7 +139,7 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
   return (
     <>
       {values.map(({ label: l, value: v }) => (
-        <CardContent className="py-1" key={l}>
+        <div className="py-1" key={l}>
           <p className="text-lg text-readable-gray">{l}</p>
           {v.kind === 'leaf' && (
             <p
@@ -127,7 +157,7 @@ function NestedValues({ values, root }: { values: LabeledValues[]; root?: boolea
               <NestedValues values={v.values} />
             </div>
           )}
-        </CardContent>
+        </div>
       ))}
     </>
   );
