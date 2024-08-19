@@ -26,7 +26,7 @@ export default function LabeledValueCard({
 }: LabeledValueCardProps) {
   const { value, setTrue, setFalse } = useBoolean(showJson ?? false);
   return (
-    <>
+    <div>
       <p className="my-1 flex items-center gap-2 text-sm text-green-500" style={{ color: color }}>
         <span className="h-3 w-3 rounded-full border-2 border-green-500" style={{ borderColor: color }} />
         {title}
@@ -70,7 +70,7 @@ export default function LabeledValueCard({
           )}
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
 

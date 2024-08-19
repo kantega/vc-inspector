@@ -66,7 +66,7 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
     <div className={className} {...props}>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="my-2 flex items-center gap-2 text-2xl font-bold">
+          <h1 className="mt-2 flex items-center gap-2 text-2xl font-bold">
             <Unlock />
             Decoded
           </h1>
