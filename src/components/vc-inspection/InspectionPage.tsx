@@ -91,7 +91,7 @@ function EncodedPart({
         Encoded
       </h1>
       <p className="my-2 flex items-center gap-2 text-sm text-green-500">
-        <p className="h-3 w-3 rounded-full border-2 border-green-500" />
+        <span className="h-3 w-3 rounded-full border-2 border-green-500" />
         INPUT
       </p>
       <div>

@@ -21,7 +21,7 @@ export default function LabeledValueCard({
   return (
     <>
       <p className="my-1 flex items-center gap-2 text-sm text-green-500">
-        <p className="h-3 w-3 rounded-full border-2 border-green-500" />
+        <span className="h-3 w-3 rounded-full border-2 border-green-500" />
         {title}
       </p>
       <Card className={className} {...props}>
