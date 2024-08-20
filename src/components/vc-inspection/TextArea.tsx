@@ -1,13 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useEffect, useRef } from 'react';
 
-type TextAreaProps = JSX.IntrinsicElements['textarea'];
-
-const START_HEGHT = 300;
-
-export default function TextArea({ className, ...props }: TextAreaProps) {
+export default function TextArea({ className, ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <textarea
       {...props}
