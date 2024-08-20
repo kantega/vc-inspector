@@ -35,7 +35,7 @@ function UpperPagePart() {
           <p className=" font-normal">
             Check out Kantega.id for more resources on how Verifiable Credentials might help you or your company.
           </p>
-          <a href="" className="underline decoration-purple-kantega-200 decoration-2 underline-offset-8">
+          <a href="" className=" mb-12 underline decoration-purple-kantega-200 decoration-2 underline-offset-8">
             Learn more <span>→</span>
           </a>
         </div>

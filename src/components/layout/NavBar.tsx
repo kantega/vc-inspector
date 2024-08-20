@@ -25,14 +25,12 @@ export default function NavigationBar({ links, className, currentPath, ...props 
       </Link>
       <div className="flex items-center justify-center gap-4">
         {links.map((link) => (
-          <Link key={link.to} className={cn(navigationMenuTriggerStyle(), 'bg-purple-kantega-600')} href={''}>
-            <Link href={link.to}>
-              <p
-                className={`border-dark-purple px-1 text-lg ${link.to === currentPath && 'underline decoration-purple-kantega-200 decoration-2 underline-offset-8'}`}
-              >
-                {link.label}
-              </p>
-            </Link>
+          <Link key={link.to} className={cn(navigationMenuTriggerStyle(), 'bg-purple-kantega-600')} href={link.to}>
+            <p
+              className={`border-dark-purple px-1 text-lg ${link.to === currentPath && 'underline decoration-purple-kantega-200 decoration-2 underline-offset-8'}`}
+            >
+              {link.label}
+            </p>
           </Link>
         ))}
       </div>

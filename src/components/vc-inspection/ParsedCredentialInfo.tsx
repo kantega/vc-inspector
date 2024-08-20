@@ -6,11 +6,8 @@ import LabeledValueCard, {
   nested as toNested,
   node as toNode,
 } from '@/components/data-lists/LabeledValueCard';
-import { CircleUser, DownloadIcon, FilePenLine, Share, Share2, ShareIcon, Unlock } from 'lucide-react';
+import { CircleUser, FilePenLine, Unlock } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
-import { Accordion } from '@/components/ui/accordion';
-import AccordionSection from '@/components/notices/AccordionSection';
-import JSONPretty from 'react-json-pretty';
 import { SuccessfullParse } from '@inspector/inspector';
 import { useState } from 'react';
 import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
@@ -19,7 +16,6 @@ import { Claim } from '@inspector/calculatedAttributes/attributes/credentialSubj
 import { isPrimitive } from '@inspector/assertTypes';
 import { isClaimList } from '@inspector/calculatedAttributes/attributes/credentialSubject';
 import ZodIssueFormatter from '@/components/vc-inspection/ZodIssueFormatter';
-import UnderConstruction from '@/components/notices/UnderConstruction';
 import InformationBox from '@/components/notices/InfoBox';
 
 type ParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
@@ -47,8 +43,10 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
 
   const standard = new StandardRetriever(selectedStandard);
 
+  const datesJson = inspectedResult.calculatedAttributes.validityDates[selectedStandard];
   const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
 
+  const subjectJson = inspectedResult.calculatedAttributes.credentialSubject[selectedStandard];
   const subject = standard.getResult(inspectedResult.calculatedAttributes.credentialSubject);
   let subjectValues: LabeledValues[] = [];
   if (subject.kind === 'ok') {
@@ -56,6 +54,7 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
     if (subject.value.id) subjectValues.unshift(labeledValue('id', toNode(subject.value.id)));
   }
 
+  const issuerJson = inspectedResult.calculatedAttributes.issuer[selectedStandard];
   const issuer = standard.getResult(inspectedResult.calculatedAttributes.issuer);
   let issuerValues: LabeledValues[] = [];
   if (issuer.kind === 'ok') {
@@ -67,7 +66,7 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
     <div className={className} {...props}>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="my-2 flex items-center gap-2 text-2xl font-bold">
+          <h1 className="mt-2 flex items-center gap-2 text-2xl font-bold">
             <Unlock />
             Decoded
           </h1>
@@ -91,17 +90,26 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
         </Select>
       </div>
       {issuer.kind === 'ok' ? (
-        <LabeledValueCard title="Issuer" titleIcon={FilePenLine} values={issuerValues} data-testid="issuer-card" />
+        <LabeledValueCard
+          title="Issuer"
+          titleIcon={FilePenLine}
+          values={issuerValues}
+          data-testid="issuer-card"
+          jsonData={issuerJson}
+        />
       ) : (
         <ErrorBox title="Issuer" error={issuer.error} />
       )}
       {subject.kind === 'ok' ? (
         <LabeledValueCard
           title="Subject"
+          color="hsla(350, 89%, 60%, 1)"
+          secondaryColor="hsla(350, 89%, 60%, 0.2)"
           titleIcon={CircleUser}
           values={subjectValues}
           className="row-span-2"
           data-testid="subject-card"
+          jsonData={subjectJson}
         />
       ) : (
         <ErrorBox title="Credential subject" error={subject.error} />
@@ -116,38 +124,16 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
       ) : (
         <ErrorBox title="Dates of validity" error={dates.error} />
       )}
-      <Accordion type="multiple" className="mt-5 flex flex-col gap-8 [&_.accordion-item]:bg-white">
-        {inspectedResult.parsedJson.type !== 'JSON' && ( // TODO: Use .format
-          <>
-            <HLineWithText text="Raw JSON" />
-            <AccordionSection value="decoded-to-json" title="Decoded JSON" className="px-0">
-              <JSONPretty
-                className="break-words"
-                stringStyle="color:#f92672;"
-                booleanStyle="color:#f92672;"
-                valueStyle="color:#f92672;"
-                data={inspectedResult.parsedJson}
-              />
-            </AccordionSection>
-          </>
-        )}
-        <div>
-          <HLineWithText text="Credential" />
-          <div className="flex flex-col gap-4">
-            <AccordionSection title="Proof" value="proof">
-              <UnderConstruction />
-            </AccordionSection>
-          </div>
-        </div>
-      </Accordion>
-    </div>
-  );
-}
-
-function HLineWithText({ text }: { text: string }) {
-  return (
-    <div className="relative mx-4 h-0 border-t-2 border-dark-gray p-2">
-      <p className="absolute -top-5 left-10 bg-light-purple p-1 text-lg text-readable-gray">{text}</p>
+      <LabeledValueCard
+        title="Decoded JSON"
+        color="hsla(25, 95%, 53%, 1)"
+        secondaryColor="hsla(25, 95%, 53%, 0.2)"
+        values={subjectValues}
+        className="row-span-2"
+        data-testid="subject-card"
+        showJson={true}
+        jsonData={inspectedResult.parsedJson}
+      />
     </div>
   );
 }

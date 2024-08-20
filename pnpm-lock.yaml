@@ -45,7 +45,7 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       jose:
-        specifier: ^5.2.4
+        specifier: ^5.6.3
         version: 5.6.3
       lucide-react:
         specifier: ^0.358.0
@@ -54,10 +54,10 @@ importers:
         specifier: 14.1.1
         version: 14.1.1(@babel/core@7.24.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-json-pretty:
         specifier: ^2.2.0
@@ -115,25 +115,25 @@ importers:
         specifier: ^0.8.3
         version: 0.8.3
       '@types/node':
-        specifier: ^20
+        specifier: ^20.11.18
         version: 20.11.18
       '@types/react':
-        specifier: ^18
+        specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18
+        specifier: ^18.2.19
         version: 18.2.19
       '@vitest/coverage-v8':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.11.18)(terser@5.29.1))
       autoprefixer:
-        specifier: ^10.0.1
+        specifier: ^10.4.17
         version: 10.4.17(postcss@8.4.35)
       cypress:
         specifier: ^13.6.4
         version: 13.6.4
       eslint:
-        specifier: ^8
+        specifier: ^8.56.0
         version: 8.56.0
       eslint-config-next:
         specifier: 14.1.0
@@ -145,7 +145,7 @@ importers:
         specifier: ^9.0.11
         version: 9.0.11
       postcss:
-        specifier: ^8
+        specifier: ^8.4.35
         version: 8.4.35
       prettier:
         specifier: 3.2.5
@@ -157,7 +157,7 @@ importers:
         specifier: ^8.0.10
         version: 8.0.10(@babel/preset-env@7.24.0(@babel/core@7.24.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       tailwindcss:
-        specifier: ^3.3.0
+        specifier: ^3.4.1
         version: 3.4.1
       typedoc:
         specifier: ^0.26.3
@@ -166,7 +166,7 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
       vitest:
-        specifier: ^1.5.0
+        specifier: ^1.6.0
         version: 1.6.0(@types/node@20.11.18)(terser@5.29.1)
 
   src/inspector:
@@ -2968,8 +2968,8 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  caniuse-lite@1.0.30001587:
-    resolution: {integrity: sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==}
+  caniuse-lite@1.0.30001651:
+    resolution: {integrity: sha512-9Cf+Xv1jJNe1xPZLGuUXLNkE1BoDkqRqYyFJ9TDYSqhduqA4hu4oR9HluGoWYQC/aj8WHjsGVV+bwkh0+tegRg==}
 
   case-sensitive-paths-webpack-plugin@2.4.0:
     resolution: {integrity: sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw==}
@@ -9862,7 +9862,7 @@ snapshots:
   autoprefixer@10.4.17(postcss@8.4.35):
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001587
+      caniuse-lite: 1.0.30001651
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -10048,7 +10048,7 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001587
+      caniuse-lite: 1.0.30001651
       electron-to-chromium: 1.4.670
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
@@ -10100,7 +10100,7 @@ snapshots:
 
   camelcase-css@2.0.1: {}
 
-  caniuse-lite@1.0.30001587: {}
+  caniuse-lite@1.0.30001651: {}
 
   case-sensitive-paths-webpack-plugin@2.4.0: {}
 
@@ -12318,7 +12318,7 @@ snapshots:
       '@next/env': 14.1.1
       '@swc/helpers': 0.5.2
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001587
+      caniuse-lite: 1.0.30001651
       graceful-fs: 4.2.11
       postcss: 8.4.31
       react: 18.2.0

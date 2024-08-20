@@ -61,7 +61,7 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
       <div
         {...props}
         className={cn(
-          'sm:w-5/6-mt-6 relative flex min-h-screen w-full flex-col gap-2 bg-white p-2 transition-all duration-200 sm:flex-row',
+          'sm:w-5/6-mt-6 relative flex min-h-screen w-full flex-col gap-8 bg-white p-2 px-8 pt-8 transition-all duration-200 sm:flex-row',
         )}
       >
         <EncodedPart {...{ inspected, errors, value, setValue }} />
@@ -86,12 +86,12 @@ function EncodedPart({
 
   return (
     <div className="w-full sm:w-1/2">
-      <h1 className="my-4 flex items-center gap-2 text-2xl font-bold">
+      <h1 className="mb-8 mt-2 flex items-center gap-2 text-2xl font-bold">
         <Lock />
         Encoded
       </h1>
       <p className="my-2 flex items-center gap-2 text-sm text-green-500">
-        <p className="h-3 w-3 rounded-full border-2 border-green-500" />
+        <span className="h-3 w-3 rounded-full border-2 border-green-500" />
         INPUT
       </p>
       <div>
@@ -155,7 +155,7 @@ function DecodedPart({
             );
           })}
         </div>
-        <ParsedCredentialInfo inspectedResult={inspected} className="flex w-full flex-col gap-2" />
+        <ParsedCredentialInfo inspectedResult={inspected} className="flex w-full flex-col gap-8" />
       </div>
     </div>
   );
@@ -173,7 +173,7 @@ function UpperSection({
   copied: boolean;
 }) {
   return (
-    <div className="flex h-20 w-full items-center justify-between border-b-2 border-dashed border-purple-kantega-600 px-10">
+    <div className="flex h-20 w-full items-center justify-between px-8 py-6 ">
       <h1 className="text-3xl"> Verifiable Credential</h1>
       {value !== '' && (
         <Button
