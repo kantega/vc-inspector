@@ -5,7 +5,7 @@ import ParsedCredentialInfo from './ParsedCredentialInfo';
 import { FileType, Lock, Share2, Unlock, Upload } from 'lucide-react';
 import InformationBox from '@/components/notices/InfoBox';
 import { cn } from '@/lib/utils';
-import NewTextArea from './NewTextArea';
+import TextArea from './TextArea';
 import { ReasonedError } from '@/inspector/calculatedAttributes/results';
 import { Button } from '../ui/button';
 import { useCopyToClipboard } from 'usehooks-ts';
@@ -118,7 +118,7 @@ function EncodedPart({
         </div>
         <div className=" w-full">
           <div className="relative flex overflow-hidden rounded-md">
-            <NewTextArea
+            <TextArea
               className={cn(
                 'w-full resize-none border-l-8 bg-light-purple',
                 errors.length > 0 ? 'border-red-400 bg-red-200' : 'border-green-200',

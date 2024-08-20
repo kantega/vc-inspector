@@ -7,7 +7,7 @@ type TextAreaProps = JSX.IntrinsicElements['textarea'];
 
 const START_HEGHT = 300;
 
-export default function NewTextArea({ className, ...props }: TextAreaProps) {
+export default function TextArea({ className, ...props }: TextAreaProps) {
   const ref = useRef<HTMLTextAreaElement | null>(null);
   useEffect(() => ref.current?.focus(), []);
 
