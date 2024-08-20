@@ -2,6 +2,8 @@
 // import type { Meta, StoryObj } from '@storybook/react';
 // import { CircleUser, FilePenLine } from 'lucide-react';
 
+export default null;
+
 // const meta = {
 //   title: 'DataLists/LabeledValueCard',
 //   component: LabeledValueCard,
