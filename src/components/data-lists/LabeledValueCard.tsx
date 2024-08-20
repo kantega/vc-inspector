@@ -58,6 +58,7 @@ export default function LabeledValueCard({
         >
           <Button
             variant="link"
+            // @ts-ignore
             onClick={() => copyToClipboard(JSON.stringify(jsonData.value ?? jsonData))}
             className="group absolute right-4 top-4 transition-opacity duration-200"
           >
@@ -81,6 +82,7 @@ export default function LabeledValueCard({
                 value: 'color:#a6e22e;',
                 boolean: 'color:#ac81fe;',
               }}
+              // @ts-ignore
               data={jsonData.value ?? jsonData}
             />
           )}
