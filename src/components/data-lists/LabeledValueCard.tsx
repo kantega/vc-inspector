@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { isPrimitive, isStrRecord } from '@inspector/assertTypes';
 import { Copy, LucideIcon } from 'lucide-react';
 import { ReactNode, useState } from 'react';
-import { Button } from '../ui/button';
+import { Button, buttonVariants } from '../ui/button';
 import { useBoolean, useCopyToClipboard } from 'usehooks-ts';
 import JSONPretty from 'react-json-pretty';
 import { Result } from '@/inspector/calculatedAttributes/results';
@@ -56,21 +56,21 @@ export default function LabeledValueCard({
           className="relative overflow-auto border-l-8 border-green-200 bg-light-purple p-4"
           style={{ borderColor: secondaryColor }}
         >
-          <Button
-            variant="link"
-            // @ts-ignore
-            onClick={() => copyToClipboard(JSON.stringify(jsonData.value ?? jsonData))}
-            className="group absolute right-4 top-4 transition-opacity duration-200"
-          >
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Copy className="opacity-20 group-hover:opacity-100" />
-                </TooltipTrigger>
-                <TooltipContent className="rounded-lg">Copy JSON to clipboard</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'group absolute right-4 top-4 transition-opacity duration-200',
+                )}
+                // @ts-ignore
+                onClick={() => copyToClipboard(JSON.stringify(jsonData.value ?? jsonData))}
+              >
+                <Copy className="opacity-20 group-hover:opacity-100" />
+              </TooltipTrigger>
+              <TooltipContent className="rounded-lg">Copy JSON to clipboard</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           {!value && <NestedValues values={values} root />}
           {value && (
             <JSONPretty

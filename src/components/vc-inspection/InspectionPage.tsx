@@ -126,6 +126,7 @@ function EncodedPart({
               data-testid="inspector-textarea"
               value={value}
               onChange={(e) => {
+                e.target.innerHTML = e.target.value + '<span>test</span>';
                 setValue(e.target.value);
               }}
             />
