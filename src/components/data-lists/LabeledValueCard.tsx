@@ -6,6 +6,10 @@ import { ReactNode, useState } from 'react';
 import { Button } from '../ui/button';
 import { useBoolean } from 'usehooks-ts';
 import JSONPretty from 'react-json-pretty';
+import { Result } from '@/inspector/calculatedAttributes/results';
+import { Issuer } from '@/inspector/calculatedAttributes/attributes/issuer';
+import { CredentialSubject } from '@/inspector/calculatedAttributes/attributes/credentialSubject';
+import { ParsedCredential } from '@/inspector/inspector';
 
 /**
  * Component to display a json/Record like structure.
@@ -93,7 +97,7 @@ type LabeledValueCardProps = Omit<JSX.IntrinsicElements['div'], 'ref'> & {
   titleIcon?: LucideIcon;
   title: string;
   values: LabeledValues[];
-  jsonData: Record<string, unknown>;
+  jsonData: Result<Issuer | CredentialSubject> | ParsedCredential;
   secondaryColor?: string;
   showJson?: boolean;
 };
