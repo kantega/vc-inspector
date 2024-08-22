@@ -2,6 +2,8 @@
 import { usePathname } from 'next/navigation';
 import NavigationBar from './NavBar';
 import NavigationDrawer from './NavDrawer';
+import { useEffect } from 'react';
+import matomoInit from './matomoInit.js';
 
 export type NavigationLinks = {
   to: string;
@@ -29,6 +31,10 @@ const links: NavigationLinks[] = [
  * Needs to be a client component to be able to get path name
  */
 export default function Header() {
+  useEffect(() => {
+    matomoInit();
+  }, []);
+
   const pathName = usePathname();
   return (
     <header className=" z-50 ml-auto mr-auto mt-10 flex h-20 w-4/5 max-w-[1350px] items-center justify-center overflow-hidden rounded-xl bg-purple-kantega-600 text-white">

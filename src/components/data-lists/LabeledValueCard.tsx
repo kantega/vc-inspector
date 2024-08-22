@@ -1,10 +1,11 @@
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { isPrimitive, isStrRecord } from '@inspector/assertTypes';
-import { LucideIcon } from 'lucide-react';
+import { Copy, LucideIcon } from 'lucide-react';
 import { ReactNode, useState } from 'react';
-import { Button } from '../ui/button';
-import { useBoolean } from 'usehooks-ts';
+import { Button, buttonVariants } from '../ui/button';
+import { useBoolean, useCopyToClipboard } from 'usehooks-ts';
 import JSONPretty from 'react-json-pretty';
 import { Result } from '@/inspector/calculatedAttributes/results';
 import { Issuer } from '@/inspector/calculatedAttributes/attributes/issuer';
@@ -29,6 +30,7 @@ export default function LabeledValueCard({
   ...props
 }: LabeledValueCardProps) {
   const { value, setTrue, setFalse } = useBoolean(showJson ?? false);
+  const [, copyToClipboard] = useCopyToClipboard();
   return (
     <div>
       <p className="my-1 flex items-center gap-2 text-sm text-green-500" style={{ color: color }}>
@@ -48,16 +50,27 @@ export default function LabeledValueCard({
                 PARSED
               </Button>
             </span>
-            <span>
-              <Button variant="link">Clear</Button>
-              <Button variant="link">Copy</Button>
-            </span>
           </CardTitle>
         </CardHeader>
         <CardContent
-          className="overflow-auto border-l-8 border-green-200 bg-light-purple p-4"
+          className="relative overflow-auto border-l-8 border-green-200 bg-light-purple p-4"
           style={{ borderColor: secondaryColor }}
         >
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'group absolute right-4 top-4 transition-opacity duration-200',
+                )}
+                // @ts-ignore
+                onClick={() => copyToClipboard(JSON.stringify(jsonData.value ?? jsonData))}
+              >
+                <Copy className="opacity-20 group-hover:opacity-100" />
+              </TooltipTrigger>
+              <TooltipContent className="rounded-lg">Copy JSON to clipboard</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           {!value && <NestedValues values={values} root />}
           {value && (
             <JSONPretty
@@ -69,7 +82,8 @@ export default function LabeledValueCard({
                 value: 'color:#a6e22e;',
                 boolean: 'color:#ac81fe;',
               }}
-              data={jsonData}
+              // @ts-ignore
+              data={jsonData.value ?? jsonData}
             />
           )}
         </CardContent>

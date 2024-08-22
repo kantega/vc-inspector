@@ -6,11 +6,13 @@ import Image from 'next/image';
 
 export default function Home() {
   if (typeof window !== 'undefined' && window.location.hash !== '') {
-    const token = window.location.hash.split('=')[1].trim();
+    const token = getToken();
+
     return (
       <>
         <UpperPagePart />
         <InspectionPage defaultToken={base64urlDecode(token)} />
+        <BottomPagePart />
       </>
     );
   }
@@ -65,5 +67,11 @@ function BottomPagePart() {
         </div>
       </div>
     </div>
+  );
+}
+
+function getToken() {
+  return decodeURIComponent(
+    window.location.hash.split('=').reduce((acc, curr, index) => (index === 0 ? acc : acc + curr), ''),
   );
 }
