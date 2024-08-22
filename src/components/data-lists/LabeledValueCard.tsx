@@ -1,16 +1,16 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { isPrimitive, isStrRecord } from '@inspector/assertTypes';
-import { Copy, LucideIcon } from 'lucide-react';
-import { ReactNode, useState } from 'react';
-import { Button, buttonVariants } from '../ui/button';
+import { LucideIcon } from 'lucide-react';
+import { ReactNode } from 'react';
+import { Button } from '../ui/button';
 import { useBoolean, useCopyToClipboard } from 'usehooks-ts';
 import JSONPretty from 'react-json-pretty';
 import { Result } from '@/inspector/calculatedAttributes/results';
 import { Issuer } from '@/inspector/calculatedAttributes/attributes/issuer';
 import { CredentialSubject } from '@/inspector/calculatedAttributes/attributes/credentialSubject';
 import { ParsedCredential } from '@/inspector/inspector';
+import CopyButton from './CopyButton';
 
 /**
  * Component to display a json/Record like structure.
@@ -56,21 +56,9 @@ export default function LabeledValueCard({
           className="relative overflow-auto border-l-8 border-green-200 bg-light-purple p-4"
           style={{ borderColor: secondaryColor }}
         >
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger
-                className={cn(
-                  buttonVariants({ variant: 'link' }),
-                  'group absolute right-4 top-4 transition-opacity duration-200',
-                )}
-                // @ts-ignore
-                onClick={() => copyToClipboard(JSON.stringify(jsonData.value ?? jsonData))}
-              >
-                <Copy className="opacity-20 group-hover:opacity-100" />
-              </TooltipTrigger>
-              <TooltipContent className="rounded-lg">Copy JSON to clipboard</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {/* @ts-ignore */}
+          <CopyButton onClick={() => copyToClipboard(JSON.stringify(jsonData.value ?? jsonData))} />
+
           {!value && <NestedValues values={values} root />}
           {value && (
             <JSONPretty

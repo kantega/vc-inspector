@@ -85,8 +85,6 @@ function EncodedPart({
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
 }) {
-  const [, copyToClipboard] = useCopyToClipboard();
-
   return (
     <div className="w-full sm:w-1/2">
       <h1 className="mb-8 mt-2 flex items-center gap-2 text-2xl font-bold">
@@ -99,25 +97,15 @@ function EncodedPart({
       </p>
       <div>
         <div className="flex w-full justify-between gap-2 rounded-t border-l-2 border-r-2 border-t-2 p-1 px-2">
-          {inspected?.success ? (
-            <>
-              <div className="flex items-center">
-                <FileType size="1.2em" />
-                <span className="ml-1">Format: </span>
+          <>
+            <div className="flex items-center">
+              <FileType size="1.2em" />
+              <span className="ml-1">Format: </span>
+              {inspected?.success && (
                 <span className="ml-1.5 rounded bg-light-gray p-0.5">{inspected.parsedJson.type}</span>
-              </div>
-            </>
-          ) : (
-            <div></div>
-          )}
-          <div className="">
-            <Button variant="link" onClick={() => setValue('')}>
-              Clear
-            </Button>
-            <Button variant="link" onClick={() => copyToClipboard(value)}>
-              Copy
-            </Button>
-          </div>
+              )}
+            </div>
+          </>
         </div>
         <div className=" w-full">
           <div className="relative flex overflow-hidden rounded-md">
@@ -128,10 +116,7 @@ function EncodedPart({
               )}
               data-testid="inspector-textarea"
               value={value}
-              onChange={(e) => {
-                e.target.innerHTML = e.target.value + '<span>test</span>';
-                setValue(e.target.value);
-              }}
+              onChange={(e) => setValue(e.target.value)}
             />
           </div>
         </div>
