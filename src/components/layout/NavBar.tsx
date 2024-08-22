@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import kantegaLogo from '@/public/kantega-logo.png';
 import { cn } from '@/lib/utils';
+import inspectorLogo from '@/public/inspector-logo-white.svg';
 
 type NavigationBarProps = JSX.IntrinsicElements['div'] & {
   links: NavigationLinks[];
@@ -21,7 +22,7 @@ export default function NavigationBar({ links, className, currentPath, ...props 
   return (
     <nav className="flex h-full w-full items-center justify-between p-0 max-md:hidden">
       <Link href="/" className="flex gap-2 px-10 align-middle">
-        <h1 className="self-center text-xl font-bold">POIROT</h1>
+        <Image src={inspectorLogo} alt="VC Inspector Logo" width={100} />
       </Link>
       <div className="flex items-center justify-center gap-4">
         {links.map((link) => (
@@ -36,6 +37,7 @@ export default function NavigationBar({ links, className, currentPath, ...props 
       </div>
       <Link href="https://www.kantega.no/" className="relative flex h-full items-center bg-purple-kantega-400 px-12">
         <div className="absolute -bottom-1 -left-10 border-b-[100px] border-l-[50px] border-b-purple-kantega-400 border-l-purple-kantega-600"></div>
+        by
         <Image src={kantegaLogo} alt="Kantega Logo" width={100} />
       </Link>
     </nav>
