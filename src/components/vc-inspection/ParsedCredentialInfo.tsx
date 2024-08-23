@@ -9,7 +9,7 @@ import LabeledValueCard, {
 import { CircleUser, FilePenLine, Unlock } from 'lucide-react';
 import ValidityDates from '@/components/vc-inspection/validity/ValidityDates';
 import { SuccessfullParse } from '@inspector/inspector';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StandardRetriever } from '@inspector/calculatedAttributes/standardRetriever';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Claim } from '@inspector/calculatedAttributes/attributes/credentialSubject';
@@ -37,6 +37,7 @@ export default function ParsedCredentialInfo({ inspectedResult, ...props }: Pars
 
 function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: InnerParsedCredentialInfoProps) {
   // TODO: More dynamic types
+  const [showFullJson, setShowFullJson] = useState(false);
   const [selectedStandard, setSelectedStandard] = useState(
     inspectedResult.parsedJson.type === 'CBOR' ? Standards.MDOC : Standards.W3C_V2,
   );
@@ -71,69 +72,79 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
             Decoded
           </h1>
         </div>
-        <Select
-          onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
-          defaultValue={Object.entries(stringToStandard)
-            .find(([_key, standard]) => standard === selectedStandard)
-            ?.at(0)}
-        >
-          <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="w3c2">W3C 2.0</SelectItem>
-            <SelectItem data-testid="w3c1-option" value="w3c1">
-              W3C 1.1
-            </SelectItem>
-            <SelectItem value="mdoc">MDOC</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col gap-2">
+          <JsonSwitch setShowFullJson={setShowFullJson} showFullJson={showFullJson} />
+
+          <Select
+            onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
+            defaultValue={Object.entries(stringToStandard)
+              .find(([_key, standard]) => standard === selectedStandard)
+              ?.at(0)}
+          >
+            <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="w3c2">W3C 2.0</SelectItem>
+              <SelectItem data-testid="w3c1-option" value="w3c1">
+                W3C 1.1
+              </SelectItem>
+              <SelectItem value="mdoc">MDOC</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
-      {issuer.kind === 'ok' ? (
+      <ShowComponents show={!showFullJson}>
+        {issuer.kind === 'ok' ? (
+          <LabeledValueCard
+            title="Issuer"
+            titleIcon={FilePenLine}
+            values={issuerValues}
+            data-testid="issuer-card"
+            jsonData={issuerJson}
+          />
+        ) : (
+          <ErrorBox title="Issuer" error={issuer.error} />
+        )}
+        {subject.kind === 'ok' ? (
+          <LabeledValueCard
+            title="Subject"
+            color="hsla(350, 89%, 60%, 1)"
+            secondaryColor="hsla(350, 89%, 60%, 0.2)"
+            titleIcon={CircleUser}
+            values={subjectValues}
+            className="row-span-2"
+            data-testid="subject-card"
+            jsonData={subjectJson}
+          />
+        ) : (
+          <ErrorBox title="Credential subject" error={subject.error} />
+        )}
+
+        {dates.kind == 'ok' ? (
+          <ValidityDates
+            className="w-full"
+            withinDates={dates.value.isValid}
+            validFrom={dates.value.validityDates.validFrom}
+            validUntil={dates.value.validityDates.validUntil}
+          />
+        ) : (
+          <ErrorBox title="Dates of validity" error={dates.error} />
+        )}
+      </ShowComponents>
+
+      <ShowComponents show={showFullJson}>
         <LabeledValueCard
-          title="Issuer"
-          titleIcon={FilePenLine}
-          values={issuerValues}
-          data-testid="issuer-card"
-          jsonData={issuerJson}
-        />
-      ) : (
-        <ErrorBox title="Issuer" error={issuer.error} />
-      )}
-      {subject.kind === 'ok' ? (
-        <LabeledValueCard
-          title="Subject"
-          color="hsla(350, 89%, 60%, 1)"
-          secondaryColor="hsla(350, 89%, 60%, 0.2)"
-          titleIcon={CircleUser}
+          title="Decoded JSON"
+          color="hsla(25, 95%, 53%, 1)"
+          secondaryColor="hsla(25, 95%, 53%, 0.2)"
           values={subjectValues}
           className="row-span-2"
           data-testid="subject-card"
-          jsonData={subjectJson}
+          showJson={true}
+          jsonData={inspectedResult.parsedJson}
         />
-      ) : (
-        <ErrorBox title="Credential subject" error={subject.error} />
-      )}
-      {dates.kind == 'ok' ? (
-        <ValidityDates
-          className="w-full"
-          withinDates={dates.value.isValid}
-          validFrom={dates.value.validityDates.validFrom}
-          validUntil={dates.value.validityDates.validUntil}
-        />
-      ) : (
-        <ErrorBox title="Dates of validity" error={dates.error} />
-      )}
-      <LabeledValueCard
-        title="Decoded JSON"
-        color="hsla(25, 95%, 53%, 1)"
-        secondaryColor="hsla(25, 95%, 53%, 0.2)"
-        values={subjectValues}
-        className="row-span-2"
-        data-testid="subject-card"
-        showJson={true}
-        jsonData={inspectedResult.parsedJson}
-      />
+      </ShowComponents>
     </div>
   );
 }
@@ -181,4 +192,36 @@ function ErrorBox({ title, error }: { title: string; error: Error }) {
       <ZodIssueFormatter error={error} />
     </InformationBox>
   );
+}
+
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+
+export function JsonSwitch({
+  showFullJson,
+  setShowFullJson,
+}: {
+  showFullJson: boolean;
+  setShowFullJson: (show: boolean) => void;
+}) {
+  return (
+    <div className="flex items-center space-x-2">
+      <Switch
+        id="full-json-switch"
+        type="button"
+        value={showFullJson.toString()}
+        checked={showFullJson}
+        onClick={(e) => {
+          const value = e.currentTarget.value === 'false' ? true : false;
+          setShowFullJson(value);
+        }}
+      />
+      <Label htmlFor="full-json-switch">Show JSON</Label>
+    </div>
+  );
+}
+
+function ShowComponents({ show, children }: { show: boolean; children: React.ReactNode }) {
+  if (!show) return null;
+  return <>{children}</>;
 }
