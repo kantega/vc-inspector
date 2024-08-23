@@ -64,7 +64,7 @@ export default function InspectionPage({ className, defaultToken, ...props }: In
       <div
         {...props}
         className={cn(
-          'sm:w-5/6-mt-6 relative flex min-h-screen w-full flex-col gap-8 bg-white p-2 px-8 pt-8 transition-all duration-200 sm:flex-row',
+          'md:w-5/6-mt-6 relative flex min-h-screen w-full flex-col gap-8 bg-white p-2 px-8 pt-8 transition-all duration-200 md:flex-row',
         )}
       >
         <EncodedPart {...{ inspected, errors, value, setValue }} />
@@ -86,7 +86,7 @@ function EncodedPart({
   setValue: Dispatch<SetStateAction<string>>;
 }) {
   return (
-    <div className="w-full sm:w-1/2">
+    <div className="w-full md:w-1/2">
       <h1 className="mb-8 mt-2 flex items-center gap-2 text-2xl font-bold">
         <Lock />
         Encoded
@@ -133,7 +133,7 @@ function DecodedPart({
   inspected: SuccessfullParse | null | undefined;
 }) {
   return (
-    <div className="flex w-full flex-col sm:w-1/2">
+    <div className="flex w-full flex-col md:w-1/2">
       <div className="flex flex-col">
         <div className="flex w-full flex-wrap gap-4">
           {errors.map((error, i) => {
