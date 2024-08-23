@@ -133,7 +133,7 @@ function DecodedPart({
   inspected: SuccessfullParse | null | undefined;
 }) {
   return (
-    <div className="flex w-1/2 flex-col">
+    <div className="flex w-full flex-col sm:w-1/2">
       <div className="flex flex-col">
         <div className="flex w-full flex-wrap gap-4">
           {errors.map((error, i) => {
@@ -180,7 +180,7 @@ function UpperSection({
           {!copied && (
             <>
               <Upload className="w-4" />
-              Share Current Credential
+              <span className="hidden sm:block">Share Current Credential</span>
             </>
           )}
         </Button>

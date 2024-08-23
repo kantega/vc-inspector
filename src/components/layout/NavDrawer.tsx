@@ -1,7 +1,7 @@
 'use client';
 
 import { NavigationLinks } from './Header';
-import inspectorLogo from '@/public/inspector-logo.svg';
+import inspectorLogo from '@/public/inspector-logo-white.svg';
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
@@ -29,7 +29,7 @@ export default function NavigationDrawer({ links, currentPath, className, ...pro
   return (
     <div className={cn(className, 'flex w-full justify-between p-3')} {...props}>
       <Link href="/" className="flex gap-2 align-middle">
-        <Image src={inspectorLogo} alt="VC Inspector Logo" width={50} />
+        <Image src={inspectorLogo} alt="VC Inspector Logo" width={100} />
       </Link>
       <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger asChild>
