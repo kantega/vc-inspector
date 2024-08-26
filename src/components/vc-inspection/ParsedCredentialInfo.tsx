@@ -73,8 +73,6 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
           </h1>
         </div>
         <div className="flex flex-col gap-2">
-          <JsonSwitch setShowFullJson={setShowFullJson} showFullJson={showFullJson} />
-
           <Select
             onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
             defaultValue={Object.entries(stringToStandard)
@@ -102,6 +100,8 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
             values={issuerValues}
             data-testid="issuer-card"
             jsonData={issuerJson}
+            setShowFullJson={setShowFullJson}
+            showFullJson={showFullJson}
           />
         ) : (
           <ErrorBox title="Issuer" error={issuer.error} />
@@ -116,11 +116,12 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
             className="row-span-2"
             data-testid="subject-card"
             jsonData={subjectJson}
+            setShowFullJson={setShowFullJson}
+            showFullJson={showFullJson}
           />
         ) : (
           <ErrorBox title="Credential subject" error={subject.error} />
         )}
-
         {dates.kind == 'ok' ? (
           <ValidityDates
             className="w-full"
@@ -142,7 +143,10 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
           className="row-span-2"
           data-testid="subject-card"
           showJson={true}
+          switchEnabled={false}
           jsonData={inspectedResult.parsedJson}
+          setShowFullJson={setShowFullJson}
+          showFullJson={showFullJson}
         />
       </ShowComponents>
     </div>
@@ -216,7 +220,7 @@ export function JsonSwitch({
           setShowFullJson(value);
         }}
       />
-      <Label htmlFor="full-json-switch">Show JSON</Label>
+      <Label htmlFor="full-json-switch">Show complete JSON</Label>
     </div>
   );
 }
