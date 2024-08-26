@@ -11,6 +11,8 @@ import { Issuer } from '@/inspector/calculatedAttributes/attributes/issuer';
 import { CredentialSubject } from '@/inspector/calculatedAttributes/attributes/credentialSubject';
 import { ParsedCredential } from '@/inspector/inspector';
 import CopyButton from './CopyButton';
+import { Validity } from '@/inspector/calculatedAttributes/attributes/validity';
+import { JsonSwitch } from '../vc-inspection/ParsedCredentialInfo';
 
 /**
  * Component to display a json/Record like structure.
@@ -26,6 +28,9 @@ export default function LabeledValueCard({
   color,
   secondaryColor,
   showJson,
+  switchEnabled = true,
+  setShowFullJson,
+  showFullJson,
   className,
   ...props
 }: LabeledValueCardProps) {
@@ -42,14 +47,31 @@ export default function LabeledValueCard({
           <CardTitle
             className={cn('m-0 flex items-center justify-between p-0 text-base leading-none', TitleIcon && 'gap-3')}
           >
-            <span className="flex gap-2">
-              <Button variant={value ? 'secondary' : 'link'} className="rounded-xl" onClick={setTrue}>
-                JSON
-              </Button>
-              <Button variant={!value ? 'secondary' : 'link'} className="rounded-xl" onClick={setFalse}>
-                PARSED
-              </Button>
-            </span>
+            {switchEnabled && (
+              <span className="flex gap-2">
+                <Button variant={value ? 'secondary' : 'link'} className="rounded-xl" onClick={setTrue}>
+                  JSON
+                </Button>
+                <Button variant={!value ? 'secondary' : 'link'} className="rounded-xl" onClick={setFalse}>
+                  PARSED
+                </Button>
+              </span>
+            )}
+            {!switchEnabled && (
+              <span className="flex gap-2">
+                {showJson && (
+                  <Button variant={value ? 'secondary' : 'link'} className="rounded-xl" onClick={setTrue}>
+                    JSON
+                  </Button>
+                )}
+                {!showJson && (
+                  <Button variant={!value ? 'secondary' : 'link'} className="rounded-xl" onClick={setFalse}>
+                    PARSED
+                  </Button>
+                )}
+              </span>
+            )}
+            <JsonSwitch setShowFullJson={setShowFullJson} showFullJson={showFullJson} />
           </CardTitle>
         </CardHeader>
         <CardContent
@@ -99,9 +121,12 @@ type LabeledValueCardProps = Omit<JSX.IntrinsicElements['div'], 'ref'> & {
   titleIcon?: LucideIcon;
   title: string;
   values: LabeledValues[];
-  jsonData: Result<Issuer | CredentialSubject> | ParsedCredential;
+  jsonData: Result<Issuer | CredentialSubject | Validity> | ParsedCredential;
   secondaryColor?: string;
   showJson?: boolean;
+  switchEnabled?: boolean;
+  setShowFullJson: (show: boolean) => void;
+  showFullJson: boolean;
 };
 
 export function labeledValue(label: string, value: LeafNode | NestedNodes): LabeledValues {

@@ -54,7 +54,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          'relative flex flex-col justify-center bg-gradient-to-b from-purple-kantega-700 via-purple-kantega-600 via-[596px] to-light-purple to-[596px]',
+          'relative flex flex-col justify-center bg-gradient-to-b from-purple-kantega-700 via-purple-kantega-600 via-[628px] to-light-purple to-[628px]',
         )}
       >
         <Header />
