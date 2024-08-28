@@ -8,11 +8,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/kantega/vc-inspector">
-    <img src="images/logo-with-background.png" alt="Logo" width="200" style="background-color: white">
-  </a>
-
-  <h3 align="center">VC-Inspector</h3>
+  <h1 align="center">Poirot</h1>
+  <h3 align="center">(Previously known as VC Inspector)</h3>
 
   <p align="center">
     Open-sourced tool for inspecting verifiable credentials.
@@ -28,44 +25,11 @@
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#1---install-prerequisites">1 - Install Prerequisites</a></li>
-        <li><a href="#2---installation">2 - Installation</a></li>
-        <li><a href="#3---start-development-environment">3 - Start development environment</a></li>
-        <li><a href="#other">Other</a></li>
-        <ul>
-          <li><a href="#storybook">Storybook</a></li>
-          <li><a href="#documentation">Documentation</a></li>
-          <li><a href="#pre-commits-recommended">Pre-Commits</a></li>
-        </ul>
-      </ul>
-    </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
 
-[![VC inspector Screen Shot][product-screenshot]](https://example.com)
+[![VC inspector Screen Shot][product-screenshot]](https://poirot.id)
 
 Open-sourced tool for inspecting verifiable credentials.
 
@@ -187,8 +151,6 @@ See the [open issues](https://github.com/kantega/vc-inspector/issues) for a full
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTRIBUTING -->
-
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -204,34 +166,16 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
-
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
+## Acknowledgments and Origins
 
-## Contact
-
-Original creators:
-
-- Thomas H. Svendal - thomassvendal@gmail.com
-- Carl J. Gutzkow - cjgutzkow@gmail.com
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## FAQ
-
-### Error when running storybook (SB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack):
-
-Found this issue when using pnpm version 8. Use pnpm version 9.0.6.
-
-## Acknowledgments
+The first version of this tool was developed as part of a master's thesis in collaboration between NTNU and Kantega. [Complete thesis](https://ntnuopen.ntnu.no/ntnu-xmlui/handle/11250/3137516)
+Special thanks to Thomas H. Svendal and Carl J. Gutzkow for their contributions.
 
 - [Lucide](https://lucide.dev/)
 
