@@ -1,6 +1,6 @@
 'use client';
 import InspectionPage from '@/components/vc-inspection/InspectionPage';
-import { ArrowRightIcon, InfoIcon, Shield, ShieldCheck } from 'lucide-react';
+import { ArrowRightIcon, ShieldCheck } from 'lucide-react';
 import kantegaLogo from '@/public/credentials.png';
 import Image from 'next/image';
 

@@ -2,7 +2,7 @@
 import inspect, { SuccessfullParse } from '@inspector/inspector';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ParsedCredentialInfo from './ParsedCredentialInfo';
-import { FileType, Lock, Share2, Unlock, Upload } from 'lucide-react';
+import { Lock, Upload } from 'lucide-react';
 import InformationBox from '@/components/notices/InfoBox';
 import { cn } from '@/lib/utils';
 import TextArea from './TextArea';
@@ -86,33 +86,25 @@ function EncodedPart({
   setValue: Dispatch<SetStateAction<string>>;
 }) {
   return (
-    <div className="w-full md:w-1/2">
+    <div className="relative w-full md:w-1/2">
       <h1 className="mb-8 mt-2 flex items-center gap-2 text-2xl font-bold">
         <Lock />
         Encoded
       </h1>
+      <p className="mb-12 flex h-8 w-20 items-center justify-center rounded bg-slate-100">
+        {inspected?.success && inspected.parsedJson.type}
+      </p>
       <p className="my-2 flex items-center gap-2 text-sm text-green-500">
         <span className="h-3 w-3 rounded-full border-2 border-green-500" />
         INPUT
       </p>
       <div>
-        <div className="flex w-full justify-between gap-2 rounded-t border-l-2 border-r-2 border-t-2 p-1 px-2">
-          <>
-            <div className="flex items-center">
-              <FileType size="1.2em" />
-              <span className="ml-1">Format: </span>
-              {inspected?.success && (
-                <span className="ml-1.5 rounded bg-light-gray p-0.5">{inspected.parsedJson.type}</span>
-              )}
-            </div>
-          </>
-        </div>
         <div className=" w-full">
           <div className="relative flex overflow-hidden rounded-md">
             <TextArea
               className={cn(
-                'w-full resize-none border-l-8 bg-light-purple',
-                errors.length > 0 ? 'border-red-400 bg-red-200' : 'border-green-200',
+                'w-full resize-none rounded border border-l-8 border-slate-300 bg-slate-50 ',
+                errors.length > 0 ? 'border-l-red-400 bg-red-200' : 'border-l-green-200',
               )}
               data-testid="inspector-textarea"
               value={value}

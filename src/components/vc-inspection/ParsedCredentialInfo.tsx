@@ -26,6 +26,14 @@ type InnerParsedCredentialInfoProps = JSX.IntrinsicElements['div'] & {
   inspectedResult: SuccessfullParse;
 };
 
+type ParsedSubjectJson = {
+  credentialSubject: Result<CredentialSubject>;
+};
+
+type ParsedIssuerJson = {
+  issuer: Result<Issuer>;
+};
+
 /**
  * Component to show everything relevant to a credential that can be parsed.
  * Dates validity, listed data for issuer and subject, errors, proofs, parsed JSON
@@ -44,10 +52,10 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
 
   const standard = new StandardRetriever(selectedStandard);
 
-  const datesJson = inspectedResult.calculatedAttributes.validityDates[selectedStandard];
+  // const datesJson = inspectedResult.calculatedAttributes.validityDates[selectedStandard];
   const dates = standard.getResult(inspectedResult.calculatedAttributes.validityDates);
 
-  const subjectJson = inspectedResult.calculatedAttributes.credentialSubject[selectedStandard];
+  const subjectJson = (inspectedResult.parsedJson.payload as unknown as ParsedSubjectJson)['credentialSubject'];
   const subject = standard.getResult(inspectedResult.calculatedAttributes.credentialSubject);
   let subjectValues: LabeledValues[] = [];
   if (subject.kind === 'ok') {
@@ -55,7 +63,7 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
     if (subject.value.id) subjectValues.unshift(labeledValue('id', toNode(subject.value.id)));
   }
 
-  const issuerJson = inspectedResult.calculatedAttributes.issuer[selectedStandard];
+  const issuerJson = (inspectedResult.parsedJson.payload as unknown as ParsedIssuerJson)['issuer'];
   const issuer = standard.getResult(inspectedResult.calculatedAttributes.issuer);
   let issuerValues: LabeledValues[] = [];
   if (issuer.kind === 'ok') {
@@ -65,13 +73,14 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
 
   return (
     <div className={className} {...props}>
+      <div>
+        <h1 className="mt-2 flex items-center gap-2 text-2xl font-bold">
+          <Unlock />
+          Decoded
+        </h1>
+      </div>
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="mt-2 flex items-center gap-2 text-2xl font-bold">
-            <Unlock />
-            Decoded
-          </h1>
-        </div>
+        <FullJsonSwitch isOn={showFullJson} setIsOn={setShowFullJson} />
         <div className="flex flex-col gap-2">
           <Select
             onValueChange={(s: string) => setSelectedStandard(stringToStandard[s])}
@@ -79,10 +88,13 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
               .find(([_key, standard]) => standard === selectedStandard)
               ?.at(0)}
           >
-            <SelectTrigger data-testid="standard-selector" className="w-32 min-w-max">
+            <SelectTrigger
+              data-testid="standard-selector"
+              className="h-12 w-44 min-w-max border border-slate-300 bg-slate-50"
+            >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="">
               <SelectItem value="w3c2">W3C 2.0</SelectItem>
               <SelectItem data-testid="w3c1-option" value="w3c1">
                 W3C 1.1
@@ -100,8 +112,6 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
             values={issuerValues}
             data-testid="issuer-card"
             jsonData={issuerJson}
-            setShowFullJson={setShowFullJson}
-            showFullJson={showFullJson}
           />
         ) : (
           <ErrorBox title="Issuer" error={issuer.error} />
@@ -116,8 +126,6 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
             className="row-span-2"
             data-testid="subject-card"
             jsonData={subjectJson}
-            setShowFullJson={setShowFullJson}
-            showFullJson={showFullJson}
           />
         ) : (
           <ErrorBox title="Credential subject" error={subject.error} />
@@ -145,8 +153,6 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
           showJson={true}
           switchEnabled={false}
           jsonData={inspectedResult.parsedJson}
-          setShowFullJson={setShowFullJson}
-          showFullJson={showFullJson}
         />
       </ShowComponents>
     </div>
@@ -200,6 +206,10 @@ function ErrorBox({ title, error }: { title: string; error: Error }) {
 
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import FullJsonSwitch from './animateToggle';
+import { Issuer } from '@/inspector/calculatedAttributes/attributes/issuer';
+import { Result } from '@/inspector/calculatedAttributes/results';
+import { CredentialSubject } from '@/inspector/calculatedAttributes/attributes/credentialSubject';
 
 export function JsonSwitch({
   showFullJson,

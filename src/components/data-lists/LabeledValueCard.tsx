@@ -12,7 +12,7 @@ import { CredentialSubject } from '@/inspector/calculatedAttributes/attributes/c
 import { ParsedCredential } from '@/inspector/inspector';
 import CopyButton from './CopyButton';
 import { Validity } from '@/inspector/calculatedAttributes/attributes/validity';
-import { JsonSwitch } from '../vc-inspection/ParsedCredentialInfo';
+import InnerJsonSwitch from '../vc-inspection/animateToggle2';
 
 /**
  * Component to display a json/Record like structure.
@@ -29,12 +29,10 @@ export default function LabeledValueCard({
   secondaryColor,
   showJson,
   switchEnabled = true,
-  setShowFullJson,
-  showFullJson,
   className,
   ...props
 }: LabeledValueCardProps) {
-  const { value, setTrue, setFalse } = useBoolean(showJson ?? false);
+  const { value, setTrue, setFalse, toggle } = useBoolean(showJson ?? false);
   const [, copyToClipboard] = useCopyToClipboard();
   return (
     <div>
@@ -42,21 +40,12 @@ export default function LabeledValueCard({
         <span className="h-3 w-3 rounded-full border-2 border-green-500" style={{ borderColor: color }} />
         {title}
       </p>
-      <Card className={className} {...props}>
-        <CardHeader className="h-fit border-b-2 p-2">
+      <Card className={cn(className, 'border-slate-300')} {...props}>
+        <CardHeader className="h-fit border-b border-slate-300 p-2">
           <CardTitle
             className={cn('m-0 flex items-center justify-between p-0 text-base leading-none', TitleIcon && 'gap-3')}
           >
-            {switchEnabled && (
-              <span className="flex gap-2">
-                <Button variant={value ? 'secondary' : 'link'} className="rounded-xl" onClick={setTrue}>
-                  JSON
-                </Button>
-                <Button variant={!value ? 'secondary' : 'link'} className="rounded-xl" onClick={setFalse}>
-                  PARSED
-                </Button>
-              </span>
-            )}
+            {switchEnabled && <InnerJsonSwitch isOn={value} setIsOn={toggle} />}
             {!switchEnabled && (
               <span className="flex gap-2">
                 {showJson && (
@@ -71,7 +60,6 @@ export default function LabeledValueCard({
                 )}
               </span>
             )}
-            <JsonSwitch setShowFullJson={setShowFullJson} showFullJson={showFullJson} />
           </CardTitle>
         </CardHeader>
         <CardContent
@@ -125,8 +113,6 @@ type LabeledValueCardProps = Omit<JSX.IntrinsicElements['div'], 'ref'> & {
   secondaryColor?: string;
   showJson?: boolean;
   switchEnabled?: boolean;
-  setShowFullJson: (show: boolean) => void;
-  showFullJson: boolean;
 };
 
 export function labeledValue(label: string, value: LeafNode | NestedNodes): LabeledValues {
