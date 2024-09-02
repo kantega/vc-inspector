@@ -14,7 +14,7 @@ import P from '../typography/P';
  */
 export default function Introduction() {
   return (
-    <main className="p-20">
+    <main className="flex max-w-[1280px] flex-col gap-8 px-40 py-96 ">
       <Markdown
         components={{
           // Map `h1` (`# heading`) to use `h2`s.
