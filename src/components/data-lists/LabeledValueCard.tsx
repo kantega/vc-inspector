@@ -12,7 +12,7 @@ import { CredentialSubject } from '@/inspector/calculatedAttributes/attributes/c
 import { ParsedCredential } from '@/inspector/inspector';
 import CopyButton from './CopyButton';
 import { Validity } from '@/inspector/calculatedAttributes/attributes/validity';
-import InnerJsonSwitch from '../vc-inspection/animateToggle2';
+import InnerJsonSwitch from '../vc-inspection/InnerJsonSwitch';
 
 /**
  * Component to display a json/Record like structure.
@@ -40,7 +40,7 @@ export default function LabeledValueCard({
         <span className="h-3 w-3 rounded-full border-2 border-green-500" style={{ borderColor: color }} />
         {title}
       </p>
-      <Card className={cn(className, 'border-slate-300')} {...props}>
+      <Card className={cn(className, 'max-w-1/2 border-slate-300')} {...props}>
         <CardHeader className="h-fit border-b border-slate-300 p-2">
           <CardTitle
             className={cn('m-0 flex items-center justify-between p-0 text-base leading-none', TitleIcon && 'gap-3')}
@@ -72,6 +72,7 @@ export default function LabeledValueCard({
           {!value && <NestedValues values={values} root />}
           {value && (
             <JSONPretty
+              className="max-w-[578px]"
               theme={{
                 main: 'line-height:1.3;color:#1176fe;overflow:auto;',
                 error: 'line-height:1.3;color:#1176fe;overflow:auto;',

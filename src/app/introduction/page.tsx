@@ -1,5 +1,4 @@
 import UnderConstruction from '@/components/notices/UnderConstruction';
-import FullJsonSwitch from '@/components/vc-inspection/animateToggle';
 
 /**
  * A page dedicated to teach eIDAS 2.0 and the

@@ -206,7 +206,7 @@ function ErrorBox({ title, error }: { title: string; error: Error }) {
 
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import FullJsonSwitch from './animateToggle';
+import FullJsonSwitch from './FullJsonSwitch';
 import { Issuer } from '@/inspector/calculatedAttributes/attributes/issuer';
 import { Result } from '@/inspector/calculatedAttributes/results';
 import { CredentialSubject } from '@/inspector/calculatedAttributes/attributes/credentialSubject';
