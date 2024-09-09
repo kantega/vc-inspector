@@ -39,7 +39,8 @@ export default function Examples() {
 function ExampleLink({ title, token, functional }: { title: string; token: string; functional: boolean }) {
   let pathName = '';
   if (typeof window !== 'undefined') {
-    pathName = window.location.pathname.replace('/examples', '');
+    pathName = window.location.pathname.replace('/examples', '/');
+    pathName = pathName.replace('/introduction', '/');
   }
   const href = `${pathName}#vc-debugger?token=${token}`;
 
@@ -48,8 +49,12 @@ function ExampleLink({ title, token, functional }: { title: string; token: strin
       href={href}
       className={cn(
         buttonVariants({ variant: 'default', size: 'default' }),
-        'h-72 w-72 text-wrap rounded-xl text-xl',
-        !devMode ? 'bg-foreground' : functional ? 'bg-green-600' : 'bg-red-600',
+        'h-72 w-72 text-wrap rounded-xl text-xl text-foreground',
+        devMode
+          ? 'bg-background hover:bg-background active:bg-background/50'
+          : functional
+            ? 'bg-green-600'
+            : 'bg-red-600',
       )}
     >
       <div className="flex flex-col items-center justify-center gap-4">
