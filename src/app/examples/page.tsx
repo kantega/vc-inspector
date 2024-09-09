@@ -50,7 +50,7 @@ function ExampleLink({ title, token, functional }: { title: string; token: strin
       className={cn(
         buttonVariants({ variant: 'default', size: 'default' }),
         'h-72 w-72 text-wrap rounded-xl text-xl text-foreground',
-        devMode
+        !devMode
           ? 'bg-background hover:bg-background active:bg-background/50'
           : functional
             ? 'bg-green-600'
