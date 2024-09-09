@@ -1,4 +1,5 @@
 'use client';
+
 import { usePathname } from 'next/navigation';
 import NavigationBar from './NavBar';
 import NavigationDrawer from './NavDrawer';
@@ -37,11 +38,9 @@ export default function Header() {
 
   const pathName = usePathname();
   return (
-    <div className="p-8">
-      <header className=" z-50 ml-auto mr-auto mt-10 flex h-20 w-full max-w-[1350px] items-center justify-center overflow-hidden rounded-xl bg-purple-kantega-600 text-white">
-        <NavigationBar currentPath={pathName} links={links} />
-        <NavigationDrawer currentPath={pathName} links={links} className="md:hidden" />
-      </header>
-    </div>
+    <header className=" z-50 ml-auto mr-auto mt-10 flex h-20 w-full max-w-[1350px] items-center justify-center overflow-hidden rounded-xl bg-purple-kantega-600 text-white">
+      <NavigationBar currentPath={pathName} links={links} />
+      <NavigationDrawer currentPath={pathName} links={links} className="md:hidden" />
+    </header>
   );
 }

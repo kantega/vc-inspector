@@ -119,8 +119,8 @@ function InnerParsedCredentialInfo({ inspectedResult, className, ...props }: Inn
         {subject.kind === 'ok' ? (
           <LabeledValueCard
             title="Subject"
-            color="hsla(350, 89%, 60%, 1)"
-            secondaryColor="hsla(350, 89%, 60%, 0.2)"
+            // color="hsla(350, 89%, 60%, 1)"
+            // secondaryColor="hsla(350, 89%, 60%, 0.2)"
             titleIcon={CircleUser}
             values={subjectValues}
             className="row-span-2"
