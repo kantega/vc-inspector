@@ -158,7 +158,7 @@ function UpperSection({
       <h1 className="text-3xl"> Verifiable Credential</h1>
       {value !== '' && (
         <Button
-          className="gap-2 rounded-xl bg-violet-kantega-900 font-normal"
+          className="gap-2 rounded-lg bg-violet-kantega-900 font-normal"
           onClick={() => {
             const shareUrl = `${window.location.origin}${window.location.pathname}#vc-debugger?token=${value}`;
             copyToClipboard(shareUrl);

@@ -19,7 +19,7 @@ export default function Examples() {
         <h1 className="text-3xl font-bold leading-tight text-white">Examples</h1>
         <h2 className="m-0 leading-tight text-white">Click any of the links to see the example in VC-inspector.</h2>
       </div>
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-start gap-6">
         {examples.map((example) => {
           if (!devMode && !example.functional) return null;
           return (
@@ -49,7 +49,7 @@ function ExampleLink({ title, token, functional }: { title: string; token: strin
       href={href}
       className={cn(
         buttonVariants({ variant: 'default', size: 'default' }),
-        'h-96 w-96 text-wrap rounded-xl text-xl text-foreground',
+        'h-72 w-72 text-wrap rounded-xl text-xl text-foreground',
         devMode
           ? 'bg-background hover:bg-background active:bg-background/50'
           : functional
