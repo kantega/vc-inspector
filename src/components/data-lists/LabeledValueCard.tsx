@@ -49,12 +49,12 @@ export default function LabeledValueCard({
             {!switchEnabled && (
               <span className="flex gap-2">
                 {showJson && (
-                  <Button variant={value ? 'secondary' : 'link'} className="rounded-xl" onClick={setTrue}>
+                  <Button variant={value ? 'secondary' : 'link'} className="rounded-lg" onClick={setTrue}>
                     JSON
                   </Button>
                 )}
                 {!showJson && (
-                  <Button variant={!value ? 'secondary' : 'link'} className="rounded-xl" onClick={setFalse}>
+                  <Button variant={!value ? 'secondary' : 'link'} className="rounded-lg" onClick={setFalse}>
                     PARSED
                   </Button>
                 )}
