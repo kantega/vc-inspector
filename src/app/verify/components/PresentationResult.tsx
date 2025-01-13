@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import JwtViewer from './JwtViewer';
 
 interface CallbackDataViewerProps {
   pollingInterval?: number; // Interval for polling in milliseconds
-  state: any
+  state: any;
 }
 
 export default function PresentationResult({ pollingInterval = 5000, state }: CallbackDataViewerProps) {
@@ -84,12 +84,8 @@ export default function PresentationResult({ pollingInterval = 5000, state }: Ca
             <CardTitle>Callback Data</CardTitle>
           </CardHeader>
           <CardContent>
-            <pre className="bg-gray-100 p-4 rounded-md overflow-x-auto text-sm">
-              {JSON.stringify(data, null, 2)}
-            </pre>
-            {data.vp_token && (
-              <JwtViewer jwt={data.vp_token} />
-            )}
+            <pre className="overflow-x-auto rounded-md bg-gray-100 p-4 text-sm">{JSON.stringify(data, null, 2)}</pre>
+            {data.vp_token && <JwtViewer jwt={data.vp_token} />}
           </CardContent>
         </Card>
       )}
