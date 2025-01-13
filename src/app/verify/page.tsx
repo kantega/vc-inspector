@@ -192,7 +192,7 @@ export default function Page() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-bold">Presentation Request Builder</h1>
+      <h1 className="mb-4 text-2xl font-bold text-white">Presentation Request Builder</h1>
 
       {/* Two-Column Layout */}
       <div className="flex flex-wrap lg:flex-nowrap">
