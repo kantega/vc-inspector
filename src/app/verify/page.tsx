@@ -6,6 +6,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import { useBaseUrl } from "./hooks/useBaseUrl"
+import { Presentation } from "lucide-react"
+import PresentationResult from "./components/PresentationResult"
 
 interface FieldConstraint {
   path: string
@@ -21,21 +25,50 @@ interface InputDescriptor {
   fields: FieldConstraint[]
 }
 
+
+const clientMetadata = {
+  client_name: "Your Organization",
+  description: "This service requests your verifiable credentials for authentication purposes.",
+  logo_uri: "https://png.pngtree.com/png-vector/20211023/ourmid/pngtree-salon-logo-png-image_4004444.png",
+  location: "City, Country",
+  cover_uri: "https://png.pngtree.com/png-vector/20211023/ourmid/pngtree-salon-logo-png-image_4004444.png"
+};
+
+
+// make array of all types Wallet in a cool typescript way
+const wallets = ['iGrant', 'Lomino', 'Other'] as const
+
+type Wallet = typeof wallets[number]
+
 export default function Page() {
+  const baseUrl = useBaseUrl()
+
+  const [pollData, setPollData] = useState<boolean>(false)
+  const [selectedWallet, setSelectedWallet] = useState<Wallet>('Lomino')
   const [inputDescriptors, setInputDescriptors] = useState<InputDescriptor[]>([])
   const [currentType, setCurrentType] = useState('')
-  const [clientId, setClientId] = useState('my-client-id')
-  const [redirectUri, setRedirectUri] = useState('https://poirot.id/callback')
+  const [clientId, setClientId] = useState(baseUrl)
+  const [audience, setAudience] = useState(baseUrl)
+  const [responseUri, setResponseUri] = useState(baseUrl + "/api/callback")
   const [responseType, setResponseType] = useState('vp_token')
+  const [responseMode, setResponseMode] = useState('direct_post')
   const [scope, setScope] = useState('openid')
+  const [nonce, setNonce] = useState(uuidv4())
+  const [state, setState] = useState(uuidv4())
   const [authorizeUrl, setAuthorizeUrl] = useState('')
   const [unencodedUrl, setUnencodedUrl] = useState('')
+
+  useEffect(() => {
+    setClientId(baseUrl)
+    setAudience(baseUrl)
+    setResponseUri(baseUrl + "/api/callback")
+  }, [baseUrl])
 
   const addInputDescriptor = () => {
     if (currentType) {
       setInputDescriptors([
         ...inputDescriptors,
-        { id: `descriptor-${inputDescriptors.length + 1}`, credentialType: currentType, proofFormats: [], fields: [] }
+        { id: uuidv4(), credentialType: currentType, proofFormats: [], fields: [] }
       ])
       setCurrentType('')
     }
@@ -43,62 +76,109 @@ export default function Page() {
 
   const generatePresentationDefinition = () => {
     return {
-      id: "example_presentation_definition",
+      id: uuidv4(),
+      format: {
+        // "vc+sd-jwt": {
+        //   alg: ["ES256"] // Add the desired algorithms
+        // },
+        // "vp+sd-jwt": {
+        //   alg: ["ES256"] // Add the desired algorithms
+        // },
+        "jwt_vc": {
+          alg: ["ES256"] // Add the desired algorithms
+        },
+      },
       input_descriptors: inputDescriptors.map(descriptor => ({
         id: descriptor.id,
         format: descriptor.proofFormats.reduce((formats, format) => {
-          formats[format] = { proof_type: ["Ed25519Signature2018", "EcdsaSecp256k1Signature2019"] };
-          return formats;
+          formats[format] = { proof_type: ["Ed25519Signature2018", "EcdsaSecp256k1Signature2019"] }
+          return formats
         }, {} as Record<string, any>),
         constraints: {
           limit_disclosure: "required",
           fields: [
-            {
-              path: ["$.type"],
-              filter: { type: "string", pattern: descriptor.credentialType },
-            },
+            selectedWallet === 'Lomino'
+              ? {
+                path: ["$.vc.type"],
+                filter: {
+                  type: "string",
+                  pattern: `^${descriptor.credentialType}$`,
+                },
+              }
+              : selectedWallet === 'iGrant'
+                ? {
+                  path: ["$.vc.type"],
+                  filter: {
+                    type: "array",
+                    contains: {
+                      const: descriptor.credentialType,
+                    },
+                  },
+                }
+                : {
+                  // Default or fallback for "Other"
+                  path: ["$.vc.type"],
+                  filter: {
+                    type: "string",
+                  },
+                },
             ...descriptor.fields.map(field => ({
               path: [field.path],
               purpose: field.purpose,
               predicate: field.predicate,
               filter: field.filter,
             })),
-          ],
-        },
-      })),
-    };
-  };
+          ]
+        }
+      }))
+    }
+  }
 
   const updateAuthorizeUrl = () => {
-    const presentationDefinition = generatePresentationDefinition();
+    const presentationDefinition = generatePresentationDefinition()
 
-    // Unencoded URL with line breaks for readability
-    const unencoded = `openid4vp://authorize?\nclient_id=${clientId}\nresponse_type=${responseType}\nscope=${scope}\nredirect_uri=${redirectUri}\npresentation_definition=${JSON.stringify(
-        presentationDefinition,
-        null,
-        2
-    )}`;
-    setUnencodedUrl(unencoded);
+    const payload = {
+      aud: audience,
+      client_id: clientId,
+      client_id_scheme: "redirect_uri",
+      exp: Math.floor(Date.now() / 1000) + 3600,
+      iss: clientId,
+      nonce,
+      presentation_definition: presentationDefinition,
+      response_mode: responseMode,
+      response_type: responseType,
+      response_uri: responseUri,
+      scope,
+      state,
+      client_metadata: clientMetadata
+    }
 
-    // Encoded URL for proper usage
-    const queryParams = new URLSearchParams({
-        client_id: clientId,
-        response_type: responseType,
-        scope,
-        redirect_uri: redirectUri,
-        presentation_definition: JSON.stringify(presentationDefinition),
-    });
-    setAuthorizeUrl(`openid4vp://authorize?${queryParams.toString()}`);
-};
+    const unencoded = JSON.stringify(payload, null, 2)
+    setUnencodedUrl(unencoded)
 
-  // Update the authorize URL whenever inputs change
+    const encoded = `openid4vp://authorize?${new URLSearchParams({
+      aud: payload.aud,
+      client_id: payload.client_id,
+      response_type: payload.response_type,
+      scope: payload.scope,
+      nonce: payload.nonce,
+      state: payload.state,
+      presentation_definition: JSON.stringify(payload.presentation_definition),
+      response_uri: payload.response_uri,
+      response_mode: payload.response_mode,
+      client_metadata: JSON.stringify(payload.client_metadata)
+    }).toString()}`
+
+    setAuthorizeUrl(encoded)
+  }
+
   useEffect(() => {
     updateAuthorizeUrl()
-  }, [clientId, redirectUri, responseType, scope, inputDescriptors])
+  }, [baseUrl, clientId, audience, responseUri, responseType, responseMode, scope, nonce, state, inputDescriptors, wallets, selectedWallet])
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-white">Presentation Request Builder</h1>
+      <h1 className="text-2xl font-bold mb-4">Presentation Request Builder</h1>
 
       {/* Two-Column Layout */}
       <div className="flex flex-wrap lg:flex-nowrap">
@@ -117,30 +197,43 @@ export default function Page() {
                 onChange={(e) => setClientId(e.target.value)}
                 placeholder="Client ID"
               />
-              <Label htmlFor="redirectUri" className="mt-2">Redirect URI:</Label>
+              <Label htmlFor="audience" className="mt-2">Audience:</Label>
               <Input
-                id="redirectUri"
+                id="audience"
                 type="text"
-                value={redirectUri}
-                onChange={(e) => setRedirectUri(e.target.value)}
-                placeholder="Redirect URI"
+                value={audience}
+                onChange={(e) => setAudience(e.target.value)}
+                placeholder="Audience"
               />
-              <Label htmlFor="responseType" className="mt-2">Response Type:</Label>
+              <Label htmlFor="responseUri" className="mt-2">Response URI:</Label>
               <Input
-                id="responseType"
+                id="responseUri"
                 type="text"
-                value={responseType}
-                onChange={(e) => setResponseType(e.target.value)}
-                placeholder="Response Type (e.g., vp_token)"
+                value={responseUri}
+                onChange={(e) => setResponseUri(e.target.value)}
+                placeholder="Response URI"
               />
-              <Label htmlFor="scope" className="mt-2">Scope:</Label>
+              <Label htmlFor="responseMode" className="mt-2">Response Mode:</Label>
               <Input
-                id="scope"
+                id="responseMode"
                 type="text"
-                value={scope}
-                onChange={(e) => setScope(e.target.value)}
-                placeholder="Scope (e.g., openid)"
+                value={responseMode}
+                onChange={(e) => setResponseMode(e.target.value)}
+                placeholder="Response Mode (e.g., direct_post)"
               />
+              <Label htmlFor="wallet" className="mt-2">Wallet:</Label>
+              <div className="flex gap-4">
+                {wallets.map(wallet => (
+                  <div
+                    key={wallet}
+                    className={`cursor-pointer rounded-lg border ${selectedWallet === wallet ? 'border-blue-500' : 'border-gray-300'
+                      } hover:shadow-md transition px-4 py-2 text-center`}
+                    onClick={() => setSelectedWallet(wallet)}
+                  >
+                    <span className="font-semibold">{wallet}</span>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
 
@@ -158,6 +251,9 @@ export default function Page() {
               <Button onClick={addInputDescriptor}>Add Descriptor</Button>
             </CardContent>
           </Card>
+
+          {pollData && <PresentationResult state={state} />}
+
         </div>
 
         <div className="w-full lg:w-1/2 p-4">
@@ -166,13 +262,21 @@ export default function Page() {
               <CardTitle>Generated Authorize URL</CardTitle>
             </CardHeader>
             <CardContent>
-            <Label>Encoded URL:</Label>
+              <Label>Poll Presentation Data</Label>
+              <div>
+                <input
+                  type="checkbox"
+                  checked={pollData}
+                  onChange={() => setPollData(!pollData)}
+                />
+              </div>
+              <Label>Encoded URL:</Label>
               <pre className="bg-gray-100 p-4 rounded-md overflow-x-auto">
                 {authorizeUrl}
               </pre>
               <Label>QR Code:</Label>
               <div className="flex justify-center mt-4">
-                <QRCodeSVG value={authorizeUrl} size={200} />
+                <QRCodeSVG value={authorizeUrl} size={400} />
               </div>
               <Label>Unencoded URL:</Label>
               <pre className="bg-gray-100 p-4 rounded-md overflow-x-auto">
