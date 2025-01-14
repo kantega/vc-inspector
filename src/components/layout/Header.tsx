@@ -24,6 +24,10 @@ const links: NavigationLinks[] = [
     to: '/introduction',
     label: 'Introduction',
   },
+  {
+    to: '/verify',
+    label: 'Verify',
+  },
 ];
 
 /**
