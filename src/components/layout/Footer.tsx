@@ -22,8 +22,8 @@ export default function Footer() {
         <Image src={kantegaLogo} alt="Kantega Logo" width={100} />
       </div>
       <div className="flex w-full flex-col items-center justify-center ">
-        <p>Poirot is developed by Kantega. Get in touch if you want to x y or zzz.</p>
-        <p>post@kantega.no - +47 22 44 22 00</p>
+        <p>Poirot is developed by Kantega.</p>
+        <p>Abid.Ali.Teepo@kantega.no - +47 930 60 301</p>
       </div>
 
       <div className="flex w-full justify-center gap-4 py-10">
